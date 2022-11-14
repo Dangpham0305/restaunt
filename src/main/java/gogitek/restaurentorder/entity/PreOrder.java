@@ -33,8 +33,4 @@ public class PreOrder {
     @JoinColumn(name = "customer", referencedColumnName = "id")
     private User customer;
 
-    public PreOrder(OrderDetail orderDetail){
-        this.product = orderDetail.getProduct();
-        this.quantity = orderDetail.getQuantity();
-    }
 }

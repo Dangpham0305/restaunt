@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +51,11 @@ public class OrderAdminController {
         model.addAttribute("countDelivered", adminService.countByStatus(Status.DELIVERED.getValue()));
         model.addAttribute("countApproved", adminService.countByStatus(Status.APPROVED.getValue()));
         return "admin-page/order";
+    }
+    @GetMapping("/admin/preorder")
+    public String getListPreOrderAdmin(Model model, HttpServletRequest request) {
+        model.addAttribute("listPreOrder", new ArrayList<>());
+        return "admin-page/preorder";
     }
 
     @GetMapping("/admin/order/{id}")
