@@ -1,5 +1,6 @@
 package gogitek.restaurentorder.entity;
 
+import gogitek.restaurentorder.constaint.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,4 +34,6 @@ public class OrderDetail {
     @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
+
+    private Status status;
 }
