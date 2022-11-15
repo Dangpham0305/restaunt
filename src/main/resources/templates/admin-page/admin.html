@@ -146,37 +146,14 @@
     <!--  BEGIN CONTENT PART  -->
     <div id="content" class="main-content">
         <div class="container">
-            <!-- <div class="page-header">
+             <div class="page-header">
                 <div class="page-title">
                     <h3>Thống kê</h3>
-                    <form th:action="@{/admin/fill}" method="post" th:object="${dateFill}">
-                        <ul class=" list-unstyled cd-bread mt-20">
-                            <li>
-                                <div class="check-time">
-                                    <div style="display: flex">
-                                        <span style="margin-top: 10px;">Từ ngày</span>
-                                        <input name="from_date" id="from-date" class="form-control"
-                                            placeholder="Từ ngày" type="date" value="" th:field="*{startFill}">
-                                    </div>
-                                    <div style="display: flex;">
-                                        <span style="margin-top: 10px;">Đến ngày</span>
-                                        <input name="to_date" id="to-date" class="form-control to_date_ed"
-                                            placeholder="Đế ngày" type="date" value="" th:field="*{endFill}">
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <button class="btn btn-info form-control" style="margin-bottom: 10px"
-                                    type="submit">Tìm Kiếm
-                                </button>
-                            </li>
-                        </ul>
-                    </form>
                 </div>
-            </div> -->
+            </div>
 
             <div class="row layout-spacing ">
-                <!--
+
                 <div class="col-xl-3 mb-xl-0 col-lg-6 mb-4 col-md-6 col-sm-6">
                     <div class="widget-content-area  data-widgets br-4" style="background-color: #6ead14;">
                         <div class="widget  t-sales-widget1">
@@ -186,7 +163,6 @@
                                 </div>
                                 <div class="media-body text-right">
                                     <p class="widget-text mb-0">Vốn</p>
-                                    <p class="widget-numeric-value" th:utext="${format.formatPrice(getCostOfProduct)}"></p>
                                 </div>
                             </div>
                             <p class="widget-total-stats mt-2"></p>
@@ -202,7 +178,6 @@
                                 </div>
                                 <div class="media-body text-right">
                                     <p class="widget-text mb-0">Đơn hàng</p>
-                                    <p class="widget-numeric-value" th:utext="${countOrder}"></p>
                                 </div>
                             </div>
                             <p class="widget-total-stats mt-2"></p>
@@ -219,7 +194,6 @@
                                 </div>
                                 <div class="media-body text-right">
                                     <p class="widget-text mb-0">Khách hàng</p>
-                                    <p class="widget-numeric-value" th:utext="${countUser}"></p>
                                 </div>
                             </div>
                             <p class="widget-total-stats mt-2"></p>
@@ -243,12 +217,11 @@
                         </div>
                     </div>
                 </div>
-            -->
+
 
             </div>
 
             <div class="row">
-                <!--
                                     <div class="col-xl-5 col-lg-12 col-md-12 col-12 layout-spacing">
 
                                         <div class="widget-content-area br-4 layout-spacing"
@@ -324,10 +297,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> -->
+                                    </div>
 
             </div>
-            <!--
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
                                     <div class="statbox widget box">
@@ -342,138 +314,11 @@
                                         <div class="widget-content-area ">
 
                                             <div class="table-responsive new-products">
-                                                <table class="table" id="ecommerce-product-list">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="form-check-column text-center">
-                                                                <label for="checkAll"
-                                                                    class="new-control new-checkbox new-checkbox-rounded checkbox-primary pb-2">
-                                                                    <input type="checkbox" id="checkAll" class="new-control-input">
-                                                                    <span class="new-control-indicator mt-2"></span><span
-                                                                        class="invisible">s</span>
-                                                                </label>
-                                                            </th>
-                                                            <th>Sản phẩm</th>
-                                                            <th>Kiểu loại</th>
-                                                            <th>SKU</th>
-                                                            <th class="text-center">Số lượng</th>
-                                                            <th>Hình ảnh</th>
-                                                            <th class="text-center">Giá bán</th>
-                                                            <th class="text-center">Trạng thái</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr th:each="pro, state : ${dsProduct}">
-                                                            <td class="form-check-column text-center">
-                                                                <label
-                                                                    class="new-control new-checkbox new-checkbox-rounded checkbox-primary pb-2">
-                                                                    <input type="checkbox" class="new-control-input chkbox">
-                                                                    <span class="new-control-indicator mt-2"></span><span
-                                                                        class="invisible">s</span>
-                                                                </label>
-                                                            </td>
-                                                            <td th:utext="${pro.name}"></td>
-                                                            <td><span class="badge badge-info badge-pill"
-                                                                    th:utext="${pro.category.name}"></span></td>
-                                                            <td th:utext="${pro.id}"></td>
-                                                            <td class="text-center" th:utext="${pro.quantityProd}">1</td>
-                                                            <td>
-                                                                <img th:src="@{'/image/ImageOrFarm/'+${pro.image}}"
-                                                                    class="img-fluid" alt="img-1" style="border-color: #3862f5;">
-                                                            </td>
-                                                            <td class="text-center" th:utext="${format.formatPrice(pro.salePrice)}">
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <div class="toolbar">
-                                                                    <div class="toolbar-toggle">...</div>
-                                                                    <ul
-                                                                        class="toolbar-dropdown animated fadeInUp table-controls list-inline">
-                                                                        <li class="list-inline-item"><a href="javascript:void(0);"
-                                                                                class="bs-tooltip" data-original-title="View"><i
-                                                                                    class="flaticon-view-3"></i></a>
-                                                                        </li>
-                                                                        <li class="list-inline-item"><a href="javascript:void(0);"
-                                                                                class="bs-tooltip" data-original-title="Edit"><i
-                                                                                    class="flaticon-edit-5"></i></a>
-                                                                        </li>
-                                                                        <li class="list-inline-item"><a href="javascript:void(0);"
-                                                                                class="bs-tooltip" data-original-title="Remove"><i
-                                                                                    class="flaticon-delete-6"></i></a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div> -->
-
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
-                    <div class="statbox widget box box-shadow latest-invoice ">
-                        <div class="widget-header ">
-                            <div class="row">
-                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Hóa đơn gần nhất</h4>
-                                </div>
                             </div>
-                        </div>
-                        <div class="widget-content-area ">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th class="form-check-column text-center">
-                                            <label for="invoiceAll"
-                                                   class="new-control new-checkbox checkbox-primary pb-2">
-                                                <input type="checkbox" id="invoiceAll"
-                                                       class="new-control-input">
-                                                <span class="new-control-indicator mt-2"></span><span
-                                                    class="invisible">s</span>
-                                            </label>
-                                        </th>
-                                        <th>Sản phẩm</th>
-                                        <th>Mã hóa đơn</th>
-                                        <th>Ngày</th>
-                                        <th class="text-center">Số lượng</th>
-                                        <th class="text-center">Trạng thái</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody th:each="top, state : ${topOder}">
-                                    <tr>
-                                        <td class="form-check-column text-center">
-                                            <label class="new-control new-checkbox checkbox-primary pb-2">
-                                                <input type="checkbox" class="new-control-input invoicechk">
-                                                <span class="new-control-indicator mt-2"></span><span
-                                                    class="invisible">s</span>
-                                            </label>
-                                        </td>
-                                        <td th:utext="${top.name}"></td>
-                                        <td th:utext="${top.order_id}"></td>
-                                        <td th:utext="${top.date}"></td>
-                                        <td class="align-center" th:utext="${top.quantity}">15</td>
-                                        <td class="text-center">
-                                                    <span class="badge badge-pills outline-badge-secondary"
-                                                          th:utext="${top.status}"></span>
-                                        </td>
-                                        <td>
-                                            <i class="flaticon-view-1 bs-tooltip" data-placement="top"
-                                               data-original-title="View"></i>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
 
         </div>
     </div>

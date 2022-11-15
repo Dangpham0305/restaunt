@@ -1,27 +1,17 @@
 package gogitek.restaurentorder.controller.admincontroller;
 
-import gogitek.restaurentorder.config.OrderDataExcelExport;
 import gogitek.restaurentorder.constaint.FormatPrice;
 import gogitek.restaurentorder.constaint.Status;
 import gogitek.restaurentorder.entity.Orders;
 import gogitek.restaurentorder.modelutil.DateFilterDTO;
-import gogitek.restaurentorder.modelutil.OrderAdmin;
 import gogitek.restaurentorder.service.AdminService;
 import gogitek.restaurentorder.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Controller
 public class OrderAdminController {
@@ -53,7 +43,7 @@ public class OrderAdminController {
         return "admin-page/order";
     }
     @GetMapping("/admin/preorder")
-    public String getListPreOrderAdmin(Model model, HttpServletRequest request) {
+    public String getListPreOrderAdmin(Model model) {
         model.addAttribute("listPreOrder", new ArrayList<>());
         return "admin-page/preorder";
     }
