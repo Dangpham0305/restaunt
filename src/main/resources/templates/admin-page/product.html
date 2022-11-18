@@ -52,15 +52,11 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Ảnh</th>
                                         <th>Tên</th>
                                         <th>Danh mục</th>
                                         <th>Giá bán</th>
                                         <th>Giảm giá</th>
                                         <th>Giá nhập</th>
-                                        <th>Nổi bật</th>
-                                        <th>Số lượng</th>
-                                        <th>Mô Tả Ngắn</th>
                                         <th>Mô Tả</th>
                                         <th>Trạng Thái</th>
                                         <th class="align-center">Hành động</th>
@@ -69,29 +65,12 @@
                                     <tbody>
                                     <tr th:each="pro, state : ${dsProduct}">
                                         <td th:utext="${pro.id}"></td>
-                                        <td class="text-center"><img class="product-list-img"
-                                                                     th:src="@{'/image/ImageOrFarm/'+${pro.image}}">
-                                        </td>
                                         <td th:utext="${pro.name}">CK Glasses</td>
                                         <td th:utext="${pro.category.name}"></td>
                                         <td th:utext="${format.formatPrice(pro.salePrice)}"></td>
                                         <td th:utext="${pro.percentDiscount} + '%'">10%</td>
                                         <td th:utext="${format.formatPrice(pro.cost)}">200000đ</td>
-                                        <th:block th:if="${pro.isHot()}">
-                                            <td>Nổi bật</td>
-                                        </th:block>
-                                        <th:block th:unless="${pro.isHot()}">
-                                            <td>Không</td>
-                                        </th:block>
-                                        <td th:utext="${pro.quantityProd}"></td>
-                                        <td th:utext="${pro.briefDesc}"></td>
                                         <td th:utext="${pro.description}"></td>
-                                        <td class="text-center">
-                                            <th:block th:if="${pro.quantityProd != 0}"><i
-                                                    class="flaticon-cart-bag-1"></i></th:block>
-                                            <th:block th:unless="${pro.quantityProd != 0}"><i
-                                                    class="flaticon-cart-bag"></i></th:block>
-                                        </td>
                                         <td class="align-center">
                                             <ul class="table-controls">
                                                 <li>

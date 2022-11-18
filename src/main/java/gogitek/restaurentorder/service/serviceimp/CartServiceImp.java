@@ -33,7 +33,7 @@ public class CartServiceImp implements CartService {
 
     @Override
     public List<PreOrder> getAllCartByUser() {
-        return null;
+        return cartRepo.findAll();
     }
 
     @Override
@@ -74,5 +74,10 @@ public class CartServiceImp implements CartService {
 
     @Override
     public void saveItemToCartByOrder(Orders orders) {
+    }
+
+    @Override
+    public void createNewPreOrder() {
+
     }
 }

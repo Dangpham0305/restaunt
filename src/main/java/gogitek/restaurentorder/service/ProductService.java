@@ -12,12 +12,12 @@ public interface ProductService {
     long getTotalPageByFill(float start, float end, int id);
     List<Product> getListProductFillByPage(float start, float end, long currentPage, int id);
     int getTotalByFill(float start, float end, int id);
-    int getTotal(int id);
+    int getTotal();
     List<Product> getListProductByHot();
     List<Product> getListSaleProduct();
     Product getProductById(int id);
-    long getTotalPage(int id);
-    List<Product> getByPage(long currentPage, int id);
+    long getTotalPage();
+    List<Product> getByPage(long currentPage);
     int getCategoryId(int id);
     List<CartItem> getProductFromCart(List<PreOrder> cartList);
     Float getTempPriceOfCart(List<CartItem> itemList);

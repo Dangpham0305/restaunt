@@ -37,68 +37,23 @@ public class ProductController {
     public void addAttributeToHeader(Model model) {
         model.addAttribute("listCategory", categoryService.getListCategory());
         model.addAttribute("format", formatPrice);
-        model.addAttribute("countCartItem", cartService.countNumberOfItemInCart());
     }
 
-    @GetMapping("/category/{id}")
-    public String redirectViewProduct(@PathVariable("id") int id) {
-        return "redirect:/category/{id}/1";
-    }
-
-    @GetMapping("/category/{id}/filter-result")
-    public String getViewProductFilter(@PathVariable("id") int id) {
-        return "redirect:/category/{id}/filter-result/1";
-    }
-
-    @GetMapping("/category/{id}/{page}")
-    public String getViewProduct(@PathVariable("id") int id,
-                                 @PathVariable("page") long currentPage,
+    @GetMapping("/order/{page}")
+    public String getViewProduct(@PathVariable("page") long currentPage,
                                  Model model) {
-        long totalPage = productService.getTotalPage(id);
-        Integer sum = productService.getTotal(id);
-        List<Product> productList = productService.getListProductByHot();
-        Collections.shuffle(productList);
-        if (productList.size() < 4) model.addAttribute("bestSeller", productList);
-        else model.addAttribute("bestSeller", productList.subList(0, 3));
-        model.addAttribute("filter", new FilterProduct());
-        model.addAttribute("input", new SearchDTO());
+        long totalPage = productService.getTotalPage();
+        Integer sum = productService.getTotal();
         model.addAttribute("totalPage", totalPage);
         model.addAttribute("currentPage", currentPage);
-        model.addAttribute("categoryId", id);
         model.addAttribute("sum", sum);
-        model.addAttribute("listProduct", productService.getByPage(currentPage, id));
-        model.addAttribute("category", categoryService.getCategoryById(id).get());
-        return "raucusach";
+        model.addAttribute("listProduct", productService.getByPage(currentPage));
+        return "chonban";
     }
-
-    @GetMapping("/category/{id}/fill-result/{page}")
-    public String getViewProductFill(@PathVariable("id") int id,
-                                     @ModelAttribute FilterProduct filter,
-                                     @PathVariable("page") long currentPage,
-                                     Model model) {
-        Float start = filter.getFillStart();
-        Float end = filter.getFillEnd();
-        if (start > end) {
-            Float temp = start;
-            start = end;
-            end = temp;
-        }
-        Integer sum = productService.getTotalByFill(start, end, id);
-        long totalPage = productService.getTotalPageByFill(start, end, id);
-        List<Product> productList = productService.getListProductByHot();
-        Collections.shuffle(productList);
-        if (productList.size() < 4) model.addAttribute("bestSeller", productList);
-        else model.addAttribute("bestSeller", productList.subList(0, 3));
-        model.addAttribute("currentFilter", filter);
-        model.addAttribute("filter", new FilterProduct());
-        model.addAttribute("input", new SearchDTO());
-        model.addAttribute("totalPage", totalPage);
-        model.addAttribute("currentPage", currentPage);
-        model.addAttribute("categoryId", id);
-        model.addAttribute("sum", sum);
-        model.addAttribute("listProduct", productService.getListProductFillByPage(start, end, currentPage, id));
-        model.addAttribute("category", categoryService.getCategoryById(id).get());
-        return "dokho";
+    @GetMapping("/listOrder")
+    public String getListOrder(Model model){
+        model.addAttribute("preorderList", cartService.getAllCartByUser());
+        return "chonban";
     }
 
     @GetMapping("/product/{id}")

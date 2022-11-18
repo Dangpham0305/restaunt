@@ -29,8 +29,4 @@ public class PreOrder {
     @JoinColumn(name = "employee", referencedColumnName = "id")
     private User employee;
 
-    @OneToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "customer", referencedColumnName = "id")
-    private User customer;
-
 }

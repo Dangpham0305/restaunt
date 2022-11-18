@@ -32,8 +32,8 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public int getTotal(int id) {
-        return productRepo.getTotal(id);
+    public int getTotal() {
+        return productRepo.getTotal();
     }
 
     @Override
@@ -52,15 +52,15 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public long getTotalPage(int id) {
-        return (productRepo.countByCategoryId(id).get(0) % pageSize == 0) ?
-                productRepo.countByCategoryId(id).get(0) / pageSize
-                : (productRepo.countByCategoryId(id).get(0) / pageSize) + 1;
+    public long getTotalPage() {
+        return (productRepo.countProduct().get(0) % pageSize == 0) ?
+                productRepo.countProduct().get(0) / pageSize
+                : (productRepo.countProduct().get(0) / pageSize) + 1;
     }
 
     @Override
-    public List<Product> getByPage(long currentPage, int id) {
-        return productRepo.findByPage((currentPage - 1) * pageSize, pageSize, id);
+    public List<Product> getByPage(long currentPage) {
+        return productRepo.findByPage((currentPage - 1) * pageSize, pageSize);
     }
     @Override
     public long getTotalPageByFill(float start, float end, int id) {

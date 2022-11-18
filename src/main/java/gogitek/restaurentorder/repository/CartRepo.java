@@ -12,6 +12,4 @@ import java.util.List;
 @Repository
 public interface CartRepo extends JpaRepository<PreOrder, Integer> {
 
-    @Query(value = "SELECT count(*) FROM (SELECT distinct user_id FROM orfarm.cart where is_delete = 0) as template", nativeQuery = true)
-    Integer countCart();
 }

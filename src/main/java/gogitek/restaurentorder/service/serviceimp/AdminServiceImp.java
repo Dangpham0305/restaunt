@@ -170,7 +170,7 @@ public class AdminServiceImp implements AdminService {
 
     @Override
     public Integer countCart() {
-        return cartRepo.countCart();
+        return 0;
     }
 
     @Override

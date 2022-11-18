@@ -31,22 +31,10 @@ public class MainController {
     @ModelAttribute
     public void addAttributeToHeader(Model model) {
         model.addAttribute("listCategory", categoryService.getListCategory());
-        model.addAttribute("format", formatPrice);
-        model.addAttribute("countCartItem", cartService.countNumberOfItemInCart());
     }
 
     @ModelAttribute
     public void addListProduct(Model model) {
-        List<Product> hotproductList = productService.getListProductByHot();
-        int numberOfHotProduct = 6;
-        Collections.shuffle(hotproductList);
-        if (hotproductList.size() < 7) model.addAttribute("listHotProduct", hotproductList);
-        else model.addAttribute("listHotProduct", hotproductList.subList(0, numberOfHotProduct));
-        List<Product> productList = productService.getListSaleProduct();
-        int numberOfSaleProduct = 8;
-        Collections.shuffle(productList);
-        if (productList.size() < 9) model.addAttribute("listSaleProduct", productList);
-        else model.addAttribute("listSaleProduct", productList.subList(0, numberOfSaleProduct));
     }
 
     @GetMapping(value = {"/", "/index", "/home"})

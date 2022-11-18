@@ -59,13 +59,6 @@ public class ProductAdminController {
                                    @RequestParam MultipartFile photo,
                                    BindingResult result) {
         if (photo.isEmpty() || result.hasErrors()) return "redirect:/admin/product/add";
-        try {
-            InputStream inputStream = photo.getInputStream();
-            Files.copy(inputStream, path.resolve(photo.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
-            product.setImage(photo.getOriginalFilename());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         productService.addProduct(product);
         return "redirect:/admin/product";
     }

@@ -35,9 +35,6 @@ public class Product {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "hot")
-    private Boolean isHot = false;
-
     @Column(name = "image")
     private String image;
 
