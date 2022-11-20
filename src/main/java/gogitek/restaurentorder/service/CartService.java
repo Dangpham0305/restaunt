@@ -14,6 +14,6 @@ public interface CartService {
     void saveNewQuantity(List<PreOrder> cartList, List<Integer> soluong);
     boolean deleteAnItemInCart(int productId);
     void saveItemToCartByOrder(Orders orders);
-
+    PreOrder addNewCart(PreOrder preOrder);
     void createNewPreOrder();
 }

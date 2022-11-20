@@ -70,15 +70,8 @@
                         <li class="nav-item">
                             <div class="dropdown">
                                 <a class="nav-link waves-effect text-header dropdown-toggle"
-                                   th:href="@{/category/1}">Gọi món
+                                   th:href="@{/listOrder}">Gọi món
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropdown-collection">
-                                    <ul>
-                                        <li th:each="item, state : ${listCategory}">
-                                        <a class="dropdown-item" th:href="@{'/category/'+ ${item.id}}" th:text ="${item.name}"></a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </div>
 
                         </li>

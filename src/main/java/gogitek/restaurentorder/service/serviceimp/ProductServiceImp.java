@@ -59,8 +59,8 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public List<Product> getByPage(long currentPage) {
-        return productRepo.findByPage((currentPage - 1) * pageSize, pageSize);
+    public List<Product> getByPage() {
+        return productRepo.findAll();
     }
     @Override
     public long getTotalPageByFill(float start, float end, int id) {

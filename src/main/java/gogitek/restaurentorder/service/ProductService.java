@@ -17,7 +17,7 @@ public interface ProductService {
     List<Product> getListSaleProduct();
     Product getProductById(int id);
     long getTotalPage();
-    List<Product> getByPage(long currentPage);
+    List<Product> getByPage();
     int getCategoryId(int id);
     List<CartItem> getProductFromCart(List<PreOrder> cartList);
     Float getTempPriceOfCart(List<CartItem> itemList);

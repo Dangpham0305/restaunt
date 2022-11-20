@@ -1,6 +1,7 @@
 package gogitek.restaurentorder.controller;
 
 import gogitek.restaurentorder.constaint.FormatPrice;
+import gogitek.restaurentorder.entity.PreOrder;
 import gogitek.restaurentorder.entity.Product;
 import gogitek.restaurentorder.modelutil.FilterProduct;
 import gogitek.restaurentorder.modelutil.SearchDTO;
@@ -47,8 +48,14 @@ public class ProductController {
         model.addAttribute("totalPage", totalPage);
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("sum", sum);
-        model.addAttribute("listProduct", productService.getByPage(currentPage));
+//        model.addAttribute("listProduct", productService.getByPage(currentPage));
         return "chonban";
+    }
+    @GetMapping("/order/add")
+    public String getProduct(Model model) {
+        model.addAttribute("preOrder", cartService.addNewCart(new PreOrder()).getId());
+        model.addAttribute("listProduct", productService.getByPage());
+        return "chonmon";
     }
     @GetMapping("/listOrder")
     public String getListOrder(Model model){

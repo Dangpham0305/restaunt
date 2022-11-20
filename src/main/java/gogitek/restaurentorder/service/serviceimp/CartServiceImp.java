@@ -77,6 +77,11 @@ public class CartServiceImp implements CartService {
     }
 
     @Override
+    public PreOrder addNewCart(PreOrder preOrder) {
+        return cartRepo.save(preOrder);
+    }
+
+    @Override
     public void createNewPreOrder() {
 
     }
