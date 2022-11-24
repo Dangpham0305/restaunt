@@ -1,5 +1,6 @@
 package gogitek.restaurentorder.service.serviceimp;
 
+import gogitek.restaurentorder.constaint.Status;
 import gogitek.restaurentorder.entity.OrderDetail;
 import gogitek.restaurentorder.entity.PreOrder;
 import gogitek.restaurentorder.entity.PreOrderDetail;
@@ -81,8 +82,8 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public List<PreOrderDetail> getProductFromCart(PreOrder cartList) {
-        return cartList.getPreOrderDetails().stream().collect(Collectors.toList());
+    public List<PreOrderDetail> getProductFromCart(PreOrder cartList, Status status) {
+        return cartList.getPreOrderDetails().stream().filter(preOrderDetail -> status.equals(preOrderDetail.getStatus())).collect(Collectors.toList());
     }
 
     @Override

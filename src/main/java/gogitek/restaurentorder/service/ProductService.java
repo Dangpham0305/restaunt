@@ -1,5 +1,6 @@
 package gogitek.restaurentorder.service;
 
+import gogitek.restaurentorder.constaint.Status;
 import gogitek.restaurentorder.entity.OrderDetail;
 import gogitek.restaurentorder.entity.PreOrder;
 import gogitek.restaurentorder.entity.PreOrderDetail;
@@ -20,7 +21,7 @@ public interface ProductService {
     long getTotalPage();
     List<Product> getByPage();
     int getCategoryId(int id);
-    List<PreOrderDetail> getProductFromCart(PreOrder cartList);
+    List<PreOrderDetail> getProductFromCart(PreOrder cartList, Status status);
     Float getTempPriceOfCart(List<CartItem> itemList);
     boolean addProduct(Product product);
     boolean deleteProduct(Long id);

@@ -55,11 +55,11 @@ public class CartController {
         return "ViewCart";
     }
 
-    @GetMapping("/cart/delete")
-    public String handleDeleteAllProduct(){
-        cartService.deleteAllItemInCart();
-        return "redirect:/cart";
-    }
+//    @GetMapping("/cart/delete")
+//    public String handleDeleteAllProduct(){
+//        cartService.deleteAllItemInCart();
+//        return "redirect:/cart";
+//    }
     @GetMapping("/cart/{id}")
     public String handleDeleteProduct(@PathVariable("id") int productId){
         cartService.deleteAnItemInCart(productId);

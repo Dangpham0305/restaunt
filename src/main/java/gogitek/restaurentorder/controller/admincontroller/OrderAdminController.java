@@ -5,7 +5,9 @@ import gogitek.restaurentorder.constaint.Status;
 import gogitek.restaurentorder.entity.Orders;
 import gogitek.restaurentorder.modelutil.DateFilterDTO;
 import gogitek.restaurentorder.service.AdminService;
+import gogitek.restaurentorder.service.CartService;
 import gogitek.restaurentorder.service.OrderService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,16 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 @Controller
+@RequiredArgsConstructor
 public class OrderAdminController {
     private final AdminService adminService;
     private final FormatPrice formatPrice;
     private final OrderService orderService;
+    private final CartService cartService;
 
-    public OrderAdminController(AdminService adminService, FormatPrice formatPrice, OrderService orderService) {
-        this.adminService = adminService;
-        this.formatPrice = formatPrice;
-        this.orderService = orderService;
-    }
 
     @ModelAttribute
     public void addFormatService(Model model) {
@@ -44,7 +43,7 @@ public class OrderAdminController {
     }
     @GetMapping("/admin/preorder")
     public String getListPreOrderAdmin(Model model) {
-        model.addAttribute("listPreOrder", new ArrayList<>());
+        model.addAttribute("listPreOrder", cartService.getAllOrder());
         return "admin-page/preorder";
     }
 

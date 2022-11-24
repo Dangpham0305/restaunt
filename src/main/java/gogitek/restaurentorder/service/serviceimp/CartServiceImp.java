@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -50,21 +51,22 @@ public class CartServiceImp implements CartService {
     }
 
     @Override
-    public boolean deleteAllItemInCart() {
-        List<PreOrder> cartList = getAllCartByUser();
-        for (PreOrder cart : cartList
-        ) {
-            cartRepo.save(cart);
+    public boolean deleteAllItemInCart(Long id) {
+        try {
+            List<PreOrderDetail> list = new ArrayList<>(cartRepo.findById(id).orElseThrow(RuntimeException::new).getPreOrderDetails());
+            List<PreOrderDetail> listfilter = list.stream().filter(item -> Status.APPROVED.equals(item.getStatus())).collect(Collectors.toList());
+            preOrderDetailRepo.deleteAllInBatch(listfilter);
+            return true;
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+            return false;
         }
-        return true;
     }
 
     @Override
     public void saveNewQuantity(List<PreOrder> cartList, List<Integer> soluong) {
-        for (int i = 0; i < cartList.size(); i++) {
-//            cartList.get(i).setQuantity(soluong.get(i));
-            cartRepo.save(cartList.get(i));
-        }
+        //            cartList.get(i).setQuantity(soluong.get(i));
+        cartRepo.saveAll(cartList);
     }
 
     @Override
@@ -84,6 +86,23 @@ public class CartServiceImp implements CartService {
     @Override
     public PreOrder findById(Long iod) {
         return cartRepo.findById(iod).orElse(new PreOrder());
+    }
+
+    @Override
+    public boolean orderAllItem(Long id) {
+        try{
+            List<PreOrderDetail> list = new ArrayList<>(cartRepo.getById(id).getPreOrderDetails());
+            List<PreOrderDetail> filter = list.stream().filter(preOrderDetail -> Status.APPROVED.equals(preOrderDetail.getStatus())).peek(preOrderDetail -> preOrderDetail.setStatus(Status.PROCESSING)).collect(Collectors.toList());
+            preOrderDetailRepo.saveAll(filter);
+            return true;
+        }catch (Exception e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+    @Override
+    public List<PreOrderDetail> getAllOrder(){
+        return preOrderDetailRepo.findByStatusIn(Arrays.asList(Status.PROCESSING, Status.DELIVERED));
     }
 
 }

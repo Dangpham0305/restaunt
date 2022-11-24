@@ -20,15 +20,14 @@
 <!--====== SHOPPING CART PART ENDS ======-->
 
 <div class="orfarm-shop-grid-area pt-100 pb-50 ">
-    <div class="container">
-        <div class="row pb-35">
-            <div class="col-lg-9 order-1 order-lg-2">
+    <a th:href="@{/order}" class="btn btn-info form-control">Thêm order</a>
+
+    <div class="container-fluid">
                 <div class="row">
-                    <a th:href="@{/order}" class="btn btn-info form-control">Thêm order</a>
-                    <div class="col-lg-4 col-md-6" th:each="pro, state : ${preorderList}" id = "list-product">
+                    <div class="col-lg-3 col-md-6" th:each="pro, state : ${preorderList}" id = "list-product">
                         <div class="single-shop-box">
                             <div class="thumb text-center">
-                                <a th:href="@{'/order/' + ${pro.id}}">
+                                <a th:href="@{'/order/' + ${pro.id}}" class="btn btn-fill">
                                     <img th:src="@{'/image/img.png'}" alt="">
                                 </a>
                                 <div class="reborn">
@@ -40,12 +39,12 @@
                                 <span th:text="'Đơn ' + ${pro.id}"></span>
                                 <div class="row"></div>
                                 <div class="pricing button col-6">
-                                    <a th:href="@{'/order/' + ${pro.id}}">
+                                    <a th:href="@{'/order/' + ${pro.id}}" class="btn btn-creative">
                                         <span>Gọi thêm</span>
                                     </a>
                                 </div>
                                 <div class="pricing button col-6">
-                                    <a th:href="@{'/payment/' + ${pro.id}}">
+                                    <a th:href="@{'/payment/' + ${pro.id}}" class="btn btn-warning">
                                         <span>Thanh toán</span>
                                     </a>
                                 </div>
@@ -53,8 +52,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
         <footer th:replace="~{footer :: html_footer}"></footer>
     </div>
 </div>

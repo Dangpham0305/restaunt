@@ -3,135 +3,133 @@
 
 
 <head th:fragment="html_header-admin">
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-  <title>Admin OrFarm </title>
-  <link rel="icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}" />
-  <!--====== Favicon Icon ======-->
-  <link rel="shortcut icon" .href="./image/578b1438ff0a7fc4704aa5ade7625e89.jpeg" type="image/png">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>Admin OrFarm </title>
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}"/>
+    <!--====== Favicon Icon ======-->
+    <link rel="shortcut icon" .href="./image/578b1438ff0a7fc4704aa5ade7625e89.jpeg" type="image/png">
 
-  <!-- BEGIN GLOBAL MANDATORY STYLES -->
-  <link th:href="@{/assets/css/loader.css}" rel="stylesheet" type="text/css" />
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700'" rel='stylesheet' type='text/css'>
-  <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
-  <link th:href="@{/assets/css/plugins.css}" rel="stylesheet" type="text/css" />
-  <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link th:href="@{/assets/css/loader.css}" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700'" rel='stylesheet' type='text/css'>
+    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/css/plugins.css}" rel="stylesheet" type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
 
-  <link rel="stylesheet" type="text/css" th:href="@{/plugins/table/datatable/datatables.css}" />
-  <link rel="stylesheet" type="text/css" th:href="@{/assets/css/ecommerce/order.css}" />
-  <link rel="stylesheet" th:href="@{/assets/css/style.css}">
-  <link rel="stylesheet" th:href="@{/assets/scss/style.css}">
-  <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-  <link th:href="@{/plugins/maps/vector/jvector/jquery-jvectormap-2.0.3.css}" rel="stylesheet" type="text/css" />
-  <link th:href="@{/plugins/charts/chartist/chartist.css}" rel="stylesheet" type="text/css">
-  <link th:href="@{/assets/css/default-dashboard/style.css}" rel="stylesheet" type="text/css" />
-  <link th:href="@{/assets/css/ecommerce-dashboard/style.css}" rel="stylesheet" type="text/css" />
-  <link th:href="@{/assets/css/ecommerce/addedit_product.css}" rel="stylesheet" type="text/css" />
-  <link th:href="@{/assets/css/ecommerce-dashboard/timeline.css}" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="../../static/assets/scss/style.css">
-  <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+    <link rel="stylesheet" type="text/css" th:href="@{/plugins/table/datatable/datatables.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/ecommerce/order.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/scss/style.css}">
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+    <link th:href="@{/plugins/maps/vector/jvector/jquery-jvectormap-2.0.3.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/plugins/charts/chartist/chartist.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/assets/css/default-dashboard/style.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/css/ecommerce-dashboard/style.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/css/ecommerce/addedit_product.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/css/ecommerce-dashboard/timeline.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="../../static/assets/scss/style.css">
+    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 </head>
 
 <body>
 
 <!--  BEGIN MAIN CONTAINER  -->
 <header class="desktop-nav header navbar fixed-top" th:fragment="my-header-admin">
-  <div class="nav-logo mr-sm-5 ml-sm-4">
-    <a href="javascript:void(0);" class="nav-link sidebarCollapse d-inline-block mr-sm-5"
-       data-placement="bottom">
-      <i class="flaticon-menu-line-3"></i>
-    </a>
-  </div>
-  <ul class="navbar-nav flex-row ml-lg-auto">
-    <li class="nav-item dropdown user-profile-dropdown pl-4 pr-lg-0 pr-2 ml-lg-2 mr-lg-4  align-self-center">
-      <a href="javascript:void(0);" class="nav-link dropdown-toggle user">
-        <div class="user-profile d-lg-block d-none">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6p1uHt5NGPGppq1t48xlKt18PfNiIX5zCYQ&usqp=CAU"
-               alt="admin-profile" class="img-fluid">
-        </div>
-        <i class="flaticon-user-7 d-lg-none d-block"></i>
-      </a>
-    </li>
-  </ul>
+    <div class="nav-logo mr-sm-5 ml-sm-4">
+        <a href="javascript:void(0);" class="nav-link sidebarCollapse d-inline-block mr-sm-5"
+           data-placement="bottom">
+            <i class="flaticon-menu-line-3"></i>
+        </a>
+    </div>
+    <ul class="navbar-nav flex-row ml-lg-auto">
+        <li class="nav-item dropdown user-profile-dropdown pl-4 pr-lg-0 pr-2 ml-lg-2 mr-lg-4  align-self-center">
+            <a href="javascript:void(0);" class="nav-link dropdown-toggle user">
+                <div class="user-profile d-lg-block d-none">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6p1uHt5NGPGppq1t48xlKt18PfNiIX5zCYQ&usqp=CAU"
+                         alt="admin-profile" class="img-fluid">
+                </div>
+                <i class="flaticon-user-7 d-lg-none d-block"></i>
+            </a>
+        </li>
+    </ul>
 </header>
 
 <div class="main-container" id="container">
 
-  <!--  BEGIN MODERN  -->
-  <div th:replace="~{admin-page/admin  :: modern-admin}"></div>
+    <!--  BEGIN MODERN  -->
+    <div th:replace="~{admin-page/admin  :: modern-admin}"></div>
 
-  <!--  END MODERN  -->
+    <!--  END MODERN  -->
 
-  <!--  BEGIN CONTENT PART  -->
-  <div id="content" class="main-content">
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
-          <div class="statbox widget box box-shadow latest-invoice ">
-            <div class="widget-header ">
-              <div class="row">
-                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                  <h4>Hóa đơn gần nhất</h4>
-                </div>
-              </div>
-            </div>
-            <div class="widget-content-area ">
-              <div class="table-responsive">
-                <table class="table">
-                  <thead>
-                  <tr>
-                    <th class="form-check-column text-center">
-                      <label for="invoiceAll"
-                             class="new-control new-checkbox checkbox-primary pb-2">
-                        <input type="checkbox" id="invoiceAll"
-                               class="new-control-input">
-                        <span class="new-control-indicator mt-2"></span><span
-                              class="invisible">s</span>
-                      </label>
-                    </th>
-                    <th>Sản phẩm</th>
-                    <th>Mã hóa đơn</th>
-                    <th>Ngày</th>
-                    <th class="text-center">Số lượng</th>
-                    <th class="text-center">Trạng thái</th>
-                    <th></th>
-                  </tr>
-                  </thead>
-                  <tbody th:each="top, state : ${listPreOrder}">
-                  <tr>
-                    <td class="form-check-column text-center">
-                      <label class="new-control new-checkbox checkbox-primary pb-2">
-                        <input type="checkbox" class="new-control-input invoicechk">
-                        <span class="new-control-indicator mt-2"></span><span
-                              class="invisible">s</span>
-                      </label>
-                    </td>
-                    <td th:utext="${top.name}"></td>
-                    <td th:utext="${top.order_id}"></td>
-                    <td th:utext="${top.date}"></td>
-                    <td class="align-center" th:utext="${top.quantity}">15</td>
-                    <td class="text-center">
+    <!--  BEGIN CONTENT PART  -->
+    <div id="content" class="main-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
+                    <div class="statbox widget box box-shadow latest-invoice ">
+                        <div class="widget-header ">
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                    <h4>Hóa đơn gần nhất</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content-area ">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th class="form-check-column text-center">
+                                            <label for="invoiceAll"
+                                                   class="new-control new-checkbox checkbox-primary pb-2">
+                                                <input type="checkbox" id="invoiceAll"
+                                                       class="new-control-input">
+                                                <span class="new-control-indicator mt-2"></span><span
+                                                    class="invisible">s</span>
+                                            </label>
+                                        </th>
+                                        <th>Mã hóa đơn</th>
+                                        <th>Sản phẩm</th>
+                                        <th class="text-center">Số lượng</th>
+                                        <th class="text-center">Trạng thái</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody th:each="top, state : ${listPreOrder}">
+                                    <tr>
+                                        <td class="form-check-column text-center">
+                                            <label class="new-control new-checkbox checkbox-primary pb-2">
+                                                <input type="checkbox" class="new-control-input invoicechk">
+                                                <span class="new-control-indicator mt-2"></span><span
+                                                    class="invisible">s</span>
+                                            </label>
+                                        </td>
+                                        <td th:utext="${top.preOrder.id}"></td>
+                                        <td th:utext="${top.product.name}"></td>
+                                        <td class="align-center" th:utext="${top.quantity}">15</td>
+                                        <td class="text-center">
                                                     <span class="badge badge-pills outline-badge-secondary"
-                                                          th:utext="${top.status}"></span>
-                    </td>
-                    <td>
-                      <i class="flaticon-view-1 bs-tooltip" data-placement="top"
-                         data-original-title="View"></i>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
+                                                          th:utext="${top.status.getText()}"></span>
+                                        </td>
+                                        <td>
+                                            <i class="flaticon-view-1 bs-tooltip" data-placement="top"
+                                               data-original-title="View"></i>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-          </div>
+
         </div>
-
-      </div>
-
     </div>
-  </div>
-  <!--  END CONTENT PART  -->
+    <!--  END CONTENT PART  -->
 
 </div>
 <!-- END MAIN CONTAINER -->
@@ -139,60 +137,60 @@
 <!--  BEGIN FOOTER  -->
 <footer class="footer-section theme-footer" th:fragment="admin-footer">
 
-  <div class="footer-section-1  sidebar-theme">
+    <div class="footer-section-1  sidebar-theme">
 
-  </div>
-  <!--
-  <div class="footer-section-2 container-fluid">
-      <div class="row">
-          <div id="toggle-grid" class="col-xl-7 col-md-6 col-sm-6 col-12 text-sm-left text-center">
-              <ul class="list-inline links ml-sm-5">
-                  <li class="list-inline-item">
-                      <a th:href="@{/index}">OrFarm Store</a>
-                  </li>
-              </ul>
-          </div>
-          <div class="col-xl-5 col-md-6 col-sm-6 col-12">
-              <ul
-                  class="list-inline mb-0 d-flex justify-content-sm-end justify-content-center mr-sm-3 ml-sm-0 mx-3">
-                  <li class="list-inline-item  mr-3">
-                      <p class="bottom-footer">&#xA9; 2022 <a th:href="@{/index}">OrFarm Store</a></p>
-                  </li>
-                  <li class="list-inline-item align-self-center">
-                      <div class="scrollTop"><i class="flaticon-up-arrow-fill-1"></i></div>
-                  </li>
-              </ul>
-          </div>
-      </div>
-  </div>-->
+    </div>
+    <!--
+    <div class="footer-section-2 container-fluid">
+        <div class="row">
+            <div id="toggle-grid" class="col-xl-7 col-md-6 col-sm-6 col-12 text-sm-left text-center">
+                <ul class="list-inline links ml-sm-5">
+                    <li class="list-inline-item">
+                        <a th:href="@{/index}">OrFarm Store</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xl-5 col-md-6 col-sm-6 col-12">
+                <ul
+                    class="list-inline mb-0 d-flex justify-content-sm-end justify-content-center mr-sm-3 ml-sm-0 mx-3">
+                    <li class="list-inline-item  mr-3">
+                        <p class="bottom-footer">&#xA9; 2022 <a th:href="@{/index}">OrFarm Store</a></p>
+                    </li>
+                    <li class="list-inline-item align-self-center">
+                        <div class="scrollTop"><i class="flaticon-up-arrow-fill-1"></i></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>-->
 </footer>
 <!--  END FOOTER  -->
 
 <!--  BEGIN PROFILE SIDEBAR  -->
 <aside class="profile-sidebar text-center" th:fragment="admin-profile">
-  <div class="profile-content profile-content-scroll">
-    <div class="usr-profile">
-      <img th:src="@{/assets/img/90x90.jpg}" alt="admin-profile" class="img-fluid" />
+    <div class="profile-content profile-content-scroll">
+        <div class="usr-profile">
+            <img th:src="@{/assets/img/90x90.jpg}" alt="admin-profile" class="img-fluid"/>
+        </div>
+        <p class="user-name mt-4 mb-4"><span th:text="${#authentication.getPrincipal().getFullname()}"></span></p>
+
+
+        <div class="user-links text-left">
+            <ul class="list-unstyled">
+                <li>
+                    <a href="#"><i class="flaticon-mail-22"></i> Email: <span
+                            th:text="${#authentication.getPrincipal().getUsername()}"></span></a>
+
+                </li>
+                <li>
+                    <a th:href="@{/admin/personal-infor}"><i class="far fa-user"></i> Trang Cá Nhân</a>
+                </li>
+                <li>
+                    <a th:href="@{/logout}"><i class="flaticon-power-off"></i> Logout</a>
+                </li>
+            </ul>
+        </div>
     </div>
-    <p class="user-name mt-4 mb-4"><span th:text="${#authentication.getPrincipal().getFullname()}"></span></p>
-
-
-    <div class="user-links text-left">
-      <ul class="list-unstyled">
-        <li>
-          <a href="#"><i class="flaticon-mail-22"></i> Email: <span
-                  th:text="${#authentication.getPrincipal().getUsername()}"></span></a>
-
-        </li>
-        <li>
-          <a th:href="@{/admin/personal-infor}"><i class="far fa-user"></i> Trang Cá Nhân</a>
-        </li>
-        <li>
-          <a th:href="@{/logout}"><i class="flaticon-power-off"></i> Logout</a>
-        </li>
-      </ul>
-    </div>
-  </div>
 </aside>
 <!--  BEGIN PROFILE SIDEBAR  -->
 </body>

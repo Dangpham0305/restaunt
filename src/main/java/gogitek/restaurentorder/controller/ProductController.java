@@ -1,6 +1,7 @@
 package gogitek.restaurentorder.controller;
 
 import gogitek.restaurentorder.constaint.FormatPrice;
+import gogitek.restaurentorder.constaint.Status;
 import gogitek.restaurentorder.entity.PreOrder;
 import gogitek.restaurentorder.entity.Product;
 import gogitek.restaurentorder.modelutil.FilterProduct;
@@ -56,18 +57,19 @@ public class ProductController {
     public String getProduct(Model model, @PathVariable Optional<Long> id) {
         PreOrder preOrder;
         if (id.isPresent()){
-             preOrder = cartService.findById(id.get());
+            preOrder = cartService.findById(id.get());
+            model.addAttribute("addedList", productService.getProductFromCart(preOrder, Status.APPROVED));
+            model.addAttribute("orderedList", productService.getProductFromCart(preOrder, Status.PROCESSING));
         }
         else {
              preOrder = cartService.addNewCart(new PreOrder());
         }
         model.addAttribute("preOrder", preOrder);
-        model.addAttribute("addedList", productService.getProductFromCart(preOrder));
         model.addAttribute("listProduct", productService.getByPage());
         return "chonmon";
     }
     @PostMapping("/order/{preOrder}/addProduct")
-    public String addProductToOrder(Model model, @PathVariable Long preOrder, @RequestParam("quantity") Long quantity,
+    public String addProductToOrder(@PathVariable Long preOrder, @RequestParam("quantity") Long quantity,
                                     @RequestParam("productId") Long id){
         cartService.saveItemToCart(productService.getProductById(id), preOrder);
         return "redirect:/order/" + preOrder;
@@ -77,6 +79,17 @@ public class ProductController {
         model.addAttribute("preorderList", cartService.getAllCartByUser());
         return "chonban";
     }
+    @GetMapping("/deleteOrder/{id}")
+    public String handleDeleteAllProduct(@PathVariable Long id){
+        cartService.deleteAllItemInCart(id);
+        return "redirect:/order/" + id;
+    }
+    @GetMapping("/order/add/{id}")
+    public String orderProduct(@PathVariable Long id){
+        cartService.orderAllItem(id);
+        return "redirect:/order/" + id;
+    }
+
 
 //    @GetMapping("/product/{id}")
 //    public String getViewProductDetail(@PathVariable int id, Model model) {
