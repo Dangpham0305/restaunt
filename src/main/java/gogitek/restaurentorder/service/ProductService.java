@@ -2,6 +2,7 @@ package gogitek.restaurentorder.service;
 
 import gogitek.restaurentorder.entity.OrderDetail;
 import gogitek.restaurentorder.entity.PreOrder;
+import gogitek.restaurentorder.entity.PreOrderDetail;
 import gogitek.restaurentorder.entity.Product;
 import gogitek.restaurentorder.modelutil.CartItem;
 import gogitek.restaurentorder.modelutil.ProductAdminDTO;
@@ -15,15 +16,15 @@ public interface ProductService {
     int getTotal();
     List<Product> getListProductByHot();
     List<Product> getListSaleProduct();
-    Product getProductById(int id);
+    Product getProductById(Long id);
     long getTotalPage();
     List<Product> getByPage();
     int getCategoryId(int id);
-    List<CartItem> getProductFromCart(List<PreOrder> cartList);
+    List<PreOrderDetail> getProductFromCart(PreOrder cartList);
     Float getTempPriceOfCart(List<CartItem> itemList);
     boolean addProduct(Product product);
-    boolean deleteProduct(int id);
-    void updateProduct(int id, Product product);
+    boolean deleteProduct(Long id);
+    void updateProduct(Long id, Product product);
     List<ProductAdminDTO> findAll();
     List<Product> findProductByName(int id, String keyWord, long currentPage);
     long getTotalPageByName(int id, String keyWord);

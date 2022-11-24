@@ -47,5 +47,5 @@ public class Product {
     private Double cost;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
-    private Set<PreOrder> preOrder = new HashSet<>();
+    private Set<PreOrderDetail> preOrderDetails = new HashSet<>();
 }

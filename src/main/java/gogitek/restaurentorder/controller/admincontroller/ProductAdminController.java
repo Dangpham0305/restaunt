@@ -64,14 +64,14 @@ public class ProductAdminController {
     }
 
     @GetMapping("/admin/product/edit/{id}")
-    public String getViewEditProductAdmin(@PathVariable("id") int productId, Model model) {
+    public String getViewEditProductAdmin(@PathVariable("id") Long productId, Model model) {
         model.addAttribute("categoryList", categoryService.getListCategory());
         model.addAttribute("product", productService.getProductById(productId));
         return "admin-page/add-product";
     }
 
     @PostMapping("/admin/product/edit/{id}")
-    public String handleEditProductAdmin(@PathVariable("id") int productId, @ModelAttribute Product product, @RequestParam MultipartFile photo) {
+    public String handleEditProductAdmin(@PathVariable("id") Long productId, @ModelAttribute Product product, @RequestParam MultipartFile photo) {
         if (!photo.isEmpty()) {
             try {
                 InputStream inputStream = photo.getInputStream();
@@ -86,7 +86,7 @@ public class ProductAdminController {
     }
 
     @GetMapping("/admin/product/delete/{id}")
-    public String handleDeleteProductAdmin(@PathVariable("id") int productId) {
+    public String handleDeleteProductAdmin(@PathVariable("id") Long productId) {
         productService.deleteProduct(productId);
         return "redirect:/admin/product";
     }

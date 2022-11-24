@@ -2,6 +2,7 @@ package gogitek.restaurentorder.service.serviceimp;
 
 import gogitek.restaurentorder.entity.OrderDetail;
 import gogitek.restaurentorder.entity.PreOrder;
+import gogitek.restaurentorder.entity.PreOrderDetail;
 import gogitek.restaurentorder.entity.Product;
 import gogitek.restaurentorder.modelutil.CartItem;
 import gogitek.restaurentorder.modelutil.ProductAdminDTO;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImp implements ProductService {
@@ -47,7 +49,7 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public Product getProductById(int id) {
+    public Product getProductById(Long id) {
         return productRepo.getById(id);
     }
 
@@ -79,9 +81,8 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public List<CartItem> getProductFromCart(List<PreOrder> cartList) {
-        List<CartItem> list = new ArrayList<>();
-        return list;
+    public List<PreOrderDetail> getProductFromCart(PreOrder cartList) {
+        return cartList.getPreOrderDetails().stream().collect(Collectors.toList());
     }
 
     @Override
@@ -101,13 +102,13 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public boolean deleteProduct(int id) {
+    public boolean deleteProduct(Long id) {
         productRepo.delete(productRepo.getById(id));
         return true;
     }
 
     @Override
-    public void updateProduct(int id, Product product) {
+    public void updateProduct(Long id, Product product) {
         Product baseProduct = productRepo.getById(id);
         if(!product.getName().isEmpty()) baseProduct.setName(product.getName());
         if(!product.getDescription().isEmpty()) baseProduct.setDescription(product.getDescription());

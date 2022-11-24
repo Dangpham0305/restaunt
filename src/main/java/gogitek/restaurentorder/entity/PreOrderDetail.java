@@ -1,29 +1,32 @@
 package gogitek.restaurentorder.entity;
 
+import gogitek.restaurentorder.constaint.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "cart")
-public class PreOrder {
+public class PreOrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.DETACH, mappedBy = "preOrder")
-    private Set<PreOrderDetail> preOrderDetails;
+    @ManyToOne(cascade = CascadeType.DETACH)
+    private PreOrder preOrder;
 
-    @OneToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "employee", referencedColumnName = "id")
-    private User employee;
+    @Column(name = "quantity")
+    private Integer quantity;
+
+    @ManyToOne(cascade = CascadeType.DETACH)
+    private Product product;
+
+    private Status status;
 
 }

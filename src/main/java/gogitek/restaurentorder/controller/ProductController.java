@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ProductController {
@@ -40,22 +41,36 @@ public class ProductController {
         model.addAttribute("format", formatPrice);
     }
 
-    @GetMapping("/order/{page}")
-    public String getViewProduct(@PathVariable("page") long currentPage,
-                                 Model model) {
-        long totalPage = productService.getTotalPage();
-        Integer sum = productService.getTotal();
-        model.addAttribute("totalPage", totalPage);
-        model.addAttribute("currentPage", currentPage);
-        model.addAttribute("sum", sum);
-//        model.addAttribute("listProduct", productService.getByPage(currentPage));
-        return "chonban";
-    }
-    @GetMapping("/order/add")
-    public String getProduct(Model model) {
-        model.addAttribute("preOrder", cartService.addNewCart(new PreOrder()).getId());
+//    @GetMapping("/order/{page}")
+//    public String getViewProduct(@PathVariable("page") long currentPage,
+//                                 Model model) {
+//        long totalPage = productService.getTotalPage();
+//        Integer sum = productService.getTotal();
+//        model.addAttribute("totalPage", totalPage);
+//        model.addAttribute("currentPage", currentPage);
+//        model.addAttribute("sum", sum);
+////        model.addAttribute("listProduct", productService.getByPage(currentPage));
+//        return "chonban";
+//    }
+    @GetMapping(value = {"/order/{id}", "/order"})
+    public String getProduct(Model model, @PathVariable Optional<Long> id) {
+        PreOrder preOrder;
+        if (id.isPresent()){
+             preOrder = cartService.findById(id.get());
+        }
+        else {
+             preOrder = cartService.addNewCart(new PreOrder());
+        }
+        model.addAttribute("preOrder", preOrder);
+        model.addAttribute("addedList", productService.getProductFromCart(preOrder));
         model.addAttribute("listProduct", productService.getByPage());
         return "chonmon";
+    }
+    @PostMapping("/order/{preOrder}/addProduct")
+    public String addProductToOrder(Model model, @PathVariable Long preOrder, @RequestParam("quantity") Long quantity,
+                                    @RequestParam("productId") Long id){
+        cartService.saveItemToCart(productService.getProductById(id), preOrder);
+        return "redirect:/order/" + preOrder;
     }
     @GetMapping("/listOrder")
     public String getListOrder(Model model){
@@ -63,32 +78,32 @@ public class ProductController {
         return "chonban";
     }
 
-    @GetMapping("/product/{id}")
-    public String getViewProductDetail(@PathVariable int id, Model model) {
-        Integer idCategory = productService.getCategoryId(id);
-        List<Product> list = productService.getListProductByCategoryId(idCategory);
-        Collections.shuffle(list);
-        if (list.size() > 8) list = list.subList(0, 7);
-        model.addAttribute("listSimilar", list);
-        model.addAttribute("productDetail", productService.getProductById(id));
-        return "productdetail";
-    }
+//    @GetMapping("/product/{id}")
+//    public String getViewProductDetail(@PathVariable int id, Model model) {
+//        Integer idCategory = productService.getCategoryId(id);
+//        List<Product> list = productService.getListProductByCategoryId(idCategory);
+//        Collections.shuffle(list);
+//        if (list.size() > 8) list = list.subList(0, 7);
+//        model.addAttribute("listSimilar", list);
+//        model.addAttribute("productDetail", productService.getProductById(id));
+//        return "productdetail";
+//    }
 
-    @PostMapping("/product/{id}")
-    public String handleAddProductToCart(@PathVariable("id") int id,
-                                         RedirectAttributes redirectAttributes,
-                                         @RequestParam("quantity") String quantitystring) {
-        int quantity = Float.valueOf(quantitystring).intValue();
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication instanceof AnonymousAuthenticationToken) return "redirect:/login";
-        Product product = productService.getProductById(id);
-        boolean success = cartService.saveItemToCart(product, quantity);
-        String msg;
-        if (success) msg = "Thêm giỏ hàng thành công";
-        else msg = "Thêm giỏ hàng thất bại";
-        redirectAttributes.addFlashAttribute("msg", msg);
-        return "redirect:/product/{id}";
-    }
+//    @PostMapping("/product/{id}")
+//    public String handleAddProductToCart(@PathVariable("id") int id,
+//                                         RedirectAttributes redirectAttributes,
+//                                         @RequestParam("quantity") String quantitystring) {
+//        int quantity = Float.valueOf(quantitystring).intValue();
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (authentication instanceof AnonymousAuthenticationToken) return "redirect:/login";
+//        Product product = productService.getProductById(id);
+//        boolean success = cartService.saveItemToCart(product, quantity);
+//        String msg;
+//        if (success) msg = "Thêm giỏ hàng thành công";
+//        else msg = "Thêm giỏ hàng thất bại";
+//        redirectAttributes.addFlashAttribute("msg", msg);
+//        return "redirect:/product/{id}";
+//    }
 
     @GetMapping("/category/{id}/fillByName")
     public String getViewSearchByName() {

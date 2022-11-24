@@ -24,7 +24,7 @@
         <div class="row pb-35">
             <div class="col-lg-9 order-1 order-lg-2">
                 <div class="row">
-                    <a th:href="@{/order/add}" class="btn btn-info form-control">Thêm order</a>
+                    <a th:href="@{/order}" class="btn btn-info form-control">Thêm order</a>
                     <div class="col-lg-4 col-md-6" th:each="pro, state : ${preorderList}" id = "list-product">
                         <div class="single-shop-box">
                             <div class="thumb text-center">
@@ -37,16 +37,16 @@
                             </div>
                             <div class="content">
                                 <input type="hidden" id="productId" value="1">
-                                <span th:value="table ${pro.id}"></span>
-                                <a th:href="@{'/product/' + ${pro.id}}"></a>
-                                <div class="pricing">0
+                                <span th:text="'Đơn ' + ${pro.id}"></span>
+                                <div class="row"></div>
+                                <div class="pricing button col-6">
                                     <a th:href="@{'/order/' + ${pro.id}}">
-                                        Goi them
+                                        <span>Gọi thêm</span>
                                     </a>
                                 </div>
-                                <div class="pricing">
+                                <div class="pricing button col-6">
                                     <a th:href="@{'/payment/' + ${pro.id}}">
-                                        Thanh toan
+                                        <span>Thanh toán</span>
                                     </a>
                                 </div>
                             </div>

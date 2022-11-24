@@ -7,7 +7,7 @@ import gogitek.restaurentorder.entity.Product;
 import java.util.List;
 
 public interface CartService {
-    boolean saveItemToCart(Product product, Integer quantity);
+    boolean saveItemToCart(Product product, Long preOrderId);
     List<PreOrder> getAllCartByUser();
     Integer countNumberOfItemInCart();
     boolean deleteAllItemInCart();
@@ -15,5 +15,5 @@ public interface CartService {
     boolean deleteAnItemInCart(int productId);
     void saveItemToCartByOrder(Orders orders);
     PreOrder addNewCart(PreOrder preOrder);
-    void createNewPreOrder();
+    PreOrder findById(Long iod);
 }

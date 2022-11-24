@@ -40,18 +40,18 @@ public class CartController {
     }
     @GetMapping("/cart")
     public String getViewCart(Model model) {
-        List<PreOrder> carts = cartService.getAllCartByUser();
-        List<CartItem> listProductInCart = productService.getProductFromCart(carts);
-        Float tempPrice = productService.getTempPriceOfCart(listProductInCart);
-        Float ship = 20000f;
-        if(tempPrice > 50000) ship = 0f;
-        Float totalPrice = tempPrice + ship;
-        model.addAttribute("tempPrice", formatPrice.formatPrice(tempPrice));
-        model.addAttribute("ship", formatPrice.formatPrice(ship));
-        model.addAttribute("totalPrice", formatPrice.formatPrice(totalPrice));
-        model.addAttribute("listProductInCart", listProductInCart);
-        CartDTO cartDTO = new CartDTO();
-        model.addAttribute("listQuantity", cartDTO);
+//        List<PreOrder> carts = cartService.getAllCartByUser();
+//        List<CartItem> listProductInCart = productService.getProductFromCart(carts);
+//        Float tempPrice = productService.getTempPriceOfCart(listProductInCart);
+//        Float ship = 20000f;
+//        if(tempPrice > 50000) ship = 0f;
+//        Float totalPrice = tempPrice + ship;
+//        model.addAttribute("tempPrice", formatPrice.formatPrice(tempPrice));
+//        model.addAttribute("ship", formatPrice.formatPrice(ship));
+//        model.addAttribute("totalPrice", formatPrice.formatPrice(totalPrice));
+//        model.addAttribute("listProductInCart", listProductInCart);
+//        CartDTO cartDTO = new CartDTO();
+//        model.addAttribute("listQuantity", cartDTO);
         return "ViewCart";
     }
 

@@ -45,48 +45,48 @@ public class OrderController {
 
     @GetMapping("/payment")
     public String getViewPayment(Model model, RedirectAttributes redirectAttributes) {
-        List<PreOrder> listCart = cartService.getAllCartByUser();
-        if (listCart.isEmpty()) {
-            redirectAttributes.addFlashAttribute("msg", "Không có sản phẩm nào để thanh toán");
-            return "redirect:/cart";
-        }
-        List<CartItem> listProductInCart = productService.getProductFromCart(listCart);
-        Float tempPrice = productService.getTempPriceOfCart(listProductInCart);
-        Float ship = 20000f;
-        if (tempPrice > 50000) ship = 0f;
-        Float totalPrice = tempPrice + ship;
-        model.addAttribute("tempPrice", formatPrice.formatPrice(tempPrice));
-        model.addAttribute("ship", formatPrice.formatPrice(ship));
-        model.addAttribute("totalPrice", formatPrice.formatPrice(totalPrice));
-        model.addAttribute("productInCart", listProductInCart);
-        model.addAttribute("userInformation", userService.getCurrentUser());
-        model.addAttribute("paymentInformation", new PaymentInformation());
+//        List<PreOrder> listCart = cartService.getAllCartByUser();
+//        if (listCart.isEmpty()) {
+//            redirectAttributes.addFlashAttribute("msg", "Không có sản phẩm nào để thanh toán");
+//            return "redirect:/cart";
+//        }
+//        List<CartItem> listProductInCart = productService.getProductFromCart(listCart);
+//        Float tempPrice = productService.getTempPriceOfCart(listProductInCart);
+//        Float ship = 20000f;
+//        if (tempPrice > 50000) ship = 0f;
+//        Float totalPrice = tempPrice + ship;
+//        model.addAttribute("tempPrice", formatPrice.formatPrice(tempPrice));
+//        model.addAttribute("ship", formatPrice.formatPrice(ship));
+//        model.addAttribute("totalPrice", formatPrice.formatPrice(totalPrice));
+//        model.addAttribute("productInCart", listProductInCart);
+//        model.addAttribute("userInformation", userService.getCurrentUser());
+//        model.addAttribute("paymentInformation", new PaymentInformation());
         return "payment";
     }
 
     @PostMapping("/payment/process")
     public String handlePaymentProcess(@ModelAttribute PaymentInformation paymentInformation) {
-        User user = userService.getCurrentUser();
-        List<PreOrder> listCart = cartService.getAllCartByUser();
-        List<CartItem> listProductInCart = productService.getProductFromCart(listCart);
-        Orders orders = orderService.saveNewOrder(paymentInformation);
-        orders.setUser(user);
-        Set<OrderDetail> orderDetailList = new HashSet<>();
-        Double realPrice = Double.valueOf(0f);
-        for (CartItem cart : listProductInCart) {
-            Product product = productService.getProductById(cart.getProductId());
-            OrderDetail orderDetail = orderDetailService.saveOrderDetail(
-                    product, orders,
-                    cart.getTotalPrice(), cart.getQuantity());
-            productService.saveAfterOrder(product, orderDetail);
-            realPrice += orderDetail.getPrice();
-            orderDetailList.add(orderDetail);
-        }
-        Float ship = 20000f;
-        if (realPrice > 50000) ship = 0f;
-        double totalPrice = realPrice + ship;
-        orderService.saveOrder(orders, (float) totalPrice, paymentInformation.getOrder().getNote(), orderDetailList);
-        cartService.deleteAllItemInCart();
+//        User user = userService.getCurrentUser();
+//        List<PreOrder> listCart = cartService.getAllCartByUser();
+//        List<CartItem> listProductInCart = productService.getProductFromCart(listCart);
+//        Orders orders = orderService.saveNewOrder(paymentInformation);
+//        orders.setUser(user);
+//        Set<OrderDetail> orderDetailList = new HashSet<>();
+//        Double realPrice = Double.valueOf(0f);
+//        for (CartItem cart : listProductInCart) {
+//            Product product = productService.getProductById(cart.getProductId());
+//            OrderDetail orderDetail = orderDetailService.saveOrderDetail(
+//                    product, orders,
+//                    cart.getTotalPrice(), cart.getQuantity());
+//            productService.saveAfterOrder(product, orderDetail);
+//            realPrice += orderDetail.getPrice();
+//            orderDetailList.add(orderDetail);
+//        }
+//        Float ship = 20000f;
+//        if (realPrice > 50000) ship = 0f;
+//        double totalPrice = realPrice + ship;
+//        orderService.saveOrder(orders, (float) totalPrice, paymentInformation.getOrder().getNote(), orderDetailList);
+//        cartService.deleteAllItemInCart();
         return "redirect:/payment/ordersucess";
     }
 
