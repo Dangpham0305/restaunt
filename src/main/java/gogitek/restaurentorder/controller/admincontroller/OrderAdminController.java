@@ -46,6 +46,11 @@ public class OrderAdminController {
         model.addAttribute("listPreOrder", cartService.getAllOrder());
         return "admin-page/preorder";
     }
+    @GetMapping("/admin/preorder/{id}")
+    public String checkDone(@PathVariable Long id){
+        cartService.changeStatus(id, Status.DONE);
+        return "redirect:/admin/order";
+    }
 
     @GetMapping("/admin/order/{id}")
     public String getViewOrderAdmin(@PathVariable int id, Model model) {

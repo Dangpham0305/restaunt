@@ -105,4 +105,14 @@ public class CartServiceImp implements CartService {
         return preOrderDetailRepo.findByStatusIn(Arrays.asList(Status.PROCESSING, Status.DELIVERED));
     }
 
+    @Override
+    public void changeStatus(Long detailId, Status status) {
+        Optional<PreOrderDetail> detail = preOrderDetailRepo.findById(detailId);
+        if (detail.isPresent()){
+            PreOrderDetail orderDetail = detail.get();
+            orderDetail.setStatus(status);
+            preOrderDetailRepo.save(orderDetail);
+        }
+    }
+
 }
