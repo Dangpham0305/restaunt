@@ -52,6 +52,64 @@
                         </div>
                     </div>
                 </div>
+        <video id="video" width="320" height="240" autoplay></video>
+        <canvas id="canvas" width="320" height="240" style="visibility: hidden;"></canvas>
+        <script>
+            let video = document.querySelector("#video");
+            let canvas = document.querySelector("#canvas");
+            const initCamera = async () => {
+                let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                video.srcObject = stream;
+            }
+
+            const captureImage = () => {
+                canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+                let file = null;
+                let blob = canvas.toBlob(function (blob) {
+                    file = new File([blob], 'test.jpg', { type: 'image/jpeg' });
+                }, 'image/jpeg');
+                return file;
+            }
+
+            const sendFile = (file) => {
+                const data = new FormData();
+                data.append('file', file);
+                jQuery.ajax({
+                    url: 'localhost:8080/upload_file',
+                    data: data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    method: 'POST',
+                    type: 'POST', // For jQuery < 1.9
+                    success: function (data) {
+                        alert(data);
+                    }
+                });
+            }
+
+            const captureAndSend = () => {
+                const file = captureImage();
+                if(!file) return false;
+                sendFile(file);
+                return true;
+            }
+
+            (async () => {
+                try {
+                    await initCamera();
+                    let interval = setInterval(() => {
+                        const result = captureAndSend();
+                        if(result) {
+                            clearInterval(interval);
+                        }
+                    },1000 * 5);
+                } catch (error) {
+                    alert(error);
+                }
+            })()
+
+        </script>
         <footer th:replace="~{footer :: html_footer}"></footer>
     </div>
 </div>

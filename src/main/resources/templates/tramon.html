@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{header :: html_header}"></head>
+
+<body>
+<header th:replace="header :: my-header"></header>
+<section class="breadcrum">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb container">
+            <li class="breadcrumb-item"><a href="./index.html">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Danh mục sản phẩm</li>
+        </ol>
+    </nav>
+</section>
+<!--====== SHOPPING CART PART START ======-->
+
+<div th:replace="index :: my-cart"></div>
+
+<!--====== SHOPPING CART PART ENDS ======-->
+
+<div class="orfarm-shop-grid-area pt-100 pb-50 ">
+    <a th:href="@{/order}" class="btn btn-info form-control">Thêm order</a>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6" th:each="pro, state : ${preorderList}" id="list-product">
+                <div class="single-shop-box">
+                    <div class="thumb text-center">
+                        <a th:href="@{'/order/' + ${pro.id}}" class="btn btn-fill">
+                            <img th:src="@{'/image/img.png'}" alt="">
+                        </a>
+                        <div class="reborn">
+                            <span th:value="${pro.id}"></span>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <input type="hidden" id="productId" value="1">
+                        <span th:text="'Đơn ' + ${pro.id}"></span>
+                        <div class="row"></div>
+                        <div class="pricing button col-6">
+                            <a th:href="@{'/order/' + ${pro.id}}" class="btn btn-creative">
+                                <span>Gọi thêm</span>
+                            </a>
+                        </div>
+                        <div class="pricing button col-6">
+                            <a th:href="@{'/payment/' + ${pro.id}}" class="btn btn-warning">
+                                <span>Thanh toán</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer th:replace="~{footer :: html_footer}"></footer>
+    </div>
+</div>
+</body>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<th:block th:insert="~{header :: script}"></th:block>
+</html>
