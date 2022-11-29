@@ -21,7 +21,7 @@ public interface ProductService {
     long getTotalPage();
     List<Product> getByPage();
     int getCategoryId(int id);
-    List<PreOrderDetail> getProductFromCart(PreOrder cartList, Status status);
+    List<PreOrderDetail> getProductFromCart(PreOrder cartList, List<Status> status);
     Float getTempPriceOfCart(List<CartItem> itemList);
     boolean addProduct(Product product);
     boolean deleteProduct(Long id);

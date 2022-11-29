@@ -49,7 +49,7 @@ public class OrderAdminController {
     @GetMapping("/admin/preorder/{id}")
     public String checkDone(@PathVariable Long id){
         cartService.changeStatus(id, Status.DONE);
-        return "redirect:/admin/order";
+        return "redirect:/admin/preorder";
     }
 
     @GetMapping("/admin/order/{id}")

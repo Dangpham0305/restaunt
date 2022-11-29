@@ -12,7 +12,7 @@ import java.util.Map;
 @Getter
 @AllArgsConstructor
 public enum Status {
-    PROCESSING("PROCESSING", 0),DONE("DONE", 3), APPROVED("APPROVED", 1), CANCELED("CANCELED", 2), DELIVERED("DELIVERED", 4), UNKNOWN("UNKNOWN", -1);
+    PROCESSING("Đang chế biến", 0),DONE("Hoàn thành", 3), APPROVED("Chấp nhận", 1), CANCELED("Huỷ", 2), DELIVERED("Đã trả món", 4), UNKNOWN("UNKNOWN", -1);
     private final String text;
     private final Integer value;
 

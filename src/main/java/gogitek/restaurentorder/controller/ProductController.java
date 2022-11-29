@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -58,8 +59,8 @@ public class ProductController {
         PreOrder preOrder;
         if (id.isPresent()){
             preOrder = cartService.findById(id.get());
-            model.addAttribute("addedList", productService.getProductFromCart(preOrder, Status.APPROVED));
-            model.addAttribute("orderedList", productService.getProductFromCart(preOrder, Status.PROCESSING));
+            model.addAttribute("addedList", productService.getProductFromCart(preOrder, Arrays.asList(Status.APPROVED, Status.DELIVERED)));
+            model.addAttribute("orderedList", productService.getProductFromCart(preOrder, Collections.singletonList(Status.PROCESSING)));
         }
         else {
              preOrder = cartService.addNewCart(new PreOrder());

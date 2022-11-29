@@ -82,8 +82,8 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public List<PreOrderDetail> getProductFromCart(PreOrder cartList, Status status) {
-        return cartList.getPreOrderDetails().stream().filter(preOrderDetail -> status.equals(preOrderDetail.getStatus())).collect(Collectors.toList());
+    public List<PreOrderDetail> getProductFromCart(PreOrder cartList, List<Status> status) {
+        return cartList.getPreOrderDetails().stream().filter(preOrderDetail -> status.contains(preOrderDetail.getStatus())).collect(Collectors.toList());
     }
 
     @Override

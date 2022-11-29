@@ -72,7 +72,7 @@
                         <div class="widget-header ">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Hóa đơn gần nhất</h4>
+                                    <h4>Danh sách hoá đơn</h4>
                                 </div>
                             </div>
                         </div>
@@ -81,41 +81,25 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th class="form-check-column text-center">
-                                            <label for="invoiceAll"
-                                                   class="new-control new-checkbox checkbox-primary pb-2">
-                                                <input type="checkbox" id="invoiceAll"
-                                                       class="new-control-input">
-                                                <span class="new-control-indicator mt-2"></span><span
-                                                    class="invisible">s</span>
-                                            </label>
-                                        </th>
-                                        <th>Mã hóa đơn</th>
-                                        <th>Sản phẩm</th>
+                                        <th class="text-center">Mã hóa đơn</th>
+                                        <th class="text-center">Sản phẩm</th>
                                         <th class="text-center">Số lượng</th>
                                         <th class="text-center">Trạng thái</th>
-                                        <th></th>
+                                        <th><i class="flaticon-double-check"></i></th>
                                     </tr>
                                     </thead>
                                     <tbody th:each="top, state : ${listPreOrder}">
                                     <tr>
-                                        <td class="form-check-column text-center">
-                                            <label class="new-control new-checkbox checkbox-primary pb-2">
-                                                <input type="checkbox" class="new-control-input invoicechk">
-                                                <span class="new-control-indicator mt-2"></span><span
-                                                    class="invisible">s</span>
-                                            </label>
-                                        </td>
-                                        <td th:utext="${top.preOrder.id}"></td>
-                                        <td th:utext="${top.product.name}"></td>
+                                        <td class="text-center" th:utext="${top.preOrder.id}"></td>
+                                        <td class="text-center" th:utext="${top.product.name}"></td>
                                         <td class="align-center" th:utext="${top.quantity}">15</td>
                                         <td class="text-center">
                                                     <span class="badge badge-pills outline-badge-secondary"
                                                           th:utext="${top.status.getText()}"></span>
                                         </td>
-                                        <td>
-                                            <i class="flaticon-view-1 bs-tooltip" data-placement="top"
-                                               data-original-title="View"></i>
+                                        <td><a th:href="@{'/admin/preorder/' + ${top.getId()}}">
+                                            <i class="flaticon-user-check bs-tooltip" data-placement="top"
+                                               data-original-title="Hoàn thành"></i></a>
                                         </td>
                                     </tr>
                                     </tbody>
