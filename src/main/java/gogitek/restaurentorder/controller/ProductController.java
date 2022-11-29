@@ -2,6 +2,7 @@ package gogitek.restaurentorder.controller;
 
 import gogitek.restaurentorder.constaint.FormatPrice;
 import gogitek.restaurentorder.constaint.Status;
+import gogitek.restaurentorder.constaint.UrlUtils;
 import gogitek.restaurentorder.entity.PreOrder;
 import gogitek.restaurentorder.entity.Product;
 import gogitek.restaurentorder.modelutil.FilterProduct;
@@ -9,6 +10,7 @@ import gogitek.restaurentorder.modelutil.SearchDTO;
 import gogitek.restaurentorder.service.CartService;
 import gogitek.restaurentorder.service.CategoryService;
 import gogitek.restaurentorder.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +24,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Controller
 public class ProductController {
     private final ProductService productService;
@@ -29,13 +32,8 @@ public class ProductController {
     private final CartService cartService;
     private final FormatPrice formatPrice;
 
-    public ProductController(ProductService productService, CategoryService categoryService,
-                             CartService cartService, FormatPrice formatPrice) {
-        this.productService = productService;
-        this.categoryService = categoryService;
-        this.cartService = cartService;
-        this.formatPrice = formatPrice;
-    }
+    private final UrlUtils urlUtils;
+
 
     @ModelAttribute
     public void addAttributeToHeader(Model model) {
@@ -59,8 +57,8 @@ public class ProductController {
         PreOrder preOrder;
         if (id.isPresent()){
             preOrder = cartService.findById(id.get());
-            model.addAttribute("addedList", productService.getProductFromCart(preOrder, Arrays.asList(Status.APPROVED, Status.DELIVERED)));
-            model.addAttribute("orderedList", productService.getProductFromCart(preOrder, Collections.singletonList(Status.PROCESSING)));
+            model.addAttribute("orderedList", productService.getProductFromCart(preOrder, Arrays.asList(Status.APPROVED, Status.DELIVERED, Status.DONE)));
+            model.addAttribute("addedList", productService.getProductFromCart(preOrder, Collections.singletonList(Status.PROCESSING)));
         }
         else {
              preOrder = cartService.addNewCart(new PreOrder());

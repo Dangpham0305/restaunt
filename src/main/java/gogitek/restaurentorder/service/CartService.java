@@ -21,4 +21,5 @@ public interface CartService {
     boolean orderAllItem(Long id);
     List<PreOrderDetail> getAllOrder();
     void changeStatus(Long detailId, Status status);
+    boolean checkOrderDelivered(PreOrder preOrder);
 }

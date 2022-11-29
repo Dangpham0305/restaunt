@@ -115,4 +115,9 @@ public class CartServiceImp implements CartService {
         }
     }
 
+    @Override
+    public boolean checkOrderDelivered(PreOrder preOrder) {
+        return preOrder.getPreOrderDetails().stream().allMatch(preOrderDetail -> preOrderDetail.getStatus().equals(Status.DELIVERED));
+    }
+
 }
