@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -57,8 +58,8 @@ public class ProductController {
         PreOrder preOrder;
         if (id.isPresent()){
             preOrder = cartService.findById(id.get());
-            model.addAttribute("orderedList", productService.getProductFromCart(preOrder, Arrays.asList(Status.APPROVED, Status.DELIVERED, Status.DONE)));
-            model.addAttribute("addedList", productService.getProductFromCart(preOrder, Collections.singletonList(Status.PROCESSING)));
+            model.addAttribute("orderedList", productService.getProductFromCart(preOrder, Arrays.asList(Status.PROCESSING, Status.DELIVERED, Status.DONE)));
+            model.addAttribute("addedList", productService.getProductFromCart(preOrder, Collections.singletonList(Status.APPROVED)));
         }
         else {
              preOrder = cartService.addNewCart(new PreOrder());
@@ -68,9 +69,13 @@ public class ProductController {
         return "chonmon";
     }
     @PostMapping("/order/{preOrder}/addProduct")
-    public String addProductToOrder(@PathVariable Long preOrder, @RequestParam("quantity") Long quantity,
-                                    @RequestParam("productId") Long id){
-        cartService.saveItemToCart(productService.getProductById(id), preOrder);
+    public String addProductToOrder(@PathVariable Long preOrder, @RequestParam("quantity") Integer quantity,
+                                    @RequestParam("productId") Long id, RedirectAttributes attributes, HttpServletRequest request){
+        if (quantity < 1) {
+            attributes.addFlashAttribute("msg", "So luong khong the nho hon 1");
+            return urlUtils.getPreviousPageByRequest(request).orElse("/");
+        }
+        cartService.saveItemToCart(productService.getProductById(id), preOrder, quantity);
         return "redirect:/order/" + preOrder;
     }
     @GetMapping("/listOrder")

@@ -13,185 +13,179 @@
                     <h4>Thanh toasn</h4>
                 </div>
                 <div>
-<!--                    <form method="post" th:action="@{/cart/save}" th:object="${listQuantity}">-->
-<!--                        <div class="displayProduct row pt-3 pb-3">-->
-<!--                            <ul id="mainCart">-->
-<!--                                <div th:each="cartItem : ${listProductInCart}">-->
-<!--                                    <li>-->
-<!--                                        <table>-->
-<!--                                            <tbody>-->
-<!--                                            <tr>-->
-<!--                                                <td><div class="img-product ">-->
-<!--                                                    <img th:src="@{'/image/ImageOrFarm/'+${cartItem.image}}" alt="">-->
-<!--                                                </div>-->
-<!--                                                </td>-->
-<!--                                                <td style="width: 200px">-->
-<!--                                                    <div class="infor-product pl-3">-->
-<!--                                                        <input type="hidden" value="1" id="` + cartMain[i].productId + `">-->
-<!--                                                        <a th:href="@{'/product/' + ${cartItem.productId}}">-->
-<!--                                                            <h3 th:text="${cartItem.productName}"></h3>-->
-<!--                                                        </a>-->
-<!--                                                        <p><strong>Kích thước:</strong> <span>1</span>kg</p>-->
-<!--                                                        <div class="discount-price"><span th:text="${format.formatPrice(cartItem.salePrice)}"></span><sup>đ</sup></div>-->
-<!--                                                    </div>-->
-<!--                                                </td>-->
-<!--                                                <td>-->
-<!--                                                    <div class="buttons_added" >-->
-<!--                                                        <input class="inputQuantity"-->
-<!--                                                               name="soluong"-->
-<!--                                                               id="soluong"-->
-<!--                                                               min='1' type='number'-->
-<!--                                                               th:value="${cartItem.quantity}"-->
-<!--                                                        />-->
-<!--                                                    </div>-->
-<!--                                                </td>-->
-<!--                                                <td>-->
-<!--                                                    <a th:href="@{'/cart/' + ${cartItem.productId}}" data-toggle="tooltip" data-placement="top" title="Edit">-->
-<!--                                                        <div class="icon-delete" id="1">-->
-<!--                                                            <i class="icon-delete1 fas fa-trash-alt">-->
-<!--                                                            </i>-->
-<!--                                                        </div>-->
-<!--                                                    </a>-->
-<!--                                                </td>-->
-<!--                                                <td>-->
-<!--                                                    <div class="sumPro">-->
-<!--                                                        <span th:text="${format.formatPrice(cartItem.totalPrice)}"></span><sup>đ</sup>-->
-<!--                                                    </div>-->
-<!--                                                </td>-->
+                        <div class="displayProduct row pt-3 pb-3">
+                            <div id="mainCart">
+                                <table>
+                                    <tbody>
+                                    <tr th:each="cartItem : ${listProductInCart}">
+                                        <td>
+                                            <div class="img-product ">
+                                                <img th:src="@{'/image/ImageOrFarm/'+${cartItem.image}}" alt="">
+                                            </div>
+                                        </td>
+                                        <td style="width: 200px">
+                                            <div class="infor-product pl-3">
+                                                <input type="hidden" value="1" id="` + cartMain[i].productId + `">
+                                                <a th:href="@{'/product/' + ${cartItem.productId}}">
+                                                    <h3 th:text="${cartItem.productName}"></h3>
+                                                </a>
+                                                <p><strong>Kích thước:</strong> <span>1</span>kg</p>
+                                                <div class="discount-price"><span
+                                                        th:text="${format.formatPrice(cartItem.salePrice)}"></span><sup>đ</sup>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="buttons_added">
+                                                <input class="inputQuantity"
+                                                       name="soluong"
+                                                       id="soluong"
+                                                       min='1' type='number'
+                                                       th:value="${cartItem.quantity}"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a th:href="@{'/cart/' + ${cartItem.productId}}" data-toggle="tooltip"
+                                               data-placement="top" title="Edit">
+                                                <div class="icon-delete" id="1">
+                                                    <i class="icon-delete1 fas fa-trash-alt">
+                                                    </i>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <div class="sumPro">
+                                                <span th:text="${format.formatPrice(cartItem.totalPrice)}"></span><sup>đ</sup>
+                                            </div>
+                                        </td>
 
-<!--                                            </tr>-->
-<!--                                            </tbody>-->
-<!--                                        </table>-->
-<!--                                    </li>-->
-<!--                                </div>-->
-<!--                            </ul>-->
-<!--                            <div class="cart-link  pt-3 pb-3 " style="width: 835px;" th:if="${countCartItem > 0}">-->
-<!--                                <a th:href="@{/category/1/1}">Tiếp tục mua hàng</a>-->
-<!--                                <a th:href="@{/cart/delete}" style="padding-left: 25%">Xoá tất cả</a>-->
-<!--                                <button type="submit" class="btn btn-warning"  style="margin-left: 31%">Lưu lại giỏ hàng</button>-->
-
-<!--                            </div>-->
-
-<!--                        </div>-->
-<!--                    </form>-->
-
-                </div>
-                <div class="right">
-                    <p>Mọi sự riêng tư và thông tin của bạn đều được chúng tôi bảo mật.</p>
-                </div>
-            </div>
-            <div class="col-lg-5 col-sm-12 payment-left">
-                <div class="payment-left-display pr-80">
-                    <div class="showProduct">
-                        <ul id="mainCartPayment">
-<!--                            <th:block th:each="cartItem : ${productInCart}">-->
-<!--                                <li>-->
-<!--                                    <div class="cover-product-pay row pb-3">-->
-<!--                                        <div class="img-product-payment pl-5 col-4 ">-->
-<!--                                            <img th:src="@{'/image/ImageOrFarm/'+${cartItem.image}}" width="50px"-->
-<!--                                                 height="50px" alt="">-->
-<!--                                            <span class="quantityPayment " th:text="${cartItem.quantity}"></span>-->
-<!--                                        </div>-->
-<!--                                        <div class="infor-product col-4 ">-->
-<!--                                            <a th:href="@{'product/' + ${cartItem.productId}}">-->
-<!--                                                <h5 th:text="${cartItem.productName}" style="font-size: 14px;"></h5>-->
-<!--                                                <span>1kg</span>-->
-<!--                                            </a>-->
-<!--                                        </div>-->
-<!--                                        <div class="price-product-pay pl-3 col-4 pt-25">-->
-<!--                                            <span class="discount-price-pay"-->
-<!--                                                  th:text="${format.formatPrice(cartItem.salePrice)}"></span><sup>đ</sup>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </li>-->
-<!--                            </th:block>-->
-
-
-                        </ul>
-                    </div>
-                    <div class="applyDiscount">
-                        <div class="input-group mb-3 ml-4" style="width: 380px;">
-                            <input id="promo-code" type="text" class="form-control" placeholder="Mã giảm giá"
-                                   height="80px"
-                                   aria-label="Recipient's username" aria-describedby="basic-addon2">
-
-                            <button class="btn btn-success" type="button">Sử dụng</button>
-
+                                    </tr>
+                                    </tbody>
+                                </table>
                         </div>
-                    </div>
-                    <div class="sumPriceproduct">
-<!--                        <p>Tạm tính: <span class="prices" th:text="${tempPrice}"></span> <sup>đ</sup></p>-->
-<!--                        <p>Phí ship: <span class="prices" th:text="${ship}"></span> <sup>đ</sup></p>-->
-                        <p class="hidden-price">Giảm giá: <span class="padding-price3"></span> <sup>đ</sup></p>
+                        </ul>
+                        <div class="cart-link  pt-3 pb-3 " style="width: 835px;" th:if="${countCartItem > 0}">
+                            <a th:href="@{/category/1/1}">Tiếp tục mua hàng</a>
+                            <a th:href="@{/cart/delete}" style="padding-left: 25%">Xoá tất cả</a>
+                        </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-5 col-sm-12 payment-left">
+            <div class="payment-left-display pr-80">
+                <div class="showProduct">
+                    <ul id="mainCartPayment">
+                        <!--                            <th:block th:each="cartItem : ${productInCart}">-->
+                        <!--                                <li>-->
+                        <!--                                    <div class="cover-product-pay row pb-3">-->
+                        <!--                                        <div class="img-product-payment pl-5 col-4 ">-->
+                        <!--                                            <img th:src="@{'/image/ImageOrFarm/'+${cartItem.image}}" width="50px"-->
+                        <!--                                                 height="50px" alt="">-->
+                        <!--                                            <span class="quantityPayment " th:text="${cartItem.quantity}"></span>-->
+                        <!--                                        </div>-->
+                        <!--                                        <div class="infor-product col-4 ">-->
+                        <!--                                            <a th:href="@{'product/' + ${cartItem.productId}}">-->
+                        <!--                                                <h5 th:text="${cartItem.productName}" style="font-size: 14px;"></h5>-->
+                        <!--                                                <span>1kg</span>-->
+                        <!--                                            </a>-->
+                        <!--                                        </div>-->
+                        <!--                                        <div class="price-product-pay pl-3 col-4 pt-25">-->
+                        <!--                                            <span class="discount-price-pay"-->
+                        <!--                                                  th:text="${format.formatPrice(cartItem.salePrice)}"></span><sup>đ</sup>-->
+                        <!--                                        </div>-->
+                        <!--                                    </div>-->
+                        <!--                                </li>-->
+                        <!--                            </th:block>-->
+
+
+                    </ul>
+                </div>
+                <div class="applyDiscount">
+                    <div class="input-group mb-3 ml-4" style="width: 380px;">
+                        <input id="promo-code" type="text" class="form-control" placeholder="Mã giảm giá"
+                               height="80px"
+                               aria-label="Recipient's username" aria-describedby="basic-addon2">
+
+                        <button class="btn btn-success" type="button">Mo camera</button>
 
                     </div>
-                    <div class="sumarizePrice ">
-<!--                        <p>Tổng tiền: <span class="padding-price" th:text="${totalPrice}"></span> <sup>đ</sup></p>-->
-                    </div>
+                </div>
+                <div class="sumPriceproduct">
+                    <!--                        <p>Tạm tính: <span class="prices" th:text="${tempPrice}"></span> <sup>đ</sup></p>-->
+                    <!--                        <p>Phí ship: <span class="prices" th:text="${ship}"></span> <sup>đ</sup></p>-->
+                    <p class="hidden-price">Giảm giá: <span class="padding-price3"></span> <sup>đ</sup></p>
+
+                </div>
+                <div class="sumarizePrice ">
+                    <!--                        <p>Tổng tiền: <span class="padding-price" th:text="${totalPrice}"></span> <sup>đ</sup></p>-->
                 </div>
             </div>
         </div>
     </div>
+    </div>
 
     <body>
-    <video id="video" width="320" height="240" autoplay></video>
-    <canvas id="canvas" width="320" height="240" style="visibility: hidden;"></canvas>
-    <script>
-        let video = document.querySelector("#video");
-        let canvas = document.querySelector("#canvas");
-        const initCamera = async () => {
-            let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-            video.srcObject = stream;
-        }
+<!--    <video id="video" width="320" height="240" autoplay></video>-->
+<!--    <canvas id="canvas" width="320" height="240" style="visibility: hidden;"></canvas>-->
+<!--    <script>-->
+<!--        let video = document.querySelector("#video");-->
+<!--        let canvas = document.querySelector("#canvas");-->
+<!--        const initCamera = async () => {-->
+<!--            let stream = await navigator.mediaDevices.getUserMedia({video: true, audio: false});-->
+<!--            video.srcObject = stream;-->
+<!--        }-->
 
-        const captureImage = () => {
-            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-            let file = null;
-            let blob = canvas.toBlob(function (blob) {
-                file = new File([blob], 'test.jpg', { type: 'image/jpeg' });
-            }, 'image/jpeg');
-            return file;
-        }
+<!--        const captureImage = () => {-->
+<!--            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);-->
+<!--            let file = null;-->
+<!--            let blob = canvas.toBlob(function (blob) {-->
+<!--                file = new File([blob], 'test.jpg', {type: 'image/jpeg'});-->
+<!--            }, 'image/jpeg');-->
+<!--            return file;-->
+<!--        }-->
 
-        const sendFile = (file) => {
-            const data = new FormData();
-            data.append('file', file);
-            jQuery.ajax({
-                url: 'localhost:8080/upload_file',
-                data: data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                method: 'POST',
-                type: 'POST', // For jQuery < 1.9
-                success: function (data) {
-                    alert(data);
-                }
-            });
-        }
+<!--        const sendFile = (file) => {-->
+<!--            const data = new FormData();-->
+<!--            data.append('file', file);-->
+<!--            jQuery.ajax({-->
+<!--                url: 'localhost:8080/upload_file',-->
+<!--                data: data,-->
+<!--                cache: false,-->
+<!--                contentType: false,-->
+<!--                processData: false,-->
+<!--                method: 'POST',-->
+<!--                type: 'POST', // For jQuery < 1.9-->
+<!--                success: function (data) {-->
+<!--                    alert(data);-->
+<!--                }-->
+<!--            });-->
+<!--        }-->
 
-        const captureAndSend = () => {
-            const file = captureImage();
-            if(!file) return false;
-            sendFile(file);
-            return true;
-        }
+<!--        const captureAndSend = () => {-->
+<!--            const file = captureImage();-->
+<!--            if (!file) return false;-->
+<!--            sendFile(file);-->
+<!--            return true;-->
+<!--        }-->
 
-        (async () => {
-            try {
-                await initCamera();
-                let interval = setInterval(() => {
-                    const result = captureAndSend();
-                    if(result) {
-                        clearInterval(interval);
-                    }
-                },1000 * 5);
-            } catch (error) {
-                alert(error);
-            }
-        })()
+<!--        (async () => {-->
+<!--            try {-->
+<!--                await initCamera();-->
+<!--                let interval = setInterval(() => {-->
+<!--                    const result = captureAndSend();-->
+<!--                    if (result) {-->
+<!--                        clearInterval(interval);-->
+<!--                    }-->
+<!--                }, 1000 * 5);-->
+<!--            } catch (error) {-->
+<!--                alert(error);-->
+<!--            }-->
+<!--        })()-->
 
-    </script>
+<!--    </script>-->
     </body>
 </main>
 

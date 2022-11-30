@@ -39,6 +39,15 @@ public class OrderController {
         model.addAttribute("format", formatPrice);
         model.addAttribute("countCartItem", cartService.countNumberOfItemInCart());
     }
+    @GetMapping("/cart/{id}")
+    public String getViewCart(Model model, @PathVariable Long id) {
+        PreOrder preOrder = cartService.findById(id);
+        List<CartItem> listProductInCart = productService.getProductInOrder(preOrder);
+        model.addAttribute("listProductInCart", listProductInCart);
+        model.addAttribute("tempPrice", listProductInCart.stream().mapToDouble(CartItem::getTotalPrice).sum());
+        model.addAttribute("preorderId", id);
+        return "ViewCart";
+    }
 
     @GetMapping("/payment/{id}")
     public String getViewPayment(Model model, @PathVariable Long id, HttpServletRequest request, RedirectAttributes redirectAttributes) {

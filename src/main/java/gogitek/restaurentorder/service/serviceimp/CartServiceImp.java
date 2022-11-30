@@ -8,7 +8,6 @@ import gogitek.restaurentorder.service.CartService;
 import gogitek.restaurentorder.service.UserService;
 import gogitek.restaurentorder.entity.Orders;
 import gogitek.restaurentorder.entity.Product;
-import gogitek.restaurentorder.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,12 +26,12 @@ public class CartServiceImp implements CartService {
 
 
     @Override
-    public boolean saveItemToCart(Product product, Long preorderId) {
+    public boolean saveItemToCart(Product product, Long preorderId, Integer quantity) {
         PreOrder preOrder = cartRepo.getById(preorderId);
         PreOrderDetail detail = new PreOrderDetail();
         detail.setPreOrder(preOrder);
         detail.setProduct(product);
-        detail.setQuantity(1);
+        detail.setQuantity(quantity);
         detail.setStatus(Status.APPROVED);
         preOrderDetailRepo.save(detail);
         return true;
@@ -117,7 +116,8 @@ public class CartServiceImp implements CartService {
 
     @Override
     public boolean checkOrderDelivered(PreOrder preOrder) {
-        return preOrder.getPreOrderDetails().stream().allMatch(preOrderDetail -> preOrderDetail.getStatus().equals(Status.DELIVERED));
+        List<Status> acceptedStatus = Arrays.asList(Status.DELIVERED, Status.CANCELED);
+        return preOrder.getPreOrderDetails().stream().noneMatch(preOrderDetail -> acceptedStatus.contains(preOrderDetail.getStatus()));
     }
 
 }

@@ -87,12 +87,31 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
+    public List<CartItem> getProductInOrder(PreOrder cartList) {
+        List<CartItem> itemList = new ArrayList<>();
+        cartList.getPreOrderDetails().stream().filter(detail -> !detail.getStatus().equals(Status.CANCELED)).forEach(detail -> {
+            CartItem item = CartItem.builder()
+                    .productId(detail.getProduct().getId())
+                    .productName(detail.getProduct().getName())
+                    .quantity(detail.getQuantity())
+                    .image(detail.getProduct().getImage())
+                    .salePrice(detail.getProduct().getSalePrice())
+                    .totalPrice(detail.getProduct().getSalePrice() * detail.getQuantity())
+                    .status(detail.getStatus())
+                    .build();
+            itemList.add(item);
+        });
+        return itemList;
+    }
+
+    @Override
     public Float getTempPriceOfCart(List<CartItem> itemList) {
-        Float tempPrice = 0f;
-        for (CartItem cartItem: itemList) {
-            tempPrice += cartItem.getTotalPrice();
-        }
-        return tempPrice;
+//        Float tempPrice = 0f;
+//        for (CartItem cartItem: itemList) {
+//            tempPrice += cartItem.getTotalPrice();
+//        }
+//        return tempPrice;
+        return null;
     }
 
     @Override

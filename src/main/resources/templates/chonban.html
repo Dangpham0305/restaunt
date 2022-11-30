@@ -20,96 +20,98 @@
 <!--====== SHOPPING CART PART ENDS ======-->
 
 <div class="orfarm-shop-grid-area pt-100 pb-50 ">
-    <a th:href="@{/order}" class="btn btn-info form-control">Thêm order</a>
-
-    <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6" th:each="pro, state : ${preorderList}" id = "list-product">
-                        <div class="single-shop-box">
-                            <div class="thumb text-center">
-                                <a th:href="@{'/order/' + ${pro.id}}" class="btn btn-fill">
-                                    <img th:src="@{'/image/img.png'}" alt="">
-                                </a>
-                                <div class="reborn">
-                                    <span th:value="${pro.id}"></span>
-                                </div>
+    <div class="container">
+        <a th:href="@{/order}" class="btn btn-info">Thêm order</a>
+        <div class="row">
+            <div class="col-lg-4 col-md-6" th:each="pro, state : ${preorderList}" id="list-product">
+                <div class="single-shop-box">
+                    <div class="thumb text-center">
+                        <a th:href="@{'/order/' + ${pro.id}}" class="btn btn-fill">
+                            <img th:src="@{'/image/img.png'}" alt="">
+                        </a>
+                        <div class="reborn">
+                            <span th:value="${pro.id}"></span>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <input type="hidden" id="productId" value="1">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <span th:text="'Đơn ' + ${pro.id}" th:class="text-center" ></span>
                             </div>
-                            <div class="content">
-                                <input type="hidden" id="productId" value="1">
-                                <span th:text="'Đơn ' + ${pro.id}"></span>
-                                <div class="row"></div>
-                                <div class="pricing button col-6">
-                                    <a th:href="@{'/order/' + ${pro.id}}" class="btn btn-creative">
-                                        <span>Gọi thêm</span>
-                                    </a>
-                                </div>
-                                <div class="pricing button col-6">
-                                    <a th:href="@{'/payment/' + ${pro.id}}" class="btn btn-warning">
-                                        <span>Thanh toán</span>
-                                    </a>
-                                </div>
+                            <div class="pricing button col-6 align-center">
+                                <a th:href="@{'/order/' + ${pro.id}}" class="btn btn-success mx-auto">
+                                    <span>Gọi thêm</span>
+                                </a>
+                            </div>
+                            <div class="pricing button col-6 align-center">
+                                <a th:href="@{'/cart/' + ${pro.id}}" class="btn btn-warning mx-auto">
+                                    <span>Thanh toán</span>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-        <video id="video" width="320" height="240" autoplay></video>
-        <canvas id="canvas" width="320" height="240" style="visibility: hidden;"></canvas>
-        <script>
-            let video = document.querySelector("#video");
-            let canvas = document.querySelector("#canvas");
-            const initCamera = async () => {
-                let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-                video.srcObject = stream;
-            }
+            </div>
+        </div>
+        <!--        <video id="video" width="320" height="240" autoplay></video>-->
+        <!--        <canvas id="canvas" width="320" height="240" style="visibility: hidden;"></canvas>-->
+        <!--        <script>-->
+        <!--            let video = document.querySelector("#video");-->
+        <!--            let canvas = document.querySelector("#canvas");-->
+        <!--            const initCamera = async () => {-->
+        <!--                let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });-->
+        <!--                video.srcObject = stream;-->
+        <!--            }-->
 
-            const captureImage = () => {
-                canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-                let file = null;
-                let blob = canvas.toBlob(function (blob) {
-                    file = new File([blob], 'test.jpg', { type: 'image/jpeg' });
-                }, 'image/jpeg');
-                return file;
-            }
+        <!--            const captureImage = () => {-->
+        <!--                canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);-->
+        <!--                let file = null;-->
+        <!--                let blob = canvas.toBlob(function (blob) {-->
+        <!--                    file = new File([blob], 'test.jpg', { type: 'image/jpeg' });-->
+        <!--                }, 'image/jpeg');-->
+        <!--                return file;-->
+        <!--            }-->
 
-            const sendFile = (file) => {
-                const data = new FormData();
-                data.append('file', file);
-                jQuery.ajax({
-                    url: 'localhost:8080/upload_file',
-                    data: data,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    method: 'POST',
-                    type: 'POST', // For jQuery < 1.9
-                    success: function (data) {
-                        alert(data);
-                    }
-                });
-            }
+        <!--            const sendFile = (file) => {-->
+        <!--                const data = new FormData();-->
+        <!--                data.append('file', file);-->
+        <!--                jQuery.ajax({-->
+        <!--                    url: 'localhost:8080/upload_file',-->
+        <!--                    data: data,-->
+        <!--                    cache: false,-->
+        <!--                    contentType: false,-->
+        <!--                    processData: false,-->
+        <!--                    method: 'POST',-->
+        <!--                    type: 'POST', // For jQuery < 1.9-->
+        <!--                    success: function (data) {-->
+        <!--                        alert(data);-->
+        <!--                    }-->
+        <!--                });-->
+        <!--            }-->
 
-            const captureAndSend = () => {
-                const file = captureImage();
-                if(!file) return false;
-                sendFile(file);
-                return true;
-            }
+        <!--            const captureAndSend = () => {-->
+        <!--                const file = captureImage();-->
+        <!--                if(!file) return false;-->
+        <!--                sendFile(file);-->
+        <!--                return true;-->
+        <!--            }-->
 
-            (async () => {
-                try {
-                    await initCamera();
-                    let interval = setInterval(() => {
-                        const result = captureAndSend();
-                        if(result) {
-                            clearInterval(interval);
-                        }
-                    },1000 * 5);
-                } catch (error) {
-                    alert(error);
-                }
-            })()
+        <!--            (async () => {-->
+        <!--                try {-->
+        <!--                    await initCamera();-->
+        <!--                    let interval = setInterval(() => {-->
+        <!--                        const result = captureAndSend();-->
+        <!--                        if(result) {-->
+        <!--                            clearInterval(interval);-->
+        <!--                        }-->
+        <!--                    },1000 * 5);-->
+        <!--                } catch (error) {-->
+        <!--                    alert(error);-->
+        <!--                }-->
+        <!--            })()-->
 
-        </script>
+        <!--        </script>-->
         <footer th:replace="~{footer :: html_footer}"></footer>
     </div>
 </div>

@@ -24,49 +24,75 @@
         <div class="row pb-35">
             <div class="col-4 order-1 ">
                 <a th:href="@{/listOrder}" class="btn btn-primary">Trở về</a>
-                <a th:href="@{'/payment/' + ${preOrder.getId()}}" class="btn btn-warning">Thanh toán</a>
+                <a th:href="@{'/cart/' + ${preOrder.getId()}}" class="btn btn-warning">Thanh toán</a>
 
                 <div class="orfarm-shop-sidebar">
                     <div class="shop-category-widget">
                         <h4 class="title">Món đã đặt</h4>
-                        <ul>
-                            <li th:each="item, state : ${orderedList}">
-                                <div class="row">
-                                    <div class="col-4 text-center ">
-                                        <span class="text-break" th:text="${item.getProduct().getName()}"></span>
-                                    </div>
-                                    <div class="col-4 text-center">
-                                        <span th:text="${item.product.salePrice}+'đ'"></span>
-                                    </div>
-                                    <div class="col-4 text-center">
-                                        <span th:text="${item.getStatus().getText()}"></span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <td class="text-center">
+                                    <span class="text-break" >Ten mon</span>
+                                </td>
+                                <td class="text-center">
+                                    <span >Gia tien</span>
+                                </td>
+                                <td class="text-center">
+                                    <span >So luong</span>
+                                </td>
+                                <td class="text-center">
+                                    <span >Trang thai</span>
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item, state : ${orderedList}">
+                                <td class="text-center">
+                                    <span class="text-break" th:text="${item.getProduct().getName()}"></span>
+                                </td>
+                                <td class="text-center">
+                                    <span th:text="${item.product.salePrice}+'đ'"></span>
+                                </td>
+                                <td class="text-center">
+                                    <span th:text="${item.getQuantity()}"></span>
+                                </td>
+                                <td class="text-center">
+                                    <span th:text="${item.getStatus().getText()}"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
 
                     </div>
                     <div class="shop-category-widget">
                         <h4 class="title">Món đã chọn</h4>
-                        <ul>
-                            <li th:each="item, state : ${addedList}">
-                                <div class="row">
-                                    <div class="col-6 text-center ">
-                                        <span class="text-break" th:text="${item.getProduct().getName()}"></span>
-                                    </div>
-                                    <div class="col-6 text-center">
-                                        <span th:text="${item.product.salePrice}+'đ'"></span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                        <table class="table">
+                            <tbody>
+                            <tr th:each="item, state : ${addedList}">
+                                <td class="text-center">
+                                    <span class="text-break" th:text="${item.getProduct().getName()}"></span>
+                                </td>
+                                <td class="text-center">
+                                    <span th:text="${item.product.salePrice}+'đ'"></span>
+                                </td>
+                                <td class="text-center">
+                                    <span th:text="${item.getQuantity()}"></span>
+                                </td>
+                                <td class="text-center">
+                                    <span th:text="${item.getStatus().getText()}"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="row shop-category-widget">
                         <div class="col-6 mx-auto">
                             <a class="btn-success btn" th:href="@{'/order/add/' + ${preOrder.id}}">Đặt món</a>
                         </div>
                         <div class="col-6 mx-auto">
-                            <a class="btn-warning btn" th:href="@{'/deleteOrder/' + ${preOrder.id}}">Xoá các món đã chọn</a>
+                            <a class="btn-warning btn" th:href="@{'/deleteOrder/' + ${preOrder.id}}">Xoá các món đã
+                                chọn</a>
                         </div>
                     </div>
 
@@ -97,7 +123,7 @@
                                     <input type="hidden" th:name="productId" th:value="${pro.id}"/>
 
                                     <div class="row my-auto mx-auto">
-                                        <input th:class="col-6" type="number" th:name="quantity" class="input-mini"/>
+                                        <input th:class="col-6" type="number" th:name="quantity" class="input-mini" min="1"/>
                                         <input th:class="col-6" type="submit" value="Đặt món"/>
                                     </div>
                                     <div class="pricing">

@@ -1,5 +1,6 @@
 package gogitek.restaurentorder.modelutil;
 
+import gogitek.restaurentorder.constaint.Status;
 import gogitek.restaurentorder.entity.Product;
 import lombok.*;
 
@@ -7,13 +8,13 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class CartItem {
     String image;
-    Integer productId;
+    Long productId;
     String productName;
     Integer quantity;
-    Float discount;
-    Float salePrice;
-    Float totalPrice;
-
+    Double salePrice;
+    Double totalPrice;
+    Status status;
 }
