@@ -118,37 +118,37 @@ public class AdminServiceImp implements AdminService {
     }
 
     @Override
-    public List<User> getListUserByRole(Role role) {
-        return userRepo.getUserByRole(role);
+    public List<User> getListUserByRole(List<Role> role) {
+        return userRepo.getUserByRoleIn(role);
     }
 
     @Override
     public boolean addStaff(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Role.STAFF);
         userRepo.save(user);
         return true;
 
     }
 
     @Override
-    public User getUserById(int id) {
+    public User getUserById(Long id) {
         return userRepo.getById(id);
     }
 
     @Override
-    public boolean updateStaff(int id, User user) {
+    public boolean updateStaff(Long id, User user) {
         User staff = userRepo.getById(id);
         staff.setFirstName(user.getFirstName());
         staff.setLastName(user.getLastName());
         staff.setPhoneNumber(user.getPhoneNumber());
         staff.setAddress(user.getAddress());
+        staff.setRole(user.getRole());
         userRepo.save(staff);
         return true;
     }
 
     @Override
-    public boolean deleteStaff(int id) {
+    public boolean deleteStaff(Long id) {
         userRepo.delete(userRepo.getById(id));
         return true;
     }

@@ -1,5 +1,6 @@
 package gogitek.restaurentorder.security;
 
+import gogitek.restaurentorder.constaint.Role;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -17,11 +18,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
         String redirectURL = request.getContextPath();
-        if (userDetails.hasRole("CUSTOMER")) {
-            redirectURL = "home";
-        } else {
-            redirectURL = "admin";
+        if (userDetails.hasRole(Role.CHEF.getType())) {
+            redirectURL = "admin/preorder";
+        } else if (userDetails.hasRole(Role.WAITER.getType())){
+            redirectURL = "staff/list-order";
         }
+        else redirectURL = "admin";
         response.sendRedirect(redirectURL);
 
     }

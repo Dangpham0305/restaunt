@@ -21,11 +21,11 @@ public interface AdminService {
 //    long getTotalPageHubByKeyWord(String keyWord);
     Float getCostOfProduct();
     ChartDTO getInformationForChart();
-    List<User> getListUserByRole(Role role);
+    List<User> getListUserByRole(List<Role> role);
     boolean addStaff(User user);
-    User getUserById(int id);
-    boolean updateStaff(int id, User user);
-    boolean deleteStaff(int id);
+    User getUserById(Long id);
+    boolean updateStaff(Long id, User user);
+    boolean deleteStaff(Long id);
     List<OrderAdmin> getListOrderAdminByFilter(Date s, Date e);
     Integer countCart();
     Integer countByStatus(int status);

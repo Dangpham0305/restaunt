@@ -45,7 +45,7 @@
     </div>
     <ul class="navbar-nav flex-row ml-lg-auto">
         <li class="nav-item dropdown user-profile-dropdown pl-4 pr-lg-0 pr-2 ml-lg-2 mr-lg-4  align-self-center">
-            <a href="javascript:void(0);" class="nav-link dropdown-toggle user">
+            <a href="javascript:void(0);" class="nav-link dropdown-toggle user" role="button" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="user-profile d-lg-block d-none">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6p1uHt5NGPGppq1t48xlKt18PfNiIX5zCYQ&usqp=CAU"
                          alt="admin-profile" class="img-fluid">
@@ -129,7 +129,7 @@
 
             </div>
         </div>
-        <div sec:authorize="hasAuthority('STAFF')">
+        <div sec:authorize="hasAuthority('CHEF')">
             <div class="">
                 <nav id="modernSidebar">
                     <ul class="menu-categories pl-0 m-0" id="topAccordion">
@@ -368,7 +368,7 @@
 <!--  END FOOTER  -->
 
 <!--  BEGIN PROFILE SIDEBAR  -->
-<aside class="profile-sidebar text-center" th:fragment="admin-profile">
+<aside class="profile-sidebar text-center" th:fragment="admin-profile" aria-labelledby="profile">
     <div class="profile-content profile-content-scroll">
         <div class="usr-profile">
             <img th:src="@{/assets/img/90x90.jpg}" alt="admin-profile" class="img-fluid" />
@@ -379,8 +379,7 @@
         <div class="user-links text-left">
             <ul class="list-unstyled">
                 <li>
-                    <a href="#"><i class="flaticon-mail-22"></i> Email: <span
-                            th:text="${#authentication.getPrincipal().getUsername()}"></span></a>
+                    <a href="#"><i class="flaticon-mail-22"></i> Email: <span th:text="${#authentication.getPrincipal().getUsername()}"></span></a>
 
                 </li>
                 <li>
@@ -392,6 +391,7 @@
             </ul>
         </div>
     </div>
+</aside>
 </aside>
 <!--  BEGIN PROFILE SIDEBAR  -->
 </body>
@@ -434,6 +434,41 @@
 <script th:src="@{/plugins/table/datatable/datatables.js}"></script>
 <script th:src="@{/assets/js/ecommerce-dashboard/ecommerce-custom.js}"></script>
 <script th:src="@{/assets/js/ecommerce/order.js}"></script>
+<script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+
+<script type="text/javascript" th:src="@{https://code.jquery.com/jquery-1.11.0.min.js}"></script>
+<script type="text/javascript" th:src="@{https://code.jquery.com/jquery-migrate-1.2.1.min.js}"></script>
+<script type="text/javascript" th:src="@{https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js}"></script>
+<!--====== jquery js ======-->
+<script th:src="@{/assets/js/vendor/modernizr-3.6.0.min.js}"></script>
+<script th:src="@{/assets/js/vendor/jquery-1.12.4.min.js}"></script>
+
+<!--====== Bootstrap js ======-->
+<!--<script th:src="@{/assets/js/bootstrap.min.js}"></script>-->
+<script th:src="@{/assets/js/popper.min.js}"></script>
+<script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+<!--====== wow js ======-->
+<script th:src="@{/assets/js/wow.js}"></script>
+
+<!--====== Slick js ======-->
+<script th:src="@{/assets/js/jquery.counterup.min.js}"></script>
+<script th:src="@{/assets/js/waypoints.min.js}"></script>
+
+<!--====== TweenMax js ======-->
+<script th:src="@{/assets/js/TweenMax.min.js}"></script>
+
+<!--====== Slick js ======-->
+<script th:src="@{/assets/js/slick.min.js}"></script>
+
+<!--====== Magnific Popup js ======-->
+<script th:src="@{/assets/js/jquery.magnific-popup.min.js}"></script>
+
+<!--====== Main js ======-->
+<script th:src="@{/assets/js/main.js}"></script>
 
 <script !src="">
     var d = new Date();

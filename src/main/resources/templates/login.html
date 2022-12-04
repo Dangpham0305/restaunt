@@ -19,7 +19,7 @@
 <div class="section-ptb customer-page register-page" style="padding-bottom: 80px;">
     <div class="container">
         <div class="row log-acc-page register-acc-page pt-5 justify-content-center">
-            <div class="col-lg-4 col-sm-12">
+            <div class="col-lg-6 col-md-12">
                 <div class="acc-page">
                     <div class="login">
                         <div th:if="${param.error != null}" class="alert alert-danger alert-dismissible fade show"
@@ -47,48 +47,11 @@
                                 <button type="submit" class="btn btn-primary btn-warning form-control">Đăng
                                     nhập
                                 </button>
-                                <div class="pt-3">
-                                    <a href="./resetPass.html" style="color: #f5ab1e;  " id="recoverPass">Quên
-                                        mật khẩu?</a>
-                                </div>
+
                             </div>
                         </form>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-sm-12">
-                <div class="acc-page-2">
-                    <div class="side-form">
-                        <div class="acc-title">
-                            <h6>Bạn chưa có tài khoản? </h6>
-                            <div class="account-option-action">
-                                <a th:href="@{/createAccount}" id="customer_register">
-                                    Tạo tài khoản
-                                    <!-- <button type="button" class="btn btn-outline-warning"></button> -->
-                                </a>
-                            </div>
-                        </div>
-                        <div class="term-privacy">
-                            <p class="term-con">
-                                        <span>
-                                            <sup>*</sup>
-                                        </span>
-                                <a href="" target="_blank"> Điều khoản và điều kiện</a>
-                            </p>
-                            <p class="pri-pol ">
-
-                                        <span> Sự riêng tư và bảo mật của bạn không quan trọng đối với chúng tôi. Để
-                                            biết thêm thông tin về cách chúng tôi sử dụng dữ liệu của bạn, hãy đọc
-                                            điều khoản dưới đây.
-                                        </span>
-                                <br>
-                                <a href="" target="_blank" style="margin: 5px"> Chính sách điều khoản</a>
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
             </div>
         </div>
     </div>

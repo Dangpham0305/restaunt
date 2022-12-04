@@ -26,10 +26,8 @@ public class OrderDetail {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @OneToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
-    private Orders order;
-
+    @ManyToOne(cascade = CascadeType.DETACH)
+    private Orders orders;
 
     @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "product_id", referencedColumnName = "id")

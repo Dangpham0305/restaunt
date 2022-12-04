@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -43,6 +44,12 @@ public class Orders {
 
     @Column(name = "note")
     private String note;
+
+    @Column(name = "discount")
+    private Double discount;
+
+    @OneToMany(cascade = CascadeType.DETACH, mappedBy = "orders")
+    private Set<OrderDetail> orderDetails;
 
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "user_id", referencedColumnName = "id")

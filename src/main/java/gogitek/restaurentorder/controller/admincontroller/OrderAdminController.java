@@ -53,18 +53,18 @@ public class OrderAdminController {
     }
 
     @GetMapping("/admin/order/{id}")
-    public String getViewOrderAdmin(@PathVariable int id, Model model) {
+    public String getViewOrderAdmin(@PathVariable Long id, Model model) {
         model.addAttribute("order", orderService.getOrderById(id));
         return "admin-page/view-order";
     }
 
-    @PostMapping("/admin/order/edit/{id}")
-    public String handleEditStatusOrderAdmin(@PathVariable int id, @ModelAttribute Orders orders,
-                                             @RequestParam Status status) {
-        orders.setStatus(status);
-        orderService.updateStatus(id, orders);
-        return "redirect:/admin/order/{id}";
-    }
+//    @PostMapping("/admin/order/edit/{id}")
+//    public String handleEditStatusOrderAdmin(@PathVariable Long id, @ModelAttribute Orders orders,
+//                                             @RequestParam Status status) {
+//        orders.setStatus(status);
+//        orderService.updateStatus(id, orders);
+//        return "redirect:/admin/order/{id}";
+//    }
 
 
 //    @GetMapping("/admin/order/fill-by-status/{value}")

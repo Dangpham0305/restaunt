@@ -23,8 +23,8 @@
     <div class="container">
         <div class="row pb-35">
             <div class="col-4 order-1 ">
-                <a th:href="@{/listOrder}" class="btn btn-primary">Trở về</a>
-                <a th:href="@{'/cart/' + ${preOrder.getId()}}" class="btn btn-warning">Thanh toán</a>
+                <a th:href="@{/staff/list-order}" class="btn btn-primary">Trở về</a>
+                <a th:href="@{'/staff/cart/' + ${preOrder.getId()}}" class="btn btn-warning">Thanh toán</a>
 
                 <div class="orfarm-shop-sidebar">
                     <div class="shop-category-widget">
@@ -88,10 +88,10 @@
                     </div>
                     <div class="row shop-category-widget">
                         <div class="col-6 mx-auto">
-                            <a class="btn-success btn" th:href="@{'/order/add/' + ${preOrder.id}}">Đặt món</a>
+                            <a class="btn-success btn" th:href="@{'/staff/order/add/' + ${preOrder.id}}">Đặt món</a>
                         </div>
                         <div class="col-6 mx-auto">
-                            <a class="btn-warning btn" th:href="@{'/deleteOrder/' + ${preOrder.id}}">Xoá các món đã
+                            <a class="btn-warning btn" th:href="@{'/staff/deleteOrder/' + ${preOrder.id}}">Xoá các món đã
                                 chọn</a>
                         </div>
                     </div>

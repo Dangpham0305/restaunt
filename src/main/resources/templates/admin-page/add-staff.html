@@ -105,6 +105,18 @@
                                                        placeholder="Address"  required th:field="*{address}">
                                             </div>
                                         </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-3 col-from-label">
+                                            Chức vụ
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                            <select class="select" th:field="*{role}">
+                                                <option
+                                                        th:each="role : ${T(gogitek.restaurentorder.constaint.Role).values()}"
+                                                        th:value="${role}" th:text="${role}" ></option>
+                                            </select>
+
+                                        </div>
 
                                         <div class="form-group mb-0 text-right">
                                             <button type="submit" class="btn btn-warning">

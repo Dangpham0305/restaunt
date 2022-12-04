@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Arrays;
+
 @Controller
 public class ManagementController {
     private final AdminService adminService;
@@ -26,7 +28,7 @@ public class ManagementController {
 
     @GetMapping("/admin/staffManager")
     public String getViewStaff(Model model) {
-        model.addAttribute("staffList", adminService.getListUserByRole(Role.STAFF));
+        model.addAttribute("staffList", adminService.getListUserByRole(Arrays.asList(Role.WAITER, Role.CHEF)));
         return "admin-page/staff";
     }
 
@@ -45,35 +47,23 @@ public class ManagementController {
     }
 
     @GetMapping("/admin/staffManager/editStaff/{id}")
-    public String getViewEditStaff(Model model, @PathVariable("id") int id) {
+    public String getViewEditStaff(Model model, @PathVariable("id") Long id) {
         model.addAttribute("staff", adminService.getUserById(id));
         return "/admin-page/add-staff";
     }
 
     @PostMapping("/admin/staffManager/editStaff/{id}")
     public String handleEditStaff(RedirectAttributes redirectAttributes,
-                                  @ModelAttribute User user, @PathVariable("id") int id) {
+                                  @ModelAttribute User user, @PathVariable("id") Long id) {
         if (adminService.updateStaff(id, user))
             redirectAttributes.addFlashAttribute("msg", "Thêm nhân viên thành công");
         return "redirect:/admin/staffManager";
     }
 
     @GetMapping("admin/staffManager/deleteStaff/{id}")
-    public String handleDeleteStaff(@PathVariable("id") int id) {
+    public String handleDeleteStaff(@PathVariable("id") Long id) {
         adminService.deleteStaff(id);
         return "redirect:/admin/staffManager";
-    }
-
-    @GetMapping("/admin/userManager")
-    public String getViewCustomer(Model model) {
-        model.addAttribute("customerList", adminService.getListUserByRole(Role.CUSTOMER));
-        return "/admin-page/user";
-    }
-
-    @GetMapping("/admin/userManager/delete/{id}")
-    public String handleDeleteUser(@PathVariable int id) {
-        adminService.deleteStaff(id);
-        return "redirect:/admin/userManager";
     }
 
 

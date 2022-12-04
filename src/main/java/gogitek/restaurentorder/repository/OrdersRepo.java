@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface OrdersRepo extends JpaRepository<Orders, Integer> {
+public interface OrdersRepo extends JpaRepository<Orders, Long> {
     //Số lượng đơn hàng
     @Query(value = "select count(*) from Orders", nativeQuery = true)
     Integer countOrders();

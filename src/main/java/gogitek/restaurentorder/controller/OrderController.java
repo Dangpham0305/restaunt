@@ -1,26 +1,27 @@
 package gogitek.restaurentorder.controller;
 
 import gogitek.restaurentorder.constaint.FormatPrice;
-import gogitek.restaurentorder.constaint.Status;
 import gogitek.restaurentorder.constaint.UrlUtils;
-import gogitek.restaurentorder.entity.*;
+import gogitek.restaurentorder.entity.Orders;
+import gogitek.restaurentorder.entity.PreOrder;
 import gogitek.restaurentorder.modelutil.CartItem;
 import gogitek.restaurentorder.modelutil.PaymentInformation;
 import gogitek.restaurentorder.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@CrossOrigin("*")
+@RequestMapping("/staff")
 public class OrderController {
     private final CategoryService categoryService;
     private final CartService cartService;
@@ -56,12 +57,30 @@ public class OrderController {
             redirectAttributes.addFlashAttribute("msg", "Chưa trả hết món!");
             return urlUtils.getPreviousPageByRequest(request).orElse("/");
         }
+        Orders order = orderService.saveNewOrder(preOrder.getId());
         model.addAttribute("preOrder", preOrder);
+        model.addAttribute("order", order);
+        List<CartItem> listProductInCart = productService.getProductInOrder(preOrder);
+        model.addAttribute("listProductInCart", listProductInCart);
         model.addAttribute("orderedList", preOrder.getPreOrderDetails());
-        Double totalPrice = preOrder.getPreOrderDetails().stream().mapToDouble(detail -> detail.getQuantity() * detail.getProduct().getSalePrice()).sum();
-        model.addAttribute("total", totalPrice);
+        Double temp = preOrder.getPreOrderDetails().stream().mapToDouble(detail -> detail.getQuantity() * detail.getProduct().getSalePrice()).sum();
+        model.addAttribute("tempPrice", temp);
         return "payment";
     }
+    @PostMapping("/upload-file")
+    public @ResponseBody ResponseEntity<?> uploadFile(MultipartFile file, @RequestParam("order") Long orderId){
+        // file.doSomeThing
+        // expect return double
+        Double discount = 10D;
+        orderService.updateStatus(discount, orderId);
+        return ResponseEntity.ok(discount);
+    }
+    @PostMapping("/reload")
+    public ResponseEntity<?> reloadPrice(@RequestBody Long id){
+        Double totalPrice = orderService.loadNewPrice(id);
+        return ResponseEntity.ok(totalPrice);
+    }
+
 
     @PostMapping("/payment/process")
     public String handlePaymentProcess(@ModelAttribute PaymentInformation paymentInformation) {
@@ -87,11 +106,6 @@ public class OrderController {
 //        orderService.saveOrder(orders, (float) totalPrice, paymentInformation.getOrder().getNote(), orderDetailList);
 //        cartService.deleteAllItemInCart();
         return "redirect:/payment/ordersucess";
-    }
-
-    @GetMapping("/payment/ordersucess")
-    public String getViewOrderSucess() {
-        return "success-order";
     }
 
 }

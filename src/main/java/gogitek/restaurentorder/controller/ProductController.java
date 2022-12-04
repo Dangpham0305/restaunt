@@ -11,12 +11,14 @@ import gogitek.restaurentorder.service.CartService;
 import gogitek.restaurentorder.service.CategoryService;
 import gogitek.restaurentorder.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +29,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
+@RequestMapping("/staff")
 public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
@@ -78,7 +81,7 @@ public class ProductController {
         cartService.saveItemToCart(productService.getProductById(id), preOrder, quantity);
         return "redirect:/order/" + preOrder;
     }
-    @GetMapping("/listOrder")
+    @GetMapping("/list-order")
     public String getListOrder(Model model){
         model.addAttribute("preorderList", cartService.getAllCartByUser());
         return "chonban";
@@ -122,34 +125,4 @@ public class ProductController {
 //        return "redirect:/product/{id}";
 //    }
 
-    @GetMapping("/category/{id}/fillByName")
-    public String getViewSearchByName() {
-        return "redirect:/category/{id}/fillByName/1";
-    }
-
-    @GetMapping("/category/{id}/fillByName/{page}")
-    public String handleViewSearchByName(@PathVariable("page") long currentPage,
-                                         @PathVariable("id") int id, Model model,
-                                         @ModelAttribute SearchDTO searchDTO) {
-        long totalPage = productService.getTotalPageByName(id, searchDTO.getName());
-        List<Product> productList = productService.getListProductByHot();
-        Collections.shuffle(productList);
-        if (productList.size() < 4) model.addAttribute("bestSeller", productList);
-        else model.addAttribute("bestSeller", productList.subList(0, 3));
-        model.addAttribute("input", new SearchDTO());
-        model.addAttribute("category", categoryService.getCategoryById(id).get());
-        model.addAttribute("totalPage", totalPage);
-        model.addAttribute("currentPage", currentPage);
-        List<Product> dsProduct = productService.findProductByName(id, searchDTO.getName(), currentPage);
-        model.addAttribute("filter", new FilterProduct());
-        model.addAttribute("categoryId", id);
-        model.addAttribute("sum", dsProduct.size());
-        model.addAttribute("listProduct", dsProduct);
-        model.addAttribute("currentFilter", searchDTO.getName());
-        return "thucphamkhac";
-    }
-    @RequestMapping("/personalInfor")
-    public String personalInfor(){return "personal-infor";}
-    @RequestMapping("/orderHistory")
-    public String orderHistory(){return "order-history";}
 }

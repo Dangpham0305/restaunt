@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Set;
 
 public interface OrderService {
-    Orders saveNewOrder(PaymentInformation information);
-    boolean saveOrder(Orders orders, Float totalPrice, String note,Set<OrderDetail> orderDetailList);
+    Orders saveNewOrder(Long preOrderId);
+Double loadNewPrice(Long id);
     List<Orders> getListOrderByCurrentUser();
-    Orders getOrderById(int id);
-    void updateStatus(int id, Orders orders);
+    Orders getOrderById(Long id);
+    void updateStatus(Double discount, Long ordersid);
 }

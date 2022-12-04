@@ -1,13 +1,10 @@
 package gogitek.restaurentorder.service.serviceimp;
 
-import gogitek.restaurentorder.constaint.Role;
 import gogitek.restaurentorder.entity.User;
 import gogitek.restaurentorder.modelutil.PasswordDTO;
 import gogitek.restaurentorder.repository.UserRepo;
 import gogitek.restaurentorder.security.CustomUserDetails;
 import gogitek.restaurentorder.service.UserService;
-import lombok.SneakyThrows;
-import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,7 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,14 +26,19 @@ public class UserServiceImp implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @SneakyThrows
+//    @SneakyThrows
+//    @Override
+//    public boolean registerUser(@Valid User user) {
+//        if(checkExist(user.getEmail())) throw new MessageDescriptorFormatException("Đã Tồn Tại Email");
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        user.setRole(Role.CUSTOMER);
+//        userRepo.save(user);
+//        return true;
+//    }
+
     @Override
-    public boolean registerUser(@Valid User user) {
-        if(checkExist(user.getEmail())) throw new MessageDescriptorFormatException("Đã Tồn Tại Email");
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Role.CUSTOMER);
-        userRepo.save(user);
-        return true;
+    public boolean registerUser(User user) {
+        return false;
     }
 
     @Override
@@ -56,7 +57,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void updateUser(int id, User userRequest) {
+    public void updateUser(Long id, User userRequest) {
         //set trong db
         User user = userRepo.getById(id);
         user.setFirstName(userRequest.getFirstName());

@@ -45,19 +45,16 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+        http.cors().disable();
         http.authorizeRequests()
-                .antMatchers("/resources/**").permitAll()
-                .antMatchers("/admin/category/**").hasAuthority(Role.ADMIN.getType())
-                .antMatchers("/admin/staffManager/**").hasAuthority(Role.ADMIN.getType())
-                .antMatchers("/admin/userManager/**").hasAuthority(Role.ADMIN.getType())
-                .antMatchers("/admin/product/**").hasAuthority(Role.ADMIN.getType())
-                .antMatchers("/admin/**").hasAnyAuthority(Role.ADMIN.getType(), Role.STAFF.getType())
-                .antMatchers("/cart/**").authenticated()
-                .antMatchers("/payment/**").authenticated()
-                .antMatchers("/user/**").authenticated()
+                .antMatchers("/resources/**", "/resources", "/resources/*").permitAll()
+                .antMatchers("/admin/preorder/**").hasAnyAuthority(Role.ADMIN.getType(), Role.CHEF.getType())
+                .antMatchers("/admin/**").hasAuthority(Role.ADMIN.getType())
+                .antMatchers("/staff/**").hasAnyAuthority(Role.ADMIN.getType(), Role.WAITER.getType())
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

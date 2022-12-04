@@ -46,23 +46,6 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping("/createAccount")
-    public String getViewCreateAccount(Model model) {
-        model.addAttribute("user", new User());
-        return "createAccount";
-    }
-
-    @PostMapping("/processRegister")
-    public String handleCreateAccount(@ModelAttribute @Valid User user,
-                                      BindingResult bindingResult,
-                                      RedirectAttributes redirectAttributes) {
-        if (userService.checkExist(user.getEmail()))
-            bindingResult.rejectValue("email", "invalid", "Tài khoản khách hàng đã có trong hệ thống");
-        if (bindingResult.hasErrors()) return "/createAccount";
-        userService.registerUser(user);
-        redirectAttributes.addFlashAttribute("msg", "Tạo tài khoản thành công");
-        return "redirect:/login";
-    }
 
     @GetMapping("/user/personal-information")
     public String getViewUserInformation(Model model) {
@@ -87,10 +70,5 @@ public class UserController {
         return "redirect:/user/personal-information";
     }
 
-    @GetMapping("/user/order-history")
-    public String getViewOrderHistory(Model model) {
-        model.addAttribute("listOrder", orderService.getListOrderByCurrentUser());
-        return "order-history";
-    }
 
 }

@@ -116,8 +116,8 @@ public class CartServiceImp implements CartService {
 
     @Override
     public boolean checkOrderDelivered(PreOrder preOrder) {
-        List<Status> acceptedStatus = Arrays.asList(Status.DELIVERED, Status.CANCELED);
-        return preOrder.getPreOrderDetails().stream().noneMatch(preOrderDetail -> acceptedStatus.contains(preOrderDetail.getStatus()));
+        List<Status> acceptedStatus = Arrays.asList(Status.PROCESSING, Status.APPROVED);
+        return preOrder.getPreOrderDetails().stream().anyMatch(preOrderDetail -> acceptedStatus.contains(preOrderDetail.getStatus()));
     }
 
 }
