@@ -22,7 +22,7 @@ import java.nio.file.StandardCopyOption;
 @Controller
 public class ProductAdminController {
     private static final String currentDirectory = System.getProperty("user.dir");
-    private static final Path path = Paths.get(currentDirectory + Paths.get("/target/classes/static/image/ImageOrFarm"));
+    private static final Path path = Paths.get(currentDirectory + Paths.get("/target/classes/static/image"));
     private final CategoryService categoryService;
     private final AdminService adminService;
     private final FormatPrice formatPrice;
@@ -59,6 +59,15 @@ public class ProductAdminController {
                                    @RequestParam MultipartFile photo,
                                    BindingResult result) {
         if (photo.isEmpty() || result.hasErrors()) return "redirect:/admin/product/add";
+        if (!photo.isEmpty()) {
+            try {
+                InputStream inputStream = photo.getInputStream();
+                Files.copy(inputStream, path.resolve(photo.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+                product.setImage(photo.getOriginalFilename());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         productService.addProduct(product);
         return "redirect:/admin/product";
     }
@@ -71,7 +80,9 @@ public class ProductAdminController {
     }
 
     @PostMapping("/admin/product/edit/{id}")
-    public String handleEditProductAdmin(@PathVariable("id") Long productId, @ModelAttribute Product product, @RequestParam MultipartFile photo) {
+    public String handleEditProductAdmin(@PathVariable("id") Long productId, @ModelAttribute Product product,
+                                         @RequestParam MultipartFile photo, BindingResult result) {
+        if (photo.isEmpty() || result.hasErrors()) return "redirect:/admin/product/edit/" + productId;
         if (!photo.isEmpty()) {
             try {
                 InputStream inputStream = photo.getInputStream();

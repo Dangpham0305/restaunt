@@ -16,6 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Controller
@@ -32,6 +38,8 @@ public class OrderController {
     private final FormatPrice formatPrice;
     private final UrlUtils urlUtils;
 
+    private static final String currentDirectory = System.getProperty("user.dir");
+    private static final Path path = Paths.get(currentDirectory + Paths.get("/target/classes/static/image/FacialPhoto"));
 
 
     @ModelAttribute
@@ -68,8 +76,16 @@ public class OrderController {
         return "payment";
     }
     @PostMapping("/upload-file")
-    public @ResponseBody ResponseEntity<?> uploadFile(MultipartFile file, @RequestParam("order") Long orderId){
-        // file.doSomeThing
+    public @ResponseBody ResponseEntity<?> uploadFile(MultipartFile photo, @RequestParam("order") Long orderId){
+        if (photo.isEmpty()) {
+            return ResponseEntity.badRequest().body("Photo not captured");
+        }
+        try {
+            Path fileNameAndPath = Paths.get(String.valueOf(path), photo.getOriginalFilename());
+            Files.write(fileNameAndPath, photo.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // expect return double
         Double discount = 10D;
         orderService.updateStatus(discount, orderId);

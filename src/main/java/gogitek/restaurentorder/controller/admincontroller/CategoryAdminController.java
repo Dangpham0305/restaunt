@@ -19,7 +19,7 @@ import java.nio.file.StandardCopyOption;
 @Controller
 public class CategoryAdminController {
     private static final String currentDirectory = System.getProperty("user.dir");
-    private static final Path path = Paths.get(currentDirectory + Paths.get("/target/classes/static/image/ImageOrFarm"));
+    private static final Path path = Paths.get(currentDirectory + Paths.get("/src/main/resources/static/image"));
     private final CategoryService categoryService;
 
     public CategoryAdminController(CategoryService categoryService) {
@@ -41,6 +41,14 @@ public class CategoryAdminController {
     @PostMapping("/admin/category/add")
     public String handleAddCategory(@ModelAttribute @Valid Category category, @RequestParam MultipartFile photo, BindingResult result) {
         if (photo.isEmpty() || result.hasErrors()) return "redirect:/admin/category/add";
+        if (!photo.isEmpty()) {
+            try {
+                Files.write(path.resolve(photo.getOriginalFilename()), photo.getBytes());
+                category.setImage(photo.getOriginalFilename());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         categoryService.addCategory(category);
         return "redirect:/admin/category";
     }
@@ -64,8 +72,7 @@ public class CategoryAdminController {
     public String handleEditCategory(@PathVariable("id") int id, @ModelAttribute Category category, @RequestParam MultipartFile photo) {
         if (!photo.isEmpty()) {
             try {
-                InputStream inputStream = photo.getInputStream();
-                Files.copy(inputStream, path.resolve(photo.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+                Files.write(path.resolve(photo.getOriginalFilename()), photo.getBytes());
                 category.setImage(photo.getOriginalFilename());
             } catch (IOException e) {
                 e.printStackTrace();
