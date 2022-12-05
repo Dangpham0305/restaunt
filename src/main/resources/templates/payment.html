@@ -21,7 +21,7 @@
                                 <tr th:each="cartItem : ${listProductInCart}">
                                     <td>
                                         <div class="img-product ">
-                                            <img th:src="@{'/image/ImageOrFarm/'+${cartItem.image}}" alt="">
+                                            <img th:src="@{'/image/'+${cartItem.image}}" alt="">
                                         </div>
                                     </td>
                                     <td>

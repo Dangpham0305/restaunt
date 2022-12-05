@@ -147,7 +147,7 @@
                     <div class="col-md-2" th:each="product : ${listHotProduct}">
                         <a th:href="@{'/product/' + ${product.getId()}}">
                             <div class="card">
-                                <img class="card-img-top" th:src="@{'/image/ImageOrFarm/' + ${product.getImage()}}" alt="Card image cap">
+                                <img class="card-img-top" th:src="@{'/image/' + ${product.getImage()}}" alt="Card image cap">
                                 <div class="card-body" style="height: 130px !important;">
                                     <h5 class="card-title" th:text="${product.getName()}"></h5>
                                     <h6 th:text="${product.getBriefDesc()}"></h6>
@@ -204,8 +204,8 @@
                                 </div>
                                 <a th:href="@{'/product/' + *{saleProduct.getId()}}">
                                     <div class="fader">
-                                        <img class=" card-img-top" th:src="@{'/image/ImageOrFarm/' + ${saleProduct.getImage()}}" alt="">
-                                        <img class="w-100 card-img-top" th:src="@{'/image/ImageOrFarm/' + ${saleProduct.getImage()}}" alt="" style="display: none;">
+                                        <img class=" card-img-top" th:src="@{'/image/' + ${saleProduct.getImage()}}" alt="">
+                                        <img class="w-100 card-img-top" th:src="@{'/image/' + ${saleProduct.getImage()}}" alt="" style="display: none;">
                                     </div>
                                 </a>
                                 <div class="box-pro-detail">
