@@ -23,7 +23,7 @@
                     <div class="shop-details-thumb">
                         <div class="shop-details-thumb-slider-active">
                             <div class="item ">
-                                <img th:src="@{'/image/ImageOrFarm/'+ ${productDetail.getImage}}" alt="">
+                                <img th:src="@{'/image/'+ ${productDetail.getImage}}" alt="">
                             </div>
 
                         </div>
@@ -264,7 +264,7 @@
                 <div class="col-lg-3 col-md-6" th:each="similar, state:${listSimilar}">
                     <div class="single-shop-box">
                         <div class="thumb text-center">
-                            <img th:src="@{'/image/ImageOrFarm/'+${similar.image}}" alt="">
+                            <img th:src="@{'/image/'+${similar.image}}" alt="">
                             <div class="reborn">
                                 <span th:if="${similar.percentDiscount}!= 0">Sale</span>
                             </div>

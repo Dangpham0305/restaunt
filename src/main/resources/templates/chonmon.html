@@ -105,7 +105,7 @@
                             <form th:action="@{'/staff/order/' + ${preOrder.id} + '/addProduct'}" method="post">
 
                                 <div class="thumb text-center">
-                                    <img th:src="@{'/image/ImageOrFarm/'+${pro.image}}" alt="">
+                                    <img th:src="@{'/image/'+${pro.image}}" alt="">
                                     <div class="reborn">
                                         <span th:if="${pro.percentDiscount!=0}">Sale</span>
                                     </div>

@@ -99,7 +99,7 @@
                     <tbody th:each="od, state:${order.orderDetails}">
                     <tr class="text-center">
                         <td th:text="*{od.product.id}">15</td>
-                        <td class="text-center"><img class="product-list-img" th:src="@{'/image/ImageOrFarm/'+ *{od.product.image}}"></td>
+                        <td class="text-center"><img class="product-list-img" th:src="@{'/image/'+ *{od.product.image}}"></td>
                         <td th:text="*{od.product.name}">Tao Xanh</td>
                         <td th:text="*{od.product.category.name}">Hoa Qua Sach</td>
                         <th:block th:if="${od.product.percentDiscount!=0}">
