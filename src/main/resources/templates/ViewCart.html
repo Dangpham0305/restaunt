@@ -53,6 +53,11 @@
                                             <span th:text="${cartItem.totalPrice}"></span><sup>đ</sup>
                                         </div>
                                     </td>
+                                    <td>
+                                        <div class="sumPro">
+                                            <span th:text="${cartItem.status.getText()}"></span>
+                                        </div>
+                                    </td>
 
                                 </tr>
                                 </tbody>

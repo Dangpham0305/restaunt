@@ -65,7 +65,8 @@
                     <div class="sumPriceproduct">
                         <p>Tạm tính: <span class="prices" th:text="${tempPrice}"></span> <sup>đ</sup></p>
                         <!--                        <p>Phí ship: <span class="prices" th:text="${ship}"></span> <sup>đ</sup></p>-->
-                        <p class="hidden-price">Giảm giá: <span class="padding-price3" id="discount"></span> <sup>%</sup></p>
+                        <p class="hidden-price">Giảm giá: <span class="padding-price3" id="discount"></span>
+                            <sup>%</sup></p>
 
                     </div>
                     <div class="sumarizePrice ">
@@ -102,8 +103,9 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
         const orderId = /*[[${order.id}]]*/
-        /*]]>*/
-        let video = document.querySelector("#video");
+            /*]]>*/
+            let
+        video = document.querySelector("#video");
         let canvas = document.querySelector("#canvas");
         let stream;
         const initCamera = async () => {
@@ -113,38 +115,38 @@
 
         const captureImage = async () => {
             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-            let file;
             await canvas.toBlob((blob) => {
-                file = new File([blob], "fileName.jpg", {type: "image/jpeg"})
+                let file = new File([blob], "fileName.jpg", {type: "image/jpeg"})
                 if (file) {
+                    console.log("file: " + file)
                     return sendFile(file)
                 }
                 return false;
             }, 'image/jpeg');
 
         }
-        const stopCamera = () => {
-            stream.getTracks().forEach(function (track) {
-                track.stop();
-            });
-        }
 
         const sendFile = (file) => {
-            const data = new FormData();
-            data.append('file', file);
+            const formData = new FormData();
+            formData.append('photo', file);
             jQuery.ajax({
-                url: 'http://localhost:8090/staff/upload-file?' +  $.param({order: orderId}),
-                data: data,
+                url: 'http://localhost:8090/staff/upload-file?' + $.param({order: orderId}),
+                data: formData,
                 cache: false,
-                contentType: false,
+                contentType: false ,
                 processData: false,
                 method: 'POST',
                 type: 'POST', // For jQuery < 1.9
-                success: function (data) {
-                    console.log('send file ' + data);
-                    getTotalPriceOrder(orderId)
-                    document.getElementById('discount').innerText = data;
-                    return true;
+                statusCode: {
+                    200: function (data) {
+                        console.log('send file ' + data);
+                        getTotalPriceOrder(orderId)
+                        document.getElementById('discount').innerText = data;
+                        return true;
+                    },
+                    400: function (data) {
+                        return false
+                    }
                 },
                 failed: () => {
                     return false;
@@ -156,11 +158,11 @@
                 $.ajax({
                     method: 'POST',
                     url: 'http://localhost:8090/staff/reload',
-                    dataType : "json",
+                    dataType: "json",
                     contentType: "application/json; charset=utf-8",
-                    data : JSON.stringify(id),
-                    success : function(result) {
-                        console.log('total price ' +result);
+                    data: JSON.stringify(id),
+                    success: function (result) {
+                        console.log('total price ' + result);
                         document.getElementById('totalPrice').innerText = result
                     },
                 })
@@ -168,6 +170,12 @@
                 alert(error);
             }
         };
+
+        const stopCamera = () => {
+            stream.getTracks().forEach(function (track) {
+                track.stop();
+            });
+        }
         $(document).ready(function () {
             getTotalPriceOrder(orderId);
             $("#myBtn").click(function () {

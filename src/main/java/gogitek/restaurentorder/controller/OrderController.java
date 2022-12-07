@@ -32,11 +32,10 @@ public class OrderController {
     private final CategoryService categoryService;
     private final CartService cartService;
     private final ProductService productService;
-    private final UserService userService;
     private final OrderService orderService;
-    private final OrderDetailService orderDetailService;
     private final FormatPrice formatPrice;
     private final UrlUtils urlUtils;
+    private final PythonUtils pythonUtils;
 
     private static final String currentDirectory = System.getProperty("user.dir");
     private static final Path path = Paths.get(currentDirectory + Paths.get("/target/classes/static/image/FacialPhoto"));
@@ -76,19 +75,21 @@ public class OrderController {
         return "payment";
     }
     @PostMapping("/upload-file")
-    public @ResponseBody ResponseEntity<?> uploadFile(MultipartFile photo, @RequestParam("order") Long orderId){
-        if (photo.isEmpty()) {
+    public @ResponseBody ResponseEntity<?> uploadFile(MultipartFile photo, @RequestParam("order") Long orderId) throws IOException {
+        if (photo == null || photo.isEmpty()) {
             return ResponseEntity.badRequest().body("Photo not captured");
         }
+        Double discount = 0D;
         try {
             Path fileNameAndPath = Paths.get(String.valueOf(path), photo.getOriginalFilename());
             Files.write(fileNameAndPath, photo.getBytes());
+            discount = Double.valueOf(pythonUtils.pythonExec(photo.getOriginalFilename()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // expect return double
-        Double discount = 10D;
-        orderService.updateStatus(discount, orderId);
+        if (discount != 0) {
+            orderService.updateStatus(discount, orderId);
+        }
         return ResponseEntity.ok(discount);
     }
     @PostMapping("/reload")

@@ -62,20 +62,6 @@ public class CartServiceImp implements CartService {
         }
     }
 
-    @Override
-    public void saveNewQuantity(List<PreOrder> cartList, List<Integer> soluong) {
-        //            cartList.get(i).setQuantity(soluong.get(i));
-        cartRepo.saveAll(cartList);
-    }
-
-    @Override
-    public boolean deleteAnItemInCart(int productId) {
-        return true;
-    }
-
-    @Override
-    public void saveItemToCartByOrder(Orders orders) {
-    }
 
     @Override
     public PreOrder addNewCart(PreOrder preOrder) {
@@ -103,6 +89,10 @@ public class CartServiceImp implements CartService {
     public List<PreOrderDetail> getAllOrder(){
         return preOrderDetailRepo.findByStatusIn(Arrays.asList(Status.PROCESSING, Status.DELIVERED));
     }
+    @Override
+    public List<PreOrderDetail> getAllOrderDone(){
+        return preOrderDetailRepo.findByStatusIn(Arrays.asList(Status.DONE));
+    }
 
     @Override
     public void changeStatus(Long detailId, Status status) {
@@ -116,7 +106,7 @@ public class CartServiceImp implements CartService {
 
     @Override
     public boolean checkOrderDelivered(PreOrder preOrder) {
-        List<Status> acceptedStatus = Arrays.asList(Status.PROCESSING, Status.APPROVED);
+        List<Status> acceptedStatus = Arrays.asList(Status.PROCESSING, Status.APPROVED, Status.DONE);
         return preOrder.getPreOrderDetails().stream().anyMatch(preOrderDetail -> acceptedStatus.contains(preOrderDetail.getStatus()));
     }
 

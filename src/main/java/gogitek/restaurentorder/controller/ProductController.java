@@ -79,22 +79,32 @@ public class ProductController {
             return urlUtils.getPreviousPageByRequest(request).orElse("/");
         }
         cartService.saveItemToCart(productService.getProductById(id), preOrder, quantity);
-        return "redirect:/order/" + preOrder;
+        return "redirect:/staff/order/" + preOrder;
     }
     @GetMapping("/list-order")
     public String getListOrder(Model model){
         model.addAttribute("preorderList", cartService.getAllCartByUser());
         return "chonban";
     }
+    @GetMapping("/completed")
+    public String getListOrderComplete(Model model){
+        model.addAttribute("preorderList", cartService.getAllOrderDone());
+        return "tramon";
+    }
+    @GetMapping("/process/{id}")
+    public String checkDeliver(@PathVariable Long id){
+        cartService.changeStatus(id, Status.DELIVERED);
+        return "redirect:/staff/completed";
+    }
     @GetMapping("/deleteOrder/{id}")
     public String handleDeleteAllProduct(@PathVariable Long id){
         cartService.deleteAllItemInCart(id);
-        return "redirect:/order/" + id;
+        return "redirect:/staff/order/" + id;
     }
     @GetMapping("/order/add/{id}")
     public String orderProduct(@PathVariable Long id){
         cartService.orderAllItem(id);
-        return "redirect:/order/" + id;
+        return "redirect:/staff/order/" + id;
     }
 
 

@@ -14,13 +14,11 @@ public interface CartService {
     List<PreOrder> getAllCartByUser();
     Integer countNumberOfItemInCart();
     boolean deleteAllItemInCart(Long id);
-    void saveNewQuantity(List<PreOrder> cartList, List<Integer> soluong);
-    boolean deleteAnItemInCart(int productId);
-    void saveItemToCartByOrder(Orders orders);
     PreOrder addNewCart(PreOrder preOrder);
     PreOrder findById(Long iod);
     boolean orderAllItem(Long id);
     List<PreOrderDetail> getAllOrder();
+    List<PreOrderDetail> getAllOrderDone();
     void changeStatus(Long detailId, Status status);
     boolean checkOrderDelivered(PreOrder preOrder);
 }

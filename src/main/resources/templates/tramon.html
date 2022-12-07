@@ -1,7 +1,57 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{header :: html_header}"></head>
+<head >
+
+    <title>Orfarm Store</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!--====== Favicon Icon ======-->
+    <link rel="shortcut icon" th:href="@{/assets/images/favicon.png}" type="image/png">
+
+    <!--====== Bootstrap css ======-->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+
+    <!--====== Fontawesome css ======-->
+    <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+
+    <!--====== Magnific Popup css ======-->
+    <link rel="stylesheet" th:href="@{/assets/css/animate.min.css}">
+
+    <!--====== Magnific Popup css ======-->
+    <link rel="stylesheet" th:href="@{/assets/css/magnific-popup.css}">
+
+    <!--====== Slick css ======-->
+    <link rel="stylesheet" th:href="@{/assets/css/slick.css}">
+
+    <!--====== Default css ======-->
+    <link rel="stylesheet" th:href="@{/assets/css/custom-animation.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/default.css}">
+
+    <!--====== Style css ======-->
+    <link rel="stylesheet" th:href="@{/assets/scss/style.css}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/plugins/table/datatable/datatables.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/ecommerce/order.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/scss/style.css}">
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+    <link th:href="@{/plugins/maps/vector/jvector/jquery-jvectormap-2.0.3.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/plugins/charts/chartist/chartist.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/assets/css/default-dashboard/style.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/css/ecommerce-dashboard/style.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/css/ecommerce/addedit_product.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/css/ecommerce-dashboard/timeline.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="../../static/assets/scss/style.css">
+
+</head>
 
 <body>
 <header th:replace="header :: my-header"></header>
@@ -9,53 +59,106 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb container">
             <li class="breadcrumb-item"><a href="./index.html">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Danh mục sản phẩm</li>
         </ol>
     </nav>
 </section>
+<div class="main-container" id="container">
+
+    <!--  BEGIN CONTENT PART  -->
+    <div id="content" class="main-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
+                    <div class="statbox widget box box-shadow latest-invoice ">
+                        <div class="widget-header ">
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                    <h4>Danh sách hoá đơn</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content-area ">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center">Mã hóa đơn</th>
+                                        <th class="text-center">Sản phẩm</th>
+                                        <th class="text-center">Số lượng</th>
+                                        <th class="text-center">Trạng thái</th>
+                                        <th class="text-center">Hành động</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody th:each="top, state : ${preorderList}">
+                                    <tr>
+                                        <td class="text-center" th:utext="${top.preOrder.id}"></td>
+                                        <td class="text-center" th:utext="${top.product.name}"></td>
+                                        <td class="text-center" th:utext="${top.quantity}">15</td>
+                                        <td class="text-center">
+                                            <span class="badge badge-pills outline-badge-secondary"
+                                                          th:utext="${top.status.getText()}"></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <a th:href="@{'/staff/process/' + ${top.getId()}}"
+                                            class="btn btn-success">Trả món</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!--  END CONTENT PART  -->
+
+</div>
+
 <!--====== SHOPPING CART PART START ======-->
 
 <div th:replace="index :: my-cart"></div>
 
 <!--====== SHOPPING CART PART ENDS ======-->
 
-<div class="orfarm-shop-grid-area pt-100 pb-50 ">
-    <a th:href="@{/staff/order}" class="btn btn-info form-control">Thêm order</a>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-6" th:each="pro, state : ${preorderList}" id="list-product">
-                <div class="single-shop-box">
-                    <div class="thumb text-center">
-                        <a th:href="@{'/order/' + ${pro.id}}" class="btn btn-fill">
-                            <img th:src="@{'/image/img.png'}" alt="">
-                        </a>
-                        <div class="reborn">
-                            <span th:value="${pro.id}"></span>
-                        </div>
-                    </div>
-                    <div class="content">
-                        <input type="hidden" id="productId" value="1">
-                        <span th:text="'Đơn ' + ${pro.id}"></span>
-                        <div class="row"></div>
-                        <div class="pricing button col-6">
-                            <a th:href="@{'/order/' + ${pro.id}}" class="btn btn-creative">
-                                <span>Gọi thêm</span>
-                            </a>
-                        </div>
-                        <div class="pricing button col-6">
-                            <a th:href="@{'/payment/' + ${pro.id}}" class="btn btn-warning">
-                                <span>Thanh toán</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer th:replace="~{footer :: html_footer}"></footer>
-    </div>
-</div>
 </body>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <th:block th:insert="~{header :: script}"></th:block>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script th:src="@{/assets/js/libs/jquery-3.1.1.min.js}"></script>
+<script th:src="@{/assets/js/loader.js}"></script>
+<script th:src="@{/assets/js/popper.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{/plugins/scrollbar/jquery.mCustomScrollbar.concat.min.js}"></script>
+<script th:src="@{/plugins/blockui/jquery.blockUI.min.js}"></script>
+<script th:src="@{/assets/js/app.js}"></script>
+<script th:src="@{/assets/js/custom.js}"></script>
+<!-- END GLOBAL MANDATORY SCRIPTS -->
+
+<!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+<script th:src="@{/plugins/charts/chartist/chartist.js}"></script>
+<script th:src="@{/plugins/maps/vector/jvector/jquery-jvectormap-2.0.3.min.js}"></script>
+<script th:src="@{/plugins/maps/vector/jvector/worldmap_script/jquery-jvectormap-world-mill-en.js}"></script>
+<script th:src="@{/plugins/calendar/pignose/moment.latest.min.js}"></script>
+<script th:src="@{/plugins/calendar/pignose/pignose.calendar.js}"></script>
+<script th:src="@{/plugins/progressbar/progressbar.min.js}"></script>
+<script th:src="@{/assets/js/default-dashboard/default-custom.js}"></script>
+<script th:src="@{/assets/js/ui-kit/timeline/horizontal-main.js}"></script>
+<script th:src="@{/plugins/progressbar/progressbar.min.js}"></script>
+<script th:src="@{/plugins/charts/amcharts/amcharts.js}"></script>
+<script th:src="@{/plugins/maps/vector/ammaps/ammap_amcharts_extension.js}"></script>
+<script th:src="@{/plugins/maps/vector/ammaps/worldLow.js}"></script>
+<script th:src="@{/plugins/charts/amcharts/radar.js}"></script>
+<script th:src="@{/plugins/charts/amcharts/pie.js}"></script>
+<script th:src="@{/plugins/charts/sparklines/jquery.sparkline.min.js}"></script>
+<script th:src="@{/plugins/charts/amcharts/serial.js}"></script>
+<script th:src="@{/plugins/charts/amcharts/light.js}"></script>
+<script th:src="@{/plugins/table/datatable/datatables.js}"></script>
+<script th:src="@{/assets/js/ecommerce-dashboard/ecommerce-custom.js}"></script>
+<script th:src="@{/assets/js/ecommerce/order.js}"></script>
+
 </html>

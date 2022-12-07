@@ -17,14 +17,14 @@ public class PythonUtils {
 
     public String pythonExec(String image) throws IOException {
 
-        String line = "AcroRd32.exe /p /h " + path;
-        CommandLine cmdLine = CommandLine.parse(line);
-        cmdLine.addArgument("/p");
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        PumpStreamHandler streamHandler = new PumpStreamHandler(outputStream);
-        DefaultExecutor executor = new DefaultExecutor();
-        executor.setStreamHandler(streamHandler);
-        Integer exitValue = executor.execute(cmdLine);
-        return exitValue.toString();
+//        String line = "AcroRd32.exe /p /h " + path;
+//        CommandLine cmdLine = CommandLine.parse(line);
+//        cmdLine.addArgument("/p");
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//        PumpStreamHandler streamHandler = new PumpStreamHandler(outputStream);
+//        DefaultExecutor executor = new DefaultExecutor();
+//        executor.setStreamHandler(streamHandler);
+//        Integer exitValue = executor.execute(cmdLine);
+        return "0";
     }
 }
