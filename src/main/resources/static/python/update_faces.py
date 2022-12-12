@@ -5,9 +5,9 @@ from facenet_pytorch import InceptionResnetV1, fixed_image_standardization
 import os
 from PIL import Image
 import numpy as np
-
-IMG_PATH = './resources/static/faceimage'
-DATA_PATH = './resources/static/data'
+dir_path = os.path.dirname(os.path.realpath(__file__))
+IMG_PATH = os.path.realpath(os.path.dirname(dir_path) + "\\faceimage")
+DATA_PATH = os.path.realpath(os.path.dirname(dir_path) + "\\data")
 
 device =  torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 # print(device)
@@ -30,7 +30,7 @@ names = []
 
 for usr in os.listdir(IMG_PATH):
     embeds = []
-    for file in glob.glob(os.path.join(IMG_PATH, usr)+'/*.jpg'):
+    for file in glob.glob(os.path.join(IMG_PATH, usr)):
         # print(usr)
         try:
             img = Image.open(file)
@@ -50,8 +50,8 @@ embeddings = torch.cat(embeddings) #[n,512]
 names = np.array(names)
 
 if device == 'cpu':
-    torch.save(embeddings, DATA_PATH+"/faceslistCPU.pth")
+    torch.save(embeddings, DATA_PATH+"\\faceslistCPU.pth")
 else:
-    torch.save(embeddings, DATA_PATH+"/faceslist.pth")
+    torch.save(embeddings, DATA_PATH+"\\faceslist.pth")
 np.save(DATA_PATH+"/usernames", names)
 print('Update Completed! There are {0} people in FaceLists'.format(names.shape[0]))

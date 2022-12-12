@@ -38,7 +38,8 @@ public class OrderController {
     private final PythonUtils pythonUtils;
 
     private static final String currentDirectory = System.getProperty("user.dir");
-    private static final Path path = Paths.get(currentDirectory + Paths.get("/target/classes/static/image/faceimage"));
+    private static final Path pathimage = Paths.get(currentDirectory + Paths.get("/target/classes/static/faceimage"));
+    private static final Path pathdata = Paths.get(currentDirectory + Paths.get("/target/classes/static/faceimage"));
 
 
     @ModelAttribute
@@ -82,9 +83,17 @@ public class OrderController {
         double discount = 0D;
         try {
             byte[] bytes = photo.getBytes();
-            Path pt = Paths.get(path+photo.getOriginalFilename());
+            if (!Files.exists(pathimage)){
+                Files.createDirectories(pathimage);
+            }if (!Files.exists(pathdata)){
+                Files.createDirectories(pathdata);
+            }
+            Path pt = Paths.get(pathimage+ "/" + photo.getOriginalFilename());
             Files.write(pt, bytes);
-            discount = Double.parseDouble(pythonUtils.recognize(pt.toAbsolutePath().toString()));
+            pythonUtils.update();
+            String rs = pythonUtils.recognize(pt.toAbsolutePath().toString());
+            System.out.println(rs);
+            discount = Double.parseDouble(rs);
         } catch (IOException e) {
             return ResponseEntity.badRequest().body("failed to recognize");
         }

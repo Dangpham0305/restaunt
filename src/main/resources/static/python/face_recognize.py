@@ -9,9 +9,9 @@ import argparse
 from pathlib import Path
 import os
 frame_size = (640,480)
-pat = os.path.dirname(os.getcwd())
-IMG_PATH = pat+"/faceimage"
-DATA_PATH = pat+"/data"
+dir_path = os.path.dirname(os.path.realpath(__file__))
+IMG_PATH = os.path.realpath(os.path.dirname(dir_path) + "\\faceimage")
+DATA_PATH = os.path.realpath(os.path.dirname(dir_path) + "\\data")
 def trans(img):
     transform = transforms.Compose([
         transforms.ToTensor(),
@@ -21,10 +21,10 @@ def trans(img):
 
 def load_faceslist():
     if device == 'cpu':
-        embeds = torch.load(DATA_PATH+'/faceslistCPU.pth')
+        embeds = torch.load(DATA_PATH+'\\faceslistCPU.pth')
     else:
-        embeds = torch.load(DATA_PATH+'/faceslist.pth')
-    names = np.load(DATA_PATH+'/usernames.npy')
+        embeds = torch.load(DATA_PATH+'\\faceslist.pth')
+    names = np.load(DATA_PATH+'\\usernames.npy')
     return embeds, names
 
 def inference(model, face, local_embeds, threshold = 3):
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     mtcnn = MTCNN(thresholds= [0.7, 0.7, 0.8] ,keep_all=True, device = device)
 
     embeddings, names = load_faceslist()
-    frame = cv2.imread(img)
+    frame = cv2.imread(str(img))
     boxes, _ = mtcnn.detect(frame)
     if boxes is not None:
         for box in boxes:
@@ -94,13 +94,14 @@ if __name__ == "__main__":
             face = extract_face(bbox, frame)
             idx, score = inference(model, face, embeddings)
             if idx != -1:
-                frame = cv2.rectangle(frame, (bbox[0],bbox[1]), (bbox[2],bbox[3]), (0,0,255), 6)
                 score = torch.Tensor.cpu(score[0]).detach().numpy()*power
-                if score < 0.2:
+                if score < 0.35:
                     print(10)
+                else:
+                    print(0)
             else:
-                frame = cv2.rectangle(frame, (bbox[0],bbox[1]), (bbox[2],bbox[3]), (0,0,255), 6)
                 print(0)
-
+    else:
+        print(0)
     cv2.destroyAllWindows()
     #+": {:.2f}".format(score)
