@@ -22,7 +22,7 @@ public class CategoryServiceImp implements CategoryService {
     }
 
     @Override
-    public Optional<Category> getCategoryById(int id) {
+    public Optional<Category> getCategoryById(Long id) {
         return categoryRepo.findById(id);
     }
 
@@ -33,13 +33,13 @@ public class CategoryServiceImp implements CategoryService {
     }
 
     @Override
-    public boolean deleteCategory(int id) {
+    public boolean deleteCategory(Long id) {
         categoryRepo.delete(categoryRepo.getById(id));
         return true;
     }
 
     @Override
-    public void updateCategory(int id, Category category) {
+    public void updateCategory(Long id, Category category) {
         Category categoryDB = categoryRepo.getById(id);
         if (!category.getName().isEmpty()) categoryDB.setName(category.getName());
         categoryRepo.save(categoryDB);

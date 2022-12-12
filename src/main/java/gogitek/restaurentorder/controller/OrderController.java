@@ -38,7 +38,7 @@ public class OrderController {
     private final PythonUtils pythonUtils;
 
     private static final String currentDirectory = System.getProperty("user.dir");
-    private static final Path path = Paths.get(currentDirectory + Paths.get("/target/classes/static/image/FacialPhoto"));
+    private static final Path path = Paths.get(currentDirectory + Paths.get("/target/classes/static/image/faceimage"));
 
 
     @ModelAttribute
@@ -75,17 +75,18 @@ public class OrderController {
         return "payment";
     }
     @PostMapping("/upload-file")
-    public @ResponseBody ResponseEntity<?> uploadFile(MultipartFile photo, @RequestParam("order") Long orderId) throws IOException {
+    public @ResponseBody ResponseEntity<?> uploadFile(MultipartFile photo, @RequestParam("order") Long orderId) {
         if (photo == null || photo.isEmpty()) {
             return ResponseEntity.badRequest().body("Photo not captured");
         }
-        Double discount = 0D;
+        double discount = 0D;
         try {
-            Path fileNameAndPath = Paths.get(String.valueOf(path), photo.getOriginalFilename());
-            Files.write(fileNameAndPath, photo.getBytes());
-            discount = Double.valueOf(pythonUtils.pythonExec(photo.getOriginalFilename()));
+            byte[] bytes = photo.getBytes();
+            Path pt = Paths.get(path+photo.getOriginalFilename());
+            Files.write(pt, bytes);
+            discount = Double.parseDouble(pythonUtils.recognize(pt.toAbsolutePath().toString()));
         } catch (IOException e) {
-            e.printStackTrace();
+            return ResponseEntity.badRequest().body("failed to recognize");
         }
         if (discount != 0) {
             orderService.updateStatus(discount, orderId);

@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 
 @Controller
 public class ProductAdminController {
@@ -61,8 +62,8 @@ public class ProductAdminController {
         if (photo.isEmpty() || result.hasErrors()) return "redirect:/admin/product/add";
         if (!photo.isEmpty()) {
             try {
-                InputStream inputStream = photo.getInputStream();
-                Files.copy(inputStream, path.resolve(photo.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+                Path fileNameAndPath = Paths.get(String.valueOf(path), photo.getOriginalFilename());
+                Files.write(fileNameAndPath, photo.getBytes());
                 product.setImage(photo.getOriginalFilename());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -82,7 +83,7 @@ public class ProductAdminController {
     @PostMapping("/admin/product/edit/{id}")
     public String handleEditProductAdmin(@PathVariable("id") Long productId, @ModelAttribute Product product,
                                          @RequestParam MultipartFile photo, BindingResult result) {
-        if (photo.isEmpty() || result.hasErrors()) return "redirect:/admin/product/edit/" + productId;
+        if (result.hasErrors()) return "redirect:/admin/product/edit/" + productId;
         if (!photo.isEmpty()) {
             try {
                 InputStream inputStream = photo.getInputStream();

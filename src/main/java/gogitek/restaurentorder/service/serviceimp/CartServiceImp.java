@@ -87,7 +87,7 @@ public class CartServiceImp implements CartService {
     }
     @Override
     public List<PreOrderDetail> getAllOrder(){
-        return preOrderDetailRepo.findByStatusIn(Arrays.asList(Status.PROCESSING, Status.DELIVERED));
+        return preOrderDetailRepo.findByStatusIn(Arrays.asList(Status.PROCESSING));
     }
     @Override
     public List<PreOrderDetail> getAllOrderDone(){

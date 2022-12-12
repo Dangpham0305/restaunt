@@ -54,13 +54,13 @@ public class CategoryAdminController {
     }
 
     @GetMapping("/admin/category/delete/{id}")
-    public String handleDeleteCategory(@PathVariable("id") int id) {
+    public String handleDeleteCategory(@PathVariable("id") Long id) {
         categoryService.deleteCategory(id);
         return "redirect:/admin/category";
     }
 
     @GetMapping("/admin/category/edit/{id}")
-    public String getViewEditCategory(@PathVariable("id") int id, Model model) {
+    public String getViewEditCategory(@PathVariable("id") Long id, Model model) {
         if (categoryService.getCategoryById(id).isPresent()) {
             model.addAttribute("category", categoryService.getCategoryById(id).get());
             return "/admin-page/add-category";
@@ -69,7 +69,7 @@ public class CategoryAdminController {
     }
 
     @PostMapping("/admin/category/edit/{id}")
-    public String handleEditCategory(@PathVariable("id") int id, @ModelAttribute Category category, @RequestParam MultipartFile photo) {
+    public String handleEditCategory(@PathVariable("id") Long id, @ModelAttribute Category category, @RequestParam MultipartFile photo) {
         if (!photo.isEmpty()) {
             try {
                 Files.write(path.resolve(photo.getOriginalFilename()), photo.getBytes());

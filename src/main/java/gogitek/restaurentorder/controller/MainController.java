@@ -5,10 +5,14 @@ import gogitek.restaurentorder.entity.Product;
 import gogitek.restaurentorder.service.CartService;
 import gogitek.restaurentorder.service.CategoryService;
 import gogitek.restaurentorder.service.ProductService;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,11 +35,11 @@ public class MainController {
     @ModelAttribute
     public void addAttributeToHeader(Model model) {
         model.addAttribute("listCategory", categoryService.getListCategory());
+        List<Product> list = productService.getByPage();
+        model.addAttribute("listProductDisplay", list.size() < 4 ? list : list.subList(0, 3));
+        model.addAttribute("listProduct", list.size() < 8 ? list : list.subList(0, 7));
     }
 
-    @ModelAttribute
-    public void addListProduct(Model model) {
-    }
 
     @GetMapping(value = {"/", "/index", "/home"})
     public String getViewHomepage() {

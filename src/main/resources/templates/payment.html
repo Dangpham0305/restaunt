@@ -72,11 +72,15 @@
                     <div class="sumarizePrice ">
                         <p>Tổng tiền: <span class="padding-price" id="totalPrice"></span> <sup>đ</sup></p>
                     </div>
+                    <a th:href="@{/staff/list-order}">
+                        <button class="btn btn-success" type="submit">Xác nhận thanh toán</button>
+                    </a>
                 </div>
             </div>
+            <div class="col-lg-7"></div>
         </div>
     </div>
-    <canvas id="canvas" width="720" height="480" style="visibility: hidden;"></canvas>
+    <canvas id="canvas" width="640" height="480" style="visibility: hidden;"></canvas>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content" style="width: fit-content !important;">
@@ -87,8 +91,14 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <video id="video" width="720" height="480" autoplay></video>
+                    <video id="video" width="640" height="480" autoplay></video>
                     <span id="messageResp"></span>
+                    <br>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                        <label class="custom-control-label" for="customSwitch1">Lưu</label>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" onclick="stopCamera()">Close
@@ -116,7 +126,7 @@
         const captureImage = async () => {
             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
             await canvas.toBlob((blob) => {
-                let file = new File([blob], "fileName.jpg", {type: "image/jpeg"})
+                let file = new File([blob], Date.now() + ".jpg", {type: "image/jpeg"})
                 if (file) {
                     console.log("file: " + file)
                     return sendFile(file)
@@ -133,7 +143,7 @@
                 url: 'http://localhost:8090/staff/upload-file?' + $.param({order: orderId}),
                 data: formData,
                 cache: false,
-                contentType: false ,
+                contentType: false,
                 processData: false,
                 method: 'POST',
                 type: 'POST', // For jQuery < 1.9
@@ -142,10 +152,14 @@
                         console.log('send file ' + data);
                         getTotalPriceOrder(orderId)
                         document.getElementById('discount').innerText = data;
+                        document.getElementById('messageResp').innerText = 'Nhận diện thành công'
+
                         return true;
                     },
                     400: function (data) {
                         return false
+                        document.getElementById('messageResp').innerText = 'Nhận diện thất bại'
+
                     }
                 },
                 failed: () => {
@@ -188,7 +202,6 @@
                             if (result) {
                                 clearInterval(interval);
                                 stopCamera();
-                                document.getElementById('messageResp').innerText = 'Nhận diện thành công'
                             } else
                                 document.getElementById('messageResp').innerText = 'Nhận diện thất bại'
                         }, 1000 * 5);
@@ -207,5 +220,45 @@
 <!--====== jquery js ======-->
 <th:block th:insert="~{header :: script}"></th:block>
 
+
+<script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+
+<script type="text/javascript" th:src="@{https://code.jquery.com/jquery-1.11.0.min.js}"></script>
+<script type="text/javascript" th:src="@{https://code.jquery.com/jquery-migrate-1.2.1.min.js}"></script>
+<script type="text/javascript"
+        th:src="@{https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js}"></script>
+<!--====== jquery js ======-->
+<script th:src="@{/assets/js/vendor/modernizr-3.6.0.min.js}"></script>
+<script th:src="@{/assets/js/vendor/jquery-1.12.4.min.js}"></script>
+
+<!--====== Bootstrap js ======-->
+<!--<script th:src="@{/assets/js/bootstrap.min.js}"></script>-->
+<script th:src="@{/assets/js/popper.min.js}"></script>
+<script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+<!--====== wow js ======-->
+<script th:src="@{/assets/js/wow.js}"></script>
+
+<!--====== Slick js ======-->
+<script th:src="@{/assets/js/jquery.counterup.min.js}"></script>
+<script th:src="@{/assets/js/waypoints.min.js}"></script>
+
+<!--====== TweenMax js ======-->
+<script th:src="@{/assets/js/TweenMax.min.js}"></script>
+
+<!--====== Slick js ======-->
+<script th:src="@{/assets/js/slick.min.js}"></script>
+
+<!--====== Magnific Popup js ======-->
+<script th:src="@{/assets/js/jquery.magnific-popup.min.js}"></script>
+
+<!--====== Main js ======-->
+<script th:src="@{/assets/js/main.js}"></script>
 
 </html>
