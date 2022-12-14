@@ -25,4 +25,6 @@ public class Category {
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Product> product = new HashSet<>();
+
+    private Boolean delete;
 }

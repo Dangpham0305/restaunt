@@ -25,51 +25,16 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public List<Product> getListProductByCategoryId(int id) {
-        return productRepo.findProductByCategoryId(id);
-    }
-
-    @Override
-    public int getTotalByFill(float start, float end, int id) {
-        return productRepo.getTotalProductByFill(start, end, id);
-    }
-
-    @Override
-    public int getTotal() {
-        return productRepo.getTotal();
-    }
-
-    @Override
     public Product getProductById(Long id) {
-        return productRepo.getById(id);
+        return productRepo.getProductsByIdAndDelete(id, false);
     }
 
-    @Override
-    public long getTotalPage() {
-        return (productRepo.countProduct().get(0) % pageSize == 0) ?
-                productRepo.countProduct().get(0) / pageSize
-                : (productRepo.countProduct().get(0) / pageSize) + 1;
-    }
 
     @Override
-    public List<Product> getByPage() {
-        return productRepo.findAll();
-    }
-    @Override
-    public long getTotalPageByFill(float start, float end, int id) {
-        return (productRepo.countByCategoryIdAndFill(start,end,id).get(0) % pageSize == 0) ?
-                productRepo.countByCategoryIdAndFill(start,end,id).get(0) / pageSize
-                : (productRepo.countByCategoryIdAndFill(start,end,id).get(0) / pageSize) + 1;
+    public List<Product> findAllProduct() {
+        return productRepo.getAllByDelete(false);
     }
 
-    @Override
-    public List<Product> getListProductFillByPage(float start, float end, long currentPage, int id) {
-        return productRepo.listFill(start,end,id,(currentPage-1)*pageSize,pageSize);
-    }
-    @Override
-    public int getCategoryId(int id) {
-        return productRepo.findCateGoryIdByProdId(id);
-    }
 
     @Override
     public List<PreOrderDetail> getProductFromCart(PreOrder cartList, List<Status> status) {
@@ -94,26 +59,19 @@ public class ProductServiceImp implements ProductService {
         return itemList;
     }
 
-    @Override
-    public Float getTempPriceOfCart(List<CartItem> itemList) {
-//        Float tempPrice = 0f;
-//        for (CartItem cartItem: itemList) {
-//            tempPrice += cartItem.getTotalPrice();
-//        }
-//        return tempPrice;
-        return null;
-    }
 
     @Override
     public boolean addProduct(Product product) {
-//        product.setQuantityProd(0);
+        product.setDelete(false);
         productRepo.save(product);
         return true;
     }
 
     @Override
     public boolean deleteProduct(Long id) {
-        productRepo.delete(productRepo.getById(id));
+        Product product = productRepo.getById(id);
+        product.setDelete(true);
+        productRepo.save(product);
         return true;
     }
 
@@ -127,30 +85,6 @@ public class ProductServiceImp implements ProductService {
         if(product.getPercentDiscount()!=null) baseProduct.setPercentDiscount(product.getPercentDiscount());
         if(product.getCost()!=null) baseProduct.setCost(product.getCost());
         productRepo.save(baseProduct);
-    }
-
-    @Override
-    public List<ProductAdminDTO> findAll() {
-        List<Product> list = productRepo.findAll();
-        List<ProductAdminDTO> productAdminDTOS = new ArrayList<>();
-        return productAdminDTOS;
-    }
-
-    @Override
-    public List<Product> findProductByName(int id, String keyWord, long currentPage) {
-        return productRepo.searchByNameAndPage(id,keyWord,(currentPage-1)*pageSize,pageSize);
-    }
-
-    @Override
-    public long getTotalPageByName(int id, String keyWord) {
-        return (productRepo.countByKeyWord(id,keyWord).get(0) % pageSize == 0) ?
-                productRepo.countByKeyWord(id, keyWord).get(0) / pageSize
-                : (productRepo.countByKeyWord(id, keyWord).get(0) / pageSize) + 1;
-    }
-
-    @Override
-    public void saveAfterOrder(Product product, OrderDetail orderDetail) {
-        productRepo.save(product);
     }
 
 

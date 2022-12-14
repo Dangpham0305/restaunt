@@ -18,7 +18,7 @@ public class CategoryServiceImp implements CategoryService {
 
     @Override
     public List<Category> getListCategory() {
-        return categoryRepo.findAll();
+        return categoryRepo.findAllByDelete(false);
     }
 
     @Override
@@ -28,13 +28,16 @@ public class CategoryServiceImp implements CategoryService {
 
     @Override
     public boolean addCategory(Category category) {
+        category.setDelete(false);
         categoryRepo.save(category);
         return true;
     }
 
     @Override
     public boolean deleteCategory(Long id) {
-        categoryRepo.delete(categoryRepo.getById(id));
+        Category category = categoryRepo.getById(id);
+        category.setDelete(true);
+        categoryRepo.save(category);
         return true;
     }
 

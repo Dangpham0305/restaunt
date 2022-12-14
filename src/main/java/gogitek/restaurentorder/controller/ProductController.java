@@ -45,7 +45,7 @@ public class ProductController {
 //        model.addAttribute("totalPage", totalPage);
 //        model.addAttribute("currentPage", currentPage);
 //        model.addAttribute("sum", sum);
-////        model.addAttribute("listProduct", productService.getByPage(currentPage));
+////        model.addAttribute("listProduct", productService.findAllProduct(currentPage));
 //        return "chonban";
 //    }
     @GetMapping(value = {"/order/{id}", "/order"})
@@ -60,7 +60,7 @@ public class ProductController {
              preOrder = cartService.addNewCart(new PreOrder());
         }
         model.addAttribute("preOrder", preOrder);
-        model.addAttribute("listProduct", productService.getByPage());
+        model.addAttribute("listProduct", productService.findAllProduct());
         return "chonmon";
     }
     @PostMapping("/order")
