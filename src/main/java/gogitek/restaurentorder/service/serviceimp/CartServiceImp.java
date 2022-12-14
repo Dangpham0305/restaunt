@@ -39,7 +39,7 @@ public class CartServiceImp implements CartService {
 
     @Override
     public List<PreOrder> getAllCartByUser() {
-        return cartRepo.findAll();
+        return cartRepo.findAllByDelete(false);
     }
 
     @Override
@@ -65,12 +65,13 @@ public class CartServiceImp implements CartService {
 
     @Override
     public PreOrder addNewCart(PreOrder preOrder) {
+        preOrder.setDelete(false);
         return cartRepo.save(preOrder);
     }
 
     @Override
     public PreOrder findById(Long iod) {
-        return cartRepo.findById(iod).orElse(new PreOrder());
+        return cartRepo.findByIdAndDelete(iod, false);
     }
 
     @Override
@@ -111,7 +112,9 @@ public class CartServiceImp implements CartService {
 
     @Override
     public void deleteOrder(Long id) {
-        cartRepo.deleteById(id);
+        PreOrder preOrder = cartRepo.getById(id);
+        preOrder.setDelete(true);
+        cartRepo.save(preOrder);
     }
 
 }

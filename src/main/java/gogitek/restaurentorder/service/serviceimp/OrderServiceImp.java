@@ -32,13 +32,13 @@ public class OrderServiceImp implements OrderService {
 
 
     @Override
-    public Orders saveNewOrder(Long preOrderid) {
-        PreOrder preOrder = cartRepo.getById(preOrderid);
+    public Orders saveNewOrder(PreOrder preOrder) {
         Orders order = new Orders();
         order.setCreateAt(new Date());
         order.setDiscount(0D);
         order = ordersRepo.save(order);
-
+        preOrder.setOrderId(order.getId());
+        cartRepo.save(preOrder);
         Set<PreOrderDetail> preOrderDetails = preOrder.getPreOrderDetails();
         Set<OrderDetail> orderDetails = new HashSet<>();
         Orders finalOrder = order;

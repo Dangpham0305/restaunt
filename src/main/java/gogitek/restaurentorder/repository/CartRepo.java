@@ -11,5 +11,6 @@ import java.util.List;
 
 @Repository
 public interface CartRepo extends JpaRepository<PreOrder, Long> {
-
+    PreOrder findByIdAndDelete(Long id, boolean delele);
+    List<PreOrder> findAllByDelete(boolean delete);
 }

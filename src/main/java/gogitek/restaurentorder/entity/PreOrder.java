@@ -26,4 +26,7 @@ public class PreOrder {
     @JoinColumn(name = "employee", referencedColumnName = "id")
     private User employee;
 
+    private Long orderId;
+
+    private Boolean delete;
 }

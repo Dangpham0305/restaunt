@@ -72,7 +72,7 @@
                     <div class="sumarizePrice ">
                         <p>Tổng tiền: <span class="padding-price" id="totalPrice"></span> <sup>đ</sup></p>
                     </div>
-                    <a th:href="@{/staff/list-order}">
+                    <a th:href="@{'/staff/payment/process/' + ${preOrder.getId()}}">
                         <button class="btn btn-success" type="submit">Xác nhận thanh toán</button>
                     </a>
                 </div>
