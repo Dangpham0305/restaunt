@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/orfarm?serverTimezone=GMT%2B7&useLegacyDatetimeCode=false&zeroDateTimeBehavior=convertToNull&useUnicode=yes&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/orrest?serverTimezone=GMT%2B7&useLegacyDatetimeCode=false&zeroDateTimeBehavior=convertToNull&useUnicode=yes&characterEncoding=UTF-8
     username: root
-    password: 123456
+    password: dang
 
     driver-class-name: com.mysql.cj.jdbc.Driver
   servlet:

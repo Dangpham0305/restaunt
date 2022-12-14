@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
@@ -67,10 +68,14 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public boolean deleteProduct(Long id) {
-        Product product = productRepo.getById(id);
-        product.setDelete(true);
-        productRepo.save(product);
-        return true;
+        Optional<Product> product = productRepo.findById(id);
+        if (product.isPresent()){
+            Product p = product.get();
+            p.setDelete(true);
+            productRepo.save(p);
+            return true;
+        }
+        return false;
     }
 
     @Override

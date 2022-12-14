@@ -192,6 +192,8 @@ background-position: center;
 .bottom-footer {
     padding: 20px 0;
     background-color: #f5ab1e;
+    margin-top :178px;
+
 }
 .bottom-footer ul{
     list-style-type: none;

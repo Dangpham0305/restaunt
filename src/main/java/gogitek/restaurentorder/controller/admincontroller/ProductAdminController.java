@@ -98,11 +98,16 @@ public class ProductAdminController {
 
     @GetMapping("/admin/product/delete/{id}")
     public String handleDeleteProductAdmin(@PathVariable("id") Long productId, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        if (productService.checkProductInUse(productId)){
+        if (productService.checkProductInUse(productId)) {
             redirectAttributes.addFlashAttribute("msg", "Không thể xoá món, món đang được đặt!");
             return urlUtils.getPreviousPageByRequest(request).orElse("/");
         }
-        productService.deleteProduct(productId);
+        if ( productService.deleteProduct(productId)){
+            redirectAttributes.addFlashAttribute("msg", "Xoas thanh cong");
+        }
+        else {
+            redirectAttributes.addFlashAttribute("msg", "Xoas that bai");
+        }
         return "redirect:/admin/product";
     }
 
