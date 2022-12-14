@@ -73,7 +73,7 @@ public class ProductController {
         }
         cartService.deleteOrder(id);
         redirectAttributes.addFlashAttribute("msg", "Xoá đơn thành công!");
-        return "redicect:/staff/list-order";
+        return "redirect:/staff/list-order";
     }
 
     @PostMapping("/order/{preOrder}/addProduct")
