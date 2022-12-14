@@ -15,8 +15,6 @@ public interface ProductService {
     List<Product> getListProductFillByPage(float start, float end, long currentPage, int id);
     int getTotalByFill(float start, float end, int id);
     int getTotal();
-    List<Product> getListProductByHot();
-    List<Product> getListSaleProduct();
     Product getProductById(Long id);
     long getTotalPage();
     List<Product> getByPage();

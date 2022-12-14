@@ -28,20 +28,16 @@ def load_faceslist():
     return embeds, names
 
 def inference(model, face, local_embeds, threshold = 3):
-    #local: [n,512] voi n la so nguoi trong faceslist
     embeds = []
-    # print(trans(face).unsqueeze(0).shape)
     embeds.append(model(trans(face).to(device).unsqueeze(0)))
     detect_embeds = torch.cat(embeds) #[1,512]
     # print(detect_embeds.shape)
     #[1,512,1]                                      [1,512,n]
     norm_diff = detect_embeds.unsqueeze(-1) - torch.transpose(local_embeds, 0, 1).unsqueeze(0)
-    # print(norm_diff)
-    norm_score = torch.sum(torch.pow(norm_diff, 2), dim=1) #(1,n), moi cot la tong khoang cach euclide so vs embed moi
+    norm_score = torch.sum(torch.pow(norm_diff, 2), dim=1) #(1,n),
 
     min_dist, embed_idx = torch.min(norm_score, dim = 1)
-    # print(min_dist*power, names[embed_idx])
-    # print(min_dist.shape)
+
     if min_dist*power > threshold:
         return -1, -1
     else:
@@ -84,7 +80,7 @@ if __name__ == "__main__":
     model.eval()
 
     mtcnn = MTCNN(thresholds= [0.7, 0.7, 0.8] ,keep_all=True, device = device)
-
+    similar_threshold = 0.35
     embeddings, names = load_faceslist()
     frame = cv2.imread(str(img))
     boxes, _ = mtcnn.detect(frame)
@@ -95,7 +91,7 @@ if __name__ == "__main__":
             idx, score = inference(model, face, embeddings)
             if idx != -1:
                 score = torch.Tensor.cpu(score[0]).detach().numpy()*power
-                if score < 0.35:
+                if score < similar_threshold:
                     print(10)
                 else:
                     print(0)

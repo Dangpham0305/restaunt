@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class ProductServiceImp implements ProductService {
     private final ProductRepo productRepo;
-    final long pageSize = 6;
+    final static long pageSize = 6;
 
     public ProductServiceImp(ProductRepo productRepo) {
         this.productRepo = productRepo;
@@ -37,16 +37,6 @@ public class ProductServiceImp implements ProductService {
     @Override
     public int getTotal() {
         return productRepo.getTotal();
-    }
-
-    @Override
-    public List<Product> getListProductByHot() {
-        return productRepo.getProductByHot();
-    }
-
-    @Override
-    public List<Product> getListSaleProduct() {
-        return productRepo.getSaleProduct();
     }
 
     @Override

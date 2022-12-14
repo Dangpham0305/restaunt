@@ -24,34 +24,38 @@
         <a th:href="@{/staff/order}" class="btn btn-info">Thêm order</a>
         <div class="row">
             <div class="col-lg-3 col-md-4" th:each="pro, state : ${preorderList}" id="list-product">
-                <div class="single-shop-box">
-                    <div class="thumb text-center">
-                        <a th:href="@{'/staff/order/' + ${pro.id}}" class="btn btn-fill">
-                            <img th:src="@{'/image/img.png'}" alt="">
-                        </a>
-                        <div class="reborn">
-                            <span th:value="${pro.id}"></span>
-                        </div>
-                    </div>
-                    <div class="content">
-                        <input type="hidden" id="productId" value="1">
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                <span th:text="'Đơn ' + ${pro.id}" th:class="text-center" ></span>
-                            </div>
-                            <div class="pricing button col-6 align-center">
-                                <a th:href="@{'/staff/order/' + ${pro.id}}" class="btn btn-success mx-auto">
-                                    <span>Gọi thêm</span>
-                                </a>
-                            </div>
-                            <div class="pricing button col-6 align-center">
-                                <a th:href="@{'/staff/cart/' + ${pro.id}}" class="btn btn-warning mx-auto">
-                                    <span>Thanh toán</span>
-                                </a>
+                <form th:action="@{/staff/order}" method="post">
+                    <div class="single-shop-box">
+                        <div class="thumb text-center">
+
+                            <a th:href="@{'/staff/order/' + ${pro.id}}" class="btn btn-fill">
+                                <img th:src="@{'/image/img.png'}" alt="">
+                            </a>
+                            <div class="reborn">
+                                <span th:value="${pro.id}"></span>
                             </div>
                         </div>
+                        <div class="content">
+                            <input type="hidden" id="productId" value="1">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <span th:text="'Đơn ' + ${pro.id}" th:class="text-center" ></span>
+                                </div>
+                                <div class="pricing button col-6 align-center">
+                                    <a th:href="@{'/staff/order/' + ${pro.id}}" class="btn btn-success mx-auto">
+                                        <span>Gọi thêm</span>
+                                    </a>
+                                </div>
+                                <div class="pricing button col-6 align-center">
+                                    <a th:href="@{'/staff/cart/' + ${pro.id}}" class="btn btn-warning mx-auto">
+                                        <span>Thanh toán</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+                </form>
             </div>
         </div>
         <!--        <video id="video" width="320" height="240" autoplay></video>-->

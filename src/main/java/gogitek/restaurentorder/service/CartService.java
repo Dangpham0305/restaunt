@@ -2,7 +2,6 @@ package gogitek.restaurentorder.service;
 
 import gogitek.restaurentorder.constaint.Status;
 import gogitek.restaurentorder.entity.PreOrder;
-import gogitek.restaurentorder.entity.Orders;
 import gogitek.restaurentorder.entity.PreOrderDetail;
 import gogitek.restaurentorder.entity.Product;
 
@@ -20,5 +19,6 @@ public interface CartService {
     List<PreOrderDetail> getAllOrder();
     List<PreOrderDetail> getAllOrderDone();
     void changeStatus(Long detailId, Status status);
-    boolean checkOrderDelivered(PreOrder preOrder);
+    boolean checkOrderDelivered(PreOrder preOrder, List<Status> statuses);
+    void deleteOrder(Long id);
 }

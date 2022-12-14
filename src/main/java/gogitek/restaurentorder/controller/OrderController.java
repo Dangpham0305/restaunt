@@ -1,6 +1,7 @@
 package gogitek.restaurentorder.controller;
 
 import gogitek.restaurentorder.constaint.FormatPrice;
+import gogitek.restaurentorder.constaint.Status;
 import gogitek.restaurentorder.constaint.UrlUtils;
 import gogitek.restaurentorder.entity.Orders;
 import gogitek.restaurentorder.entity.PreOrder;
@@ -17,11 +18,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -61,7 +61,8 @@ public class OrderController {
     @GetMapping("/payment/{id}")
     public String getViewPayment(Model model, @PathVariable Long id, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         PreOrder preOrder = cartService.findById(id);
-        if (cartService.checkOrderDelivered(preOrder)){
+        List<Status> acceptedStatus = Arrays.asList(Status.PROCESSING, Status.APPROVED, Status.DONE);
+        if (cartService.checkOrderDelivered(preOrder, acceptedStatus)){
             redirectAttributes.addFlashAttribute("msg", "Chưa trả hết món!");
             return urlUtils.getPreviousPageByRequest(request).orElse("/");
         }
@@ -85,14 +86,14 @@ public class OrderController {
             byte[] bytes = photo.getBytes();
             if (!Files.exists(pathimage)){
                 Files.createDirectories(pathimage);
-            }if (!Files.exists(pathdata)){
+            }
+            if (!Files.exists(pathdata)){
                 Files.createDirectories(pathdata);
             }
             Path pt = Paths.get(pathimage+ "/" + photo.getOriginalFilename());
             Files.write(pt, bytes);
             pythonUtils.update();
             String rs = pythonUtils.recognize(pt.toAbsolutePath().toString());
-            System.out.println(rs);
             discount = Double.parseDouble(rs);
         } catch (IOException e) {
             return ResponseEntity.badRequest().body("failed to recognize");

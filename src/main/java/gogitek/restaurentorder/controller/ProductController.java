@@ -4,21 +4,13 @@ import gogitek.restaurentorder.constaint.FormatPrice;
 import gogitek.restaurentorder.constaint.Status;
 import gogitek.restaurentorder.constaint.UrlUtils;
 import gogitek.restaurentorder.entity.PreOrder;
-import gogitek.restaurentorder.entity.Product;
-import gogitek.restaurentorder.modelutil.FilterProduct;
-import gogitek.restaurentorder.modelutil.SearchDTO;
 import gogitek.restaurentorder.service.CartService;
 import gogitek.restaurentorder.service.CategoryService;
 import gogitek.restaurentorder.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,6 +63,19 @@ public class ProductController {
         model.addAttribute("listProduct", productService.getByPage());
         return "chonmon";
     }
+    @PostMapping("/order")
+    public String deleteOrder(@RequestParam Long id, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        PreOrder preOrder = cartService.findById(id);
+        List<Status> acceptedStatus = Arrays.asList(Status.PROCESSING, Status.DONE, Status.DELIVERED);
+        if (cartService.checkOrderDelivered(preOrder, acceptedStatus)){
+            redirectAttributes.addFlashAttribute("msg", "Không thể xoá đơn!");
+            return urlUtils.getPreviousPageByRequest(request).orElse("/");
+        }
+        cartService.deleteOrder(id);
+        redirectAttributes.addFlashAttribute("msg", "Xoá đơn thành công!");
+        return "redicect:/staff/list-order";
+    }
+
     @PostMapping("/order/{preOrder}/addProduct")
     public String addProductToOrder(@PathVariable Long preOrder, @RequestParam("quantity") Integer quantity,
                                     @RequestParam("productId") Long id, RedirectAttributes attributes, HttpServletRequest request){
