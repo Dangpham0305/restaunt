@@ -1,28 +1,26 @@
 package gogitek.restaurentorder.service.serviceimp;
 
 import gogitek.restaurentorder.constaint.Status;
-import gogitek.restaurentorder.entity.OrderDetail;
-import gogitek.restaurentorder.entity.PreOrder;
-import gogitek.restaurentorder.entity.PreOrderDetail;
-import gogitek.restaurentorder.entity.Product;
+import gogitek.restaurentorder.entity.*;
 import gogitek.restaurentorder.modelutil.CartItem;
-import gogitek.restaurentorder.modelutil.ProductAdminDTO;
+import gogitek.restaurentorder.repository.CartRepo;
 import gogitek.restaurentorder.repository.ProductRepo;
 import gogitek.restaurentorder.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImp implements ProductService {
     private final ProductRepo productRepo;
-    final static long pageSize = 6;
+    private final CartRepo cartRepo;
 
-    public ProductServiceImp(ProductRepo productRepo) {
-        this.productRepo = productRepo;
-    }
 
     @Override
     public Product getProductById(Long id) {
@@ -85,6 +83,21 @@ public class ProductServiceImp implements ProductService {
         if(product.getPercentDiscount()!=null) baseProduct.setPercentDiscount(product.getPercentDiscount());
         if(product.getCost()!=null) baseProduct.setCost(product.getCost());
         productRepo.save(baseProduct);
+    }
+
+    @Override
+    public boolean checkProductInUse(Long productId) {
+        List<PreOrder> ordersList = cartRepo.findAllByDelete(false);
+        AtomicBoolean check = new AtomicBoolean(false);
+        ordersList.stream().forEach(preOrder -> {
+            Set<PreOrderDetail > details = preOrder.getPreOrderDetails();
+            details.stream().forEach(detail -> {
+                if (detail.getProduct().getId().equals(productId)) {
+                    check.set(true);
+                }
+            });
+        });
+        return check.get();
     }
 
 

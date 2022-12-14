@@ -28,5 +28,6 @@ public class PreOrder {
 
     private Long orderId;
 
+    @Column(name = "is_delete")
     private Boolean delete;
 }

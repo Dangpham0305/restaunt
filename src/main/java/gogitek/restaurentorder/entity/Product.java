@@ -49,5 +49,6 @@ public class Product {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private Set<PreOrderDetail> preOrderDetails = new HashSet<>();
 
+    @Column(name = "is_delete")
     private Boolean delete;
 }

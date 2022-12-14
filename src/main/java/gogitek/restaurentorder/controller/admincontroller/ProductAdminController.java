@@ -1,16 +1,20 @@
 package gogitek.restaurentorder.controller.admincontroller;
 
 import gogitek.restaurentorder.constaint.FormatPrice;
+import gogitek.restaurentorder.constaint.UrlUtils;
 import gogitek.restaurentorder.entity.Product;
 import gogitek.restaurentorder.service.AdminService;
 import gogitek.restaurentorder.service.CategoryService;
 import gogitek.restaurentorder.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +25,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 @Controller
+@RequiredArgsConstructor
 public class ProductAdminController {
     private static final String currentDirectory = System.getProperty("user.dir");
     private static final Path path = Paths.get(currentDirectory + Paths.get("/target/classes/static/image"));
@@ -28,14 +33,8 @@ public class ProductAdminController {
     private final AdminService adminService;
     private final FormatPrice formatPrice;
     private final ProductService productService;
+    private final UrlUtils urlUtils;
 
-    public ProductAdminController(AdminService adminService, CategoryService categoryService,
-                                  FormatPrice formatPrice, ProductService productService) {
-        this.adminService = adminService;
-        this.categoryService = categoryService;
-        this.formatPrice = formatPrice;
-        this.productService = productService;
-    }
 
     @ModelAttribute
     public void addFormatService(Model model) {
@@ -98,7 +97,11 @@ public class ProductAdminController {
     }
 
     @GetMapping("/admin/product/delete/{id}")
-    public String handleDeleteProductAdmin(@PathVariable("id") Long productId) {
+    public String handleDeleteProductAdmin(@PathVariable("id") Long productId, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        if (productService.checkProductInUse(productId)){
+            redirectAttributes.addFlashAttribute("msg", "Không thể xoá món, món đang được đặt!");
+            return urlUtils.getPreviousPageByRequest(request).orElse("/");
+        }
         productService.deleteProduct(productId);
         return "redirect:/admin/product";
     }
