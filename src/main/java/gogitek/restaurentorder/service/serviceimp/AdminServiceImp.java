@@ -12,9 +12,8 @@ import gogitek.restaurentorder.service.AdminService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class AdminServiceImp implements AdminService {
@@ -42,79 +41,31 @@ public class AdminServiceImp implements AdminService {
         return ordersRepo.countOrders();
     }
 
-    @Override
-    public Integer countCustomer() {
-        return userRepo.countCustomer();
-    }
 
     @Override
-    public Float getRevenue() {
-        if (ordersRepo.getRevenue() == null) return 0f;
-        return ordersRepo.getRevenue();
+    public Double getRevenue() {
+        List<Orders> list = ordersRepo.findAll();
+        return list.stream().mapToDouble(Orders::getTotalPrice).sum();
+    }
+    @Override
+    public Double getCost() {
+        List<Orders> list = ordersRepo.findAll();
+        Double cost = 0D;
+        for (Orders orders: list) {
+            Set<OrderDetail> details = orders.getOrderDetails();
+            cost += details.stream().mapToDouble(value -> value.getProduct().getCost() * value.getQuantity()).sum();
+        }
+        return cost;
     }
 
     @Override
     public List<Product> getListProduct() {
-        return productRepo.findAll();
-    }
-
-    @Override
-    public List<OrderDetailDTO> getTopOrderDetail() {
-        List<OrderDetail> listOrderDetail = orderDetailRepo.getTopOrder();
-        List<OrderDetailDTO> list = new ArrayList<>();
-        return list;
-    }
-
-    @Override
-    public List<OrderAdmin> getOrderAdmin() {
-        List<Orders> listOrder = ordersRepo.getOrderUser();
-        List<OrderAdmin> list = new ArrayList<>();
-        return list;
-    }
-
-    @Override
-    public List<ProductAdminDTO> getHub() {
-        List<Product> list = productRepo.findAll();
-        List<ProductAdminDTO> productAdminDTOS = new ArrayList<>();
-        return productAdminDTOS;
-    }
-
-//    @Override
-//    public List<ProductAdminDTO> searchHubByNameAndPage(String keyWord, long currentPage) {
-//        List<Product> list = productRepo.searchByNameAndPage(keyWord,(currentPage - 1) * pageSize, pageSize);
-//        List<ProductAdminDTO> productAdminDTOS = new ArrayList<>();
-//        list.forEach(product -> productAdminDTOS.add(new ProductAdminDTO(product)));
-//        return productAdminDTOS;
-//    }
-
-//    @Override
-//    public long getTotalPageHubByKeyWord(String keyWord) {
-//        return (productRepo.countByKeyWord(keyWord).get(0) % pageSize == 0) ? productRepo.countByKeyWord(keyWord).get(0) / pageSize
-//                : (productRepo.countByKeyWord(keyWord).get(0) / pageSize) + 1;
-//    }
-
-    @Override
-    public Float getCostOfProduct() {
-        if (ordersRepo.getRevenue() == null) return 0f;
-        List<OrderDetail> orderDetails = orderDetailRepo.getListRevenueOrder();
-        float sum = 0f;
-        for (OrderDetail orderDetail : orderDetails) {
-            sum = (float) (sum + orderDetail.getProduct().getCost());
-        }
-        return sum;
+        return productRepo.getAllByDelete(false);
     }
 
     @Override
     public ChartDTO getInformationForChart() {
-        List<OrderDetail> orderDetails = orderDetailRepo.getListRevenueOrder();
-        float sum = 0f;
-        for (OrderDetail orderDetail : orderDetails) {
-            sum = (float) (sum + orderDetail.getProduct().getCost());
-        }
-        ChartDTO chartDTO = new ChartDTO();
-        chartDTO.setRevenue(getRevenue());
-        chartDTO.setCost(sum);
-        return chartDTO;
+        return ChartDTO.builder().cost(getCost()).revenue(getRevenue()).build();
     }
 
     @Override
@@ -153,20 +104,6 @@ public class AdminServiceImp implements AdminService {
         return true;
     }
 
-    @Override
-    public List<OrderAdmin> getListOrderAdminByFilter(Date s, Date e) {
-        if(s.compareTo(e)>0){
-            Date temp = s;
-            s = e;
-            e = temp;
-        }
-        e = dateFormat.addOneDay(e);
-        List<Orders> ordersList = ordersRepo.getOrderUserFilter(s, e);
-        List<OrderAdmin> list = new ArrayList<>();
-        Date finalE = e;
-        Date finalS = s;
-        return list;
-    }
 
     @Override
     public Integer countCart() {
@@ -178,81 +115,5 @@ public class AdminServiceImp implements AdminService {
         return ordersRepo.countOrdersByStatus(status);
     }
 
-    @Override
-    public List<OrderAdmin> findOrdersByStatus(int status) {
-        List<Orders> ordersList = ordersRepo.findOrdersByStatus(status);
-        List<OrderAdmin> orderAdmins = new ArrayList<>();
-        return orderAdmins;
-    }
 
-    @Override
-    public List<ProductFilterDTO> findOrderDetailByDay(Date s, Date e) {
-        if(s.compareTo(e)>0){
-            Date temp = s;
-            s = e;
-            e = temp;
-        }
-        e = dateFormat.addOneDay(e);
-        List<ProductFilterDTO> lists = new ArrayList<>();
-        List<OrderDetail> orderDetails = orderDetailRepo.findOrderDetailByDay(s,e);
-        for (OrderDetail orderDetail:orderDetails) {
-            int quantity = orderDetailRepo.getTotalProductByDay(s,e, Math.toIntExact(orderDetail.getProduct().getId()));
-        }
-        return lists;
-    }
-
-    @Override
-    public Float getImportPriceByDate(Date s, Date e) {
-        if(s.compareTo(e)>0){
-            Date temp = s;
-            s = e;
-            e = temp;
-        }
-        e = dateFormat.addOneDay(e);
-        List<ProductFilterDTO> lists = findOrderDetailByDay(s,e);
-        float sum = 0f;
-        for(ProductFilterDTO product:lists){
-            sum+= product.getImportPrice();
-        }
-        return sum;
-    }
-
-    @Override
-    public Float getTotalPriceByDate(Date s, Date e) {
-        if(s.compareTo(e)>0){
-            Date temp = s;
-            s = e;
-            e = temp;
-        }
-        e = dateFormat.addOneDay(e);
-        List<ProductFilterDTO> lists = findOrderDetailByDay(s,e);
-        float sum = 0f;
-        for(ProductFilterDTO product:lists){
-            sum+= product.getTotalPrice();
-        }
-        return sum;
-    }
-
-    @Override
-    public Integer getTotalOrdersByDate(Date s, Date e) {
-
-        if(s.compareTo(e)>0){
-            Date temp = s;
-            s = e;
-            e = temp;
-        }
-        e = dateFormat.addOneDay(e);
-        return orderDetailRepo.getTotalOrderByDate(s,e);
-    }
-
-    @Override
-    public Integer getTotalUserId(Date s, Date e) {
-        if(s.compareTo(e)>0){
-            Date temp = s;
-            s = e;
-            e = temp;
-        }
-        e = dateFormat.addOneDay(e);
-        return userRepo.getTotalUserId(s,e);
-    }
 }
