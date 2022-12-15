@@ -6,7 +6,8 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ChartDTO {
-    private Float cost;
-    private Float revenue;
+    private Double cost;
+    private Double revenue;
 }

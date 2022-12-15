@@ -163,6 +163,8 @@
                                 </div>
                                 <div class="media-body text-right">
                                     <p class="widget-text mb-0">Vốn</p>
+                                    <p class="widget-numeric-value" th:utext="${format.formatPrice(cost)}"></p>
+
                                 </div>
                             </div>
                             <p class="widget-total-stats mt-2"></p>
@@ -177,7 +179,8 @@
                                     <i class="flaticon-preOrder-bag"></i>
                                 </div>
                                 <div class="media-body text-right">
-                                    <p class="widget-text mb-0">Đơn</p>
+                                    <p class="widget-text mb-0">Tổng số đơn</p>
+                                    <p class="widget-numeric-value" th:utext="${total}"></p>
                                 </div>
                             </div>
                             <p class="widget-total-stats mt-2"></p>
@@ -194,6 +197,7 @@
                                 </div>
                                 <div class="media-body text-right">
                                     <p class="widget-text mb-0">Món đã chuẩn bị</p>
+                                    <p class="widget-numeric-value" th:utext="${orderDone}"></p>
                                 </div>
                             </div>
                             <p class="widget-total-stats mt-2"></p>
@@ -211,7 +215,7 @@
                                 </div>
                                 <div class="media-body text-right">
                                     <p class="widget-text mb-0">Doanh thu</p>
-                                    <!--                                    <p class="widget-numeric-value" th:utext="${format.formatPrice(getRevenue)}"></p>-->
+                                        <p class="widget-numeric-value" th:utext="${format.formatPrice(revenue)}"></p>
                                 </div>
                             </div>
                         </div>
@@ -299,25 +303,6 @@
                     </div>
                 </div>
 
-            </div>
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
-                    <div class="statbox widget box">
-                        <div class="widget-header ">
-                            <div class="row">
-                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Sản phẩm mới</h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="widget-content-area ">
-
-                            <div class="table-responsive new-products">
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
         </div>
@@ -466,6 +451,33 @@
 
 <!--====== Main js ======-->
 <script th:src="@{/assets/js/main.js}"></script>
+<script th:inline="javascript">
+    $(document).ready(function () {
+        let url = 'http://localhost:8090/get-chart-information'
+        const option = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        };
+        fetch(url, option)
+            .then(function (res) {
+                return res.json();
+            })
+            .then(function (chartDTO){
+                let percentProfit = 100*(chartDTO.revenue-chartDTO.cost)/chartDTO.revenue
+                new Chartist.Pie('.s-r', {
+                    series: [percentProfit.toFixed(2), (100-percentProfit).toFixed(2)]
+                }, {
+                    donut: true,
+                    donutWidth: 40,
+                    donutSolid: true,
+                    startAngle: 270,
+                    showLabel: true
+                });
+            })
+    });
+</script>
 
 <script !src="">
     var d = new Date();
@@ -503,22 +515,6 @@
     setInterval(function () {
         timer();
     }, 1000);
-</script>
-<script>
-    $('#ecommerce-product-list').DataTable({
-        "lengthMenu": [5, 10, 20, 50, 100],
-        "language": {
-            "paginate": {
-                "previous": "<i class='flaticon-arrow-left-1'></i>",
-                "next": "<i class='flaticon-arrow-right'></i>"
-            },
-            "info": "Hiện thị _PAGE_ trong _PAGES_"
-        },
-        drawCallback: function (settings) {
-            $('[data-toggle="tooltip"]').tooltip();
-        },
-        "bDestroy": true
-    });
 </script>
 
 </html>

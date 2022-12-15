@@ -31,14 +31,14 @@ public class OrderAdminController {
 
     @GetMapping("/admin/order")
     public String getListOrderAdmin(Model model, HttpServletRequest request) {
-        model.addAttribute("countOrder", adminService.countOrders());
-        model.addAttribute("countCart", adminService.countCart());
-        model.addAttribute("dateFill", new DateFilterDTO());
-        model.addAttribute("orderAdmin", adminService.getOrderAdmin());
-        model.addAttribute("countProcessing", adminService.countByStatus(Status.PROCESSING.getValue()));
-        model.addAttribute("countCancel", adminService.countByStatus(Status.CANCELED.getValue()));
-        model.addAttribute("countDelivered", adminService.countByStatus(Status.DELIVERED.getValue()));
-        model.addAttribute("countApproved", adminService.countByStatus(Status.APPROVED.getValue()));
+//        model.addAttribute("countOrder", adminService.countOrders());
+//        model.addAttribute("countCart", adminService.countCart());
+//        model.addAttribute("dateFill", new DateFilterDTO());
+//        model.addAttribute("orderAdmin", adminService.getOrderAdmin());
+//        model.addAttribute("countProcessing", adminService.countByStatus(Status.PROCESSING.getValue()));
+//        model.addAttribute("countCancel", adminService.countByStatus(Status.CANCELED.getValue()));
+//        model.addAttribute("countDelivered", adminService.countByStatus(Status.DELIVERED.getValue()));
+//        model.addAttribute("countApproved", adminService.countByStatus(Status.APPROVED.getValue()));
         return "admin-page/order";
     }
     @GetMapping("/admin/preorder")

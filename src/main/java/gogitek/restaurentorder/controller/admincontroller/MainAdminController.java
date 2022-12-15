@@ -21,6 +21,11 @@ public class MainAdminController {
 
     @GetMapping("/admin")
     public String getViewMainAdmin(Model model) {
+        model.addAttribute("format", formatPrice);
+        model.addAttribute("orderDone", adminService.countOrders());
+        model.addAttribute("total", adminService.countOrders());
+        model.addAttribute("revenue", adminService.getRevenue());
+        model.addAttribute("cost", adminService.getCost());
         return "admin-page/admin";
     }
 
